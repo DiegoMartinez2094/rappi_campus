@@ -58,11 +58,11 @@ Una lista de los pedidos previos es otra funcionalidad que mejora la experiencia
 
 # Opciones de posibles proyectos:
 
-*  **Gestión de Órdenes y Entregas:**
+* **Gestión de Órdenes y Entregas:**
 
 Crea rutas y controladores para que los usuarios puedan realizar pedidos, seleccionar productos, establecer direcciones de entrega y hacer seguimiento del estado de sus pedidos. Utiliza tokens para asegurarte de que solo los usuarios autenticados puedan realizar pedidos y acceder a la información de seguimiento.
 
-*  **Gestión de Usuarios y Autenticación:**
+* **Gestión de Usuarios y Autenticación:**
 
 Utiliza tokens y middlewares para implementar la autenticación y autorización de usuarios. Puedes permitir a los usuarios registrarse, iniciar sesión y administrar sus perfiles. Esto también incluye la gestión de roles y permisos, lo que garantiza que solo los usuarios autorizados puedan acceder a ciertas funciones.
 
@@ -78,8 +78,6 @@ Crea una estructura para gestionar los productos disponibles en la plataforma, i
 
 Desarrolla una función que permita a los restaurantes y usuarios generar facturas y llevar un registro de los impuestos aplicados a las transacciones.
 
-
-
 # **Bibliografías:**
 
 ### Link información de Rappi
@@ -89,3 +87,154 @@ Desarrolla una función que permita a los restaurantes y usuarios generar factur
 ### Link información de aplicacion para Delivery
 
 [https://estudioalfa.com/por-que-deberias-tener-tu-propia-app-de-reparto-domicilio](https://estudioalfa.com/por-que-deberias-tener-tu-propia-app-de-reparto-domicilio)
+
+
+## Investigación Github Ramas (branch)
+
+
+##### **Git branch:**
+
+La funcionalidad de las ramas de Git te permite crear nuevas ramas de un proyecto para probar ideas, aislar nuevas características, o experimentar sin impactar al proyecto principal.
+
+##### **Ver Ramas:**
+
+Para ver las ramas en un repositorio Git, ejecuta el comando:
+
+```shell
+git branch
+```
+
+Habrá un asterisco (*) junto a la rama en la que te encuentras actualmente.
+
+##### **Cambiar de Rama**
+
+Para moverse a una rama existente, ejecuta el comando:
+
+```shell
+git checkout NOMBRE-RAMA
+```
+
+Hay un atajo para crear y moverte a la nueva rama al mismo tiempo.:
+
+```shell
+
+git checkout -b NOMBRE-NUEVA-RAMA
+```
+
+##### **Renombrar una Rama**
+
+Para renombrar una rama, ejecutar el comando:
+
+```shell
+git branch -m VIEJO-NOMBRE-RAMA NUEVO-NOMBRE-RAMA
+```
+
+##### **Eliminar una Rama**
+
+Git no te permitirá eliminar una rama en la que te encuentres actualmente. Primero necesitas moverte a una rama diferente, y luego ejecutar el comando:
+
+```shell
+git branch -d RAMA-A-ELIMINAR
+```
+
+no se puede eliminar la rama donde se encuentra ubicado el asterisco 
+
+##### **Comparar Ramas**
+
+Puedes comparar ramas con el comando `git diff`:
+
+```shell
+git diff PRIMERA-RAMA..SEGUNDA-RAMA
+```
+
+Verás resultados en color para los cambios entre ramas. Para todas las líneas que han cambiado, la versión de `SEGUNDA-RAMA` será una línea verde comenzando con un "+", y la versión de `PRIMERA-RAMA` será una línea roja comenzando con un "-".
+
+##### **Ayuda con Ramas de Git**
+
+Si olvidas cómo utilizar una opción, o quieres explorar otra funcionalidad alrededor del comando `git branch`, puedes ejecutar cualquiera de estos comandos:
+
+```shell
+git help branch
+git branch --help
+man git-branch
+```
+
+##### Git Merge
+
+El comando `git merge` fusionará cualquier cambio que se haya hecho en la base de código en una rama separada de tu rama actual como un nuevo commit.
+
+La sintaxis del comando es la siguiente:
+
+```shell
+git merge NOMBRE-DE-LA-RAMA
+```
+
+##### Abandonar todos los cambios
+
+```shell
+git reset --hard        # remueve todos los cambios pendientes
+```
+
+
+## ¿Cómo realizar un release en github?
+
+1. **Crear una versión del código:**
+   * Asegúrate de que todos los cambios que deseas incluir en el lanzamiento estén confirmados y fusionados en la rama principal (por ejemplo, `main` o `master`).
+   * Puedes realizar cambios menores, correcciones de errores o mejoras antes de crear un lanzamiento.
+2. **Ir a la sección "Releases" del repositorio:**
+   * Ve al repositorio en GitHub.
+3. **Crear un nuevo lanzamiento:**
+   * En la parte superior del repositorio, haz clic en la pestaña "Releases".
+   * Luego, haz clic en el botón "Nuevo lanzamiento" o "Draft a new release".
+4. **Llenar los detalles del lanzamiento:**
+   * Asigna un "Tag version" (etiqueta de versión) a tu lanzamiento. Por lo general, las etiquetas de versión siguen un formato semántico como "v1.0.0". Esta etiqueta debe coincidir con la versión del código que estás lanzando.
+   * Escribe un título descriptivo para el lanzamiento.
+   * Puedes agregar una descripción más detallada del lanzamiento en el campo "Descripción".
+5. **Adjuntar archivos o enlaces (opcional):**
+   * Si deseas proporcionar archivos binarios, instaladores, documentación u otros archivos junto con el lanzamiento, puedes arrastrar y soltar los archivos en la sección "Arrastra y suelta archivos aquí para agregarlos al lanzamiento" o hacer clic en "subir archivos".
+   * También puedes agregar enlaces a recursos externos relevantes para el lanzamiento.
+6. **Publicar el lanzamiento:**
+   * Una vez que hayas llenado los detalles y agregado los archivos o enlaces deseados, haz clic en el botón "Publicar lanzamiento" (o "Publish release").
+   * Si no estás listo para publicar el lanzamiento de inmediato, puedes guardar un borrador del lanzamiento haciendo clic en "Guardar borrador" (o "Save draft").
+7. **Notificar y compartir:**
+   * Después de publicar el lanzamiento, puedes compartir el enlace del lanzamiento con otros miembros del equipo, usuarios o interesados para que puedan acceder a los archivos, la información y las notas del lanzamiento.
+
+## Asignacion de tareas en Notion:
+
+1. **Crear una Base de Datos:**
+
+   * En tu página de Notion, crea una base de datos que se utilizará para hacer un seguimiento de las tareas asignadas. Para hacer esto, puedes hacer clic en "Agregar una página" y seleccionar "Base de datos".
+   * Configura las propiedades de la base de datos según tus necesidades. Puedes incluir propiedades como "Nombre de la tarea", "Asignado a", "Fecha límite", "Estado".
+2. **Agregar Entradas (Tareas):**
+
+   * Agrega entradas a la base de datos para representar las tareas que deseas asignar. Rellena la información relevante en las propiedades que has configurado, como el nombre de la tarea, la persona asignada y la fecha límite.
+3. **Asignar Tareas:**
+
+   * En la propiedad "Asignado a", puedes usar el formato "@nombre-de-usuario" para mencionar a la persona a la que deseas asignar la tarea. Notion incluso te proporcionará sugerencias de nombres mientras escribes.
+4. **Colaboración y Notificaciones:**
+
+   * Cuando asignas una tarea a una persona utilizando la propiedad "Asignado a", Notion puede notificar automáticamente a esa persona si has compartido la página o la base de datos con ellos. También pueden recibir notificaciones por correo electrónico si tienen esta configuración habilitada.
+5. **Realizar Seguimiento y Actualizar el Estado:**
+
+   * A medida que se trabaja en una tarea, puedes actualizar el estado en la propiedad correspondiente. Por ejemplo, puedes tener propiedades como "En progreso", "Completada", "Pendiente", etc.
+6. **Personalización Adicional:**
+
+   * Puedes personalizar aún más tu base de datos añadiendo vistas como tablas, tableros, calendarios, galerías, etc., para tener diferentes formas de visualizar y gestionar las tareas asignadas.
+7. **Recordatorios y Fechas Límite:**
+
+   * Puedes configurar recordatorios y fechas límite en la propiedad "Fecha límite" para que tú y los asignados sean notificados antes de que se venza una tarea.
+8. **Seguimiento y Filtrado:**
+
+   * Utiliza funciones de búsqueda y filtrado en la base de datos para rastrear tareas asignadas, ver el estado, filtrar por persona asignada, etc.
+
+   **Ejemplo:**
+
+   ![1691814032173](image/README/1691814032173.png)
+
+Bibliografia:
+
+[https://www.freecodecamp.org/espanol/news/explicacion-de-la-rama-de-gi-como-eliminar/]()
+
+[https://keepcoding.io/blog/que-es-la-rama-release-en-git/#:~:text=La%20rama%20release%20en%20Git%20se%20define%20como%20un%20tipo,determinada%20fecha%20de%20publicaci%C3%B3n%20estipulada.]()
+
+[https://www.notion.so/help/tasks-and-dependencies]()
