@@ -1,0 +1,73 @@
+use("db_ordenes_rappi");
+
+/** Colección Cliente */
+
+db.clientes.insertMany([
+    {
+        idCliente: 1,
+        nombre: "Cliente1",
+        direccion: "Dirección1",
+        telefono: "123-456-7890",
+        nivel: "plata"
+    },
+    {
+        idCliente: 2,
+        nombre: "Cliente2",
+        direccion: "Dirección2",
+        telefono: "987-654-3210",
+        nivel: "oro"
+    }
+]);
+
+/** Colección Producto */
+
+db.productos.insertMany([
+    {
+        id: 1,
+        nombre: "Producto1",
+        descripcion: "Descripción del producto 1",
+        cantidad: 10,
+        precio: 20
+    },
+    {
+        id: 2,
+        nombre: "Producto2",
+        descripcion: "Descripción del producto 2",
+        cantidad: 5,
+        precio: 15
+    }
+]);
+
+/** Colección Repartidor */
+
+db.repartidores.insertMany([
+    {
+        idRepartidor: 1,
+        nombre: "Repartidor1",
+        telefono: "555-123-4567",
+        vehiculo: "Moto",
+        nivel: "plata"
+    },
+    {
+        idRepartidor: 2,
+        nombre: "Repartidor2",
+        telefono: "555-987-6543",
+        vehiculo: "Bicicleta",
+        nivel: "oro"
+    }
+]);
+
+/** Colección Restaurante */
+
+db.restaurantes.insertMany([
+    {
+        nombre: "Restaurante1",
+        direccion: "Dirección del restaurante 1",
+        calificacion: 4.5
+    },
+    {
+        nombre: "Restaurante2",
+        direccion: "Dirección del restaurante 2",
+        calificacion: 3.8
+    }
+]);
