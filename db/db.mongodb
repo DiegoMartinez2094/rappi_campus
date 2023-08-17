@@ -71,3 +71,34 @@ db.restaurantes.insertMany([
         calificacion: 3.8
     }
 ]);
+
+/** Colección Ordenes */
+
+db.ordenes.insertMany([
+    {
+        idOrden: 1,
+        fechaCreacion: new Date(),
+        Cliente: { idCliente: 1, nombre: "Cliente1" },
+        Producto: { id: 1, nombre: "Producto1" },
+        pagoTotal: { monto: 20, metodoPago: "Tarjeta" },
+        estado: "pendiente",
+        instruccionesEspeciales: ["tocar el timbre dos veces", "dejar en la puerta"],
+        repartidorAsignado: { idRepartidor: 1, nombre: "Repartidor1" },
+        fechaHoraEntrega: new Date(),
+        calificacion: { min: 1, max: 5 },
+        Restaurante: { nombre: "Restaurante1" }
+    },
+    {
+        idOrden: 2,
+        fechaCreacion: new Date(),
+        Cliente: { idCliente: 2, nombre: "Cliente2" },
+        Producto: { id: 2, nombre: "Producto2" },
+        pagoTotal: { monto: 15, metodoPago: "Efectivo" },
+        estado: "preparando",
+        instruccionesEspeciales: ["preguntar por alguien"],
+        repartidorAsignado: { idRepartidor: 2, nombre: "Repartidor2" },
+        fechaHoraEntrega: new Date(),
+        calificacion: { min: 1, max: 5 },
+        Restaurante: { nombre: "Restaurante2" }
+    }
+]);
