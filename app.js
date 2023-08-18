@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import appCliente from "./routers/Cliente.js"
+import appOrdenes from "./routers/Ordenes.js";
 dotenv.config();
 let app=express();
 
@@ -12,3 +13,4 @@ app.listen(config, ()=>{
 });
 
 app.use("/clientes",appCliente);
+app.use("/ordenes",appOrdenes);
