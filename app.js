@@ -20,7 +20,6 @@ app.use((req, res, next) => {
    next();
 });
 
-
 app.use('/clientes', versionRoute({
    "1.0.0": cliente,
    "1.0.1": cliente2,
