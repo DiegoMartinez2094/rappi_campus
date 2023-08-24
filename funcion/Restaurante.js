@@ -1,9 +1,10 @@
 import { con } from "../db/atlas.js";
 import { Router } from "express";
+import DTO from "../middlewares/Restaurantes.js";
 
 const restaurante = Router();
 
-restaurante.post("/", async (req, res) => {
+restaurante.post("/", DTO, async (req, res) => {
     try {
         const db = await con(); 
         const restaurantes = db.collection("restaurantes"); 
@@ -47,7 +48,7 @@ restaurante.get("/nombre/:nombreRestaurante", async (req, res) => {
     }
 });
 
-restaurante.put("/nombre/:nombreRestaurante", async (req, res) => {
+restaurante.put("/nombre/:nombreRestaurante", DTO, async (req, res) => {
     const nombreRestaurante = req.params.nombreRestaurante;
 
     try {
