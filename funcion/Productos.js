@@ -16,5 +16,17 @@ producto.get("/disponibles", async(req, res) => {
     }
 });
 
+producto.post("/nuevos", async(req, res)=>{
+    
+    let result;
+    try {
+        const producto = db.collection("productos");
+        result = await producto.insertOne(req.body);
+        res.status(201).send(result);
+    } catch (error) {
+        console.log(error.errInfo.details.schemaRulesNotSatisfied[0]);
+        res.send();
+    }
+})
 
 export default producto;
