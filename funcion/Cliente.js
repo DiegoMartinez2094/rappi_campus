@@ -1,5 +1,6 @@
 import { con } from "../db/atlas.js";
 import { Router } from "express";
+import { appDTOData} from "../middlewares/Cliente.js";
 
 const cliente = Router();
 
@@ -12,6 +13,17 @@ cliente.get("/todos", async (req, res) => {
     } catch (error) {
         console.error("Error al obtener los clientes:", error);
         res.status(500).send("Error interno del servidor");
+    }
+});
+
+cliente.post("/", appDTOData, async(req, res) => {
+    let resul;
+    try {
+        resul = await cliente.insertOne(req.body);
+        res.status(201).send(resul);
+    } catch (error) {
+        console.log(error.errInfo.details.schemaRulesNotSatisfied[0]);
+        res.send();
     }
 });
 
@@ -36,7 +48,7 @@ cliente.delete("/:idCliente", async (req, res) => {
     }
 });
 
-cliente.put("/:idCliente", async (req, res) => {
+cliente.put("/:idCliente", appDTOData, async (req, res) => {
     const idCliente = parseInt(req.params.idCliente);
     const newData = req.body; // Los nuevos datos para actualizar el cliente
 
