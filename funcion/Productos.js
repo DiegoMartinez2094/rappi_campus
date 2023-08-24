@@ -51,4 +51,24 @@ producto.put("/:id", async(req, res)=>{
 
 });
 
+producto.delete("/:id", async(req, res)=>{
+
+    const id = parseInt(req.params.id);
+
+    try {
+        const producto = db.collection("productos");
+        const result = await producto.deleteOne({ id });
+
+        if (result.deletedCount === 1) {
+            res.send("Producto eliminado correctamente");
+        } else {
+            res.status(404).send("Producto no encontrado");
+        }
+    } catch (error) {
+        console.error("Error al eliminar el producto:", error);
+        res.status(500).send("Error interno del servidor");
+    }
+
+});
+
 export default producto;
