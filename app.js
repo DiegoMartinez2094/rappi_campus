@@ -7,6 +7,7 @@ import cliente2 from "./funcion/Cliente2.js";
 import orden from "./funcion/Ordenes.js";
 import restaurante from "./funcion/Restaurante.js";
 import repartidor from "./funcion/Repartidor.js";
+import producto from "./funcion/Productos.js"
 
 dotenv.config();
 const app = express();
@@ -34,6 +35,10 @@ app.use('/restaurantes', versionRoute({
 
 app.use('/repartidor', versionRoute({
    "1.0.0": repartidor,
+}));
+
+app.use('/producto', versionRoute({
+   "1.0.0": producto,
 }));
 
 app.listen(config.port, config.hostname, () => {
