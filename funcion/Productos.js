@@ -17,7 +17,7 @@ producto.get("/disponibles", async(req, res) => {
 });
 
 producto.post("/nuevos", async(req, res)=>{
-    
+
     let result;
     try {
         const producto = db.collection("productos");
@@ -27,6 +27,28 @@ producto.post("/nuevos", async(req, res)=>{
         console.log(error.errInfo.details.schemaRulesNotSatisfied[0]);
         res.send();
     }
-})
+
+});
+
+producto.put("/:id", async(req, res)=>{
+
+    const id = parseInt(req.params.id);
+    const newData = req.body; 
+
+    try {
+        const productos = db.collection("productos");
+        const result = await productos.updateOne({ id }, { $set: newData });
+
+        if (result.matchedCount === 1) {
+            res.send("Producto actualizado correctamente");
+        } else {
+            res.status(404).send("Producto no encontrado");
+        }
+    } catch (error) {
+        console.error("Error al actualizar el producto:", error);
+        res.status(500).send("Error interno del servidor");
+    }
+
+});
 
 export default producto;
