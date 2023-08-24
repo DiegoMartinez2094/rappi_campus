@@ -32,4 +32,26 @@ repartidor.post("/agregar", async(req, res)=>{
 
 });
 
+repartidor.put("/:idRepartidor", async(req, res)=>{
+
+    const idRepartidor = parseInt(req.params.idRepartidor);
+    const newData = req.body; 
+
+    try {
+        const db = await con();
+        const repartidor = db.collection("repartidores");
+        const result = await repartidor.updateOne({ idRepartidor }, { $set: newData });
+
+        if (result.matchedCount === 1) {
+            res.send("Repartidor actualizado correctamente");
+        } else {
+            res.status(404).send("Repartidor no encontrado");
+        }
+    } catch (error) {
+        console.error("Error al actualizar el repartidor:", error);
+        res.status(500).send("Error interno del servidor");
+    }
+
+});
+
 export default repartidor;
