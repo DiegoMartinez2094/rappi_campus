@@ -2,10 +2,11 @@ import dotenv from "dotenv";
 import express from "express";
 import versionRoutes from 'express-routes-versioning';
 
-import cliente from "./funcion/Cliente.js"
-import cliente2 from "./funcion/Cliente2.js"
-import orden from "./funcion/Ordenes.js"
+import cliente from "./funcion/Cliente.js";
+import cliente2 from "./funcion/Cliente2.js";
+import orden from "./funcion/Ordenes.js";
 import restaurante from "./funcion/Restaurante.js";
+import repartidor from "./funcion/Repartidor.js";
 
 dotenv.config();
 const app = express();
@@ -30,6 +31,10 @@ app.use('/ordenes', versionRoute({
 
 app.use('/restaurantes', versionRoute({
    "1.0.0": restaurante,
+}));
+
+app.use('/repartidor', versionRoute({
+   "1.0.0": repartidor,
 }));
 
 app.listen(config.port, config.hostname, () => {
