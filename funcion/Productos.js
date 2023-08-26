@@ -1,6 +1,6 @@
 import { con } from "../db/atlas.js";
 import { Router } from "express";
-import { appDTOData} from "../middlewares/Producto.js";
+
 
 const producto = Router();
 
@@ -17,7 +17,7 @@ producto.get("/disponibles", async(req, res) => {
     }
 });
 
-producto.post("/nuevos",appDTOData, async(req, res)=>{
+producto.post("/nuevos", async(req, res)=>{
 
     let result;
     try {
@@ -31,7 +31,7 @@ producto.post("/nuevos",appDTOData, async(req, res)=>{
 
 });
 
-producto.put("/:id",appDTOData, async(req, res)=>{
+producto.put("/:id", async(req, res)=>{
 
     const id = parseInt(req.params.id);
     const newData = req.body; 

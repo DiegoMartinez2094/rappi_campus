@@ -1,6 +1,6 @@
 import { con } from "../db/atlas.js";
 import { Router } from "express";
-import { appDTOData} from "../middlewares/Cliente.js";
+
 
 const cliente = Router();
 
@@ -16,7 +16,7 @@ cliente.get("/todos", async (req, res) => {
     }
 });
 
-cliente.post("/", appDTOData, async(req, res) => {
+cliente.post("/",  async(req, res) => {
     let resul;
     try {
         resul = await cliente.insertOne(req.body);
@@ -48,7 +48,7 @@ cliente.delete("/:idCliente", async (req, res) => {
     }
 });
 
-cliente.put("/:idCliente", appDTOData, async (req, res) => {
+cliente.put("/:idCliente",  async (req, res) => {
     const idCliente = parseInt(req.params.idCliente);
     const newData = req.body; // Los nuevos datos para actualizar el cliente
 
