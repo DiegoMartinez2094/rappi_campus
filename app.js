@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import versionRoutes from 'express-routes-versioning';
+import {check} from 'express-validator'
 
 import cliente from "./funcion/Cliente.js";
 import cliente2 from "./funcion/Cliente2.js";
@@ -21,16 +22,33 @@ app.use((req, res, next) => {
    next();
 });
 
-app.use('/clientes', versionRoute({
+
+
+app.use('/clientes',
+[check("idCliente")
+.notEmpty().withMessage('el idCliente es obligatorio')
+.isInt().withMessage('el idCliente debe ser numerico')],
+
+[check("nombre")
+.notEmpty().withMessage('el nombre es obligatorio')
+.isString().withMessage('el nombre debe ser string')],
+
+[check("direccion")
+.notEmpty().withMessage('la direccion es obligatorio')
+.isString().withMessage('la direccion debe ser string')],
+
+[check("telefono")
+.notEmpty().withMessage('el telefono es obligatorio')
+.isString().withMessage('el telefono debe ser string')],
+
+[check("nivel")
+.notEmpty().withMessage('el nivel es obligatorio')
+.custom((value) => ['diamante', 'oro', 'plata', 'bronce'].includes(value.toLowerCase())).withMessage('nivel no válido'),
+],
+
+versionRoute({
    "1.0.0": cliente,
    "1.0.1": cliente2,
-}));
-app.use('/ordenes', versionRoute({
-   "1.0.0": orden,
-}));
-
-app.use('/restaurantes', versionRoute({
-   "1.0.0": restaurante,
 }));
 
 app.use('/repartidor', versionRoute({
@@ -40,6 +58,15 @@ app.use('/repartidor', versionRoute({
 app.use('/producto', versionRoute({
    "1.0.0": producto,
 }));
+
+app.use('/ordenes', versionRoute({
+   "1.0.0": orden,
+}));
+
+app.use('/restaurantes', versionRoute({
+   "1.0.0": restaurante,
+}));
+
 
 app.listen(config.port, config.hostname, () => {
     console.log(`Servidor iniciado en http://${config.hostname}:${config.port}`);
