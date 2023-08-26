@@ -1,6 +1,6 @@
 import { con } from "../db/atlas.js";
 import { Router } from "express";
-import { appDTOData} from "../middlewares/Repartidor.js";
+
 
 const repartidor = Router();
 
@@ -19,7 +19,7 @@ repartidor.get("/todos", async(req, res)=>{
 
 });
 
-repartidor.post("/agregar",appDTOData, async(req, res)=>{
+repartidor.post("/agregar", async(req, res)=>{
 
     let result;
     try {
@@ -33,7 +33,7 @@ repartidor.post("/agregar",appDTOData, async(req, res)=>{
 
 });
 
-repartidor.put("/:idRepartidor",appDTOData, async(req, res)=>{
+repartidor.put("/:idRepartidor", async(req, res)=>{
 
     const idRepartidor = parseInt(req.params.idRepartidor);
     const newData = req.body; 
