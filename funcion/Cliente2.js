@@ -3,12 +3,11 @@ import { Router } from "express";
 import { validationResult } from "express-validator";
 
 const cliente2 = Router();
-const db = await con();
-const clientes = db.collection("clientes");
-
 
 cliente2.get("/", async (req, res) => {
     try {
+        const db = await con();
+        const clientes = db.collection("clientes");
         const result = await clientes.find({}).toArray();
         res.send(result);
     } catch (error) {
@@ -20,6 +19,8 @@ cliente2.get("/", async (req, res) => {
 cliente2.get("/:idCliente", async (req, res) => {
     const idCliente = parseInt(req.params.idCliente); // Parsea el parámetro como un número entero
     try {
+        const db = await con();
+        const clientes = db.collection("clientes");
         const result = await clientes.findOne({ idCliente }); // Encuentra un cliente por el idCliente
         if (result) {
             res.send(result);
@@ -34,9 +35,13 @@ cliente2.get("/:idCliente", async (req, res) => {
 
 cliente2.post("/", async(req, res) => {
     const {errors} = validationResult(req)
-    res.status(200).json(errors);
+    if (errors.length > 0) {
+        return res.status(400).json({ errors: errors });
+      }
 let resul;
 try { 
+    const db = await con();
+    const clientes = db.collection("clientes");
     resul = await clientes.insertOne(req.body);
     res.status(201).send(resul);
 } catch (error) {
@@ -48,6 +53,8 @@ try {
 cliente2.delete("/:idCliente", async (req, res) => {
     const idCliente = parseInt(req.params.idCliente);
     try {
+        const db = await con();
+        const clientes = db.collection("clientes");
         const result = await clientes.deleteOne({ idCliente });
         if (result.deletedCount === 1) {
             res.send("Cliente eliminado correctamente");
@@ -61,11 +68,13 @@ cliente2.delete("/:idCliente", async (req, res) => {
 });
 
 cliente2.put("/:idCliente", async (req, res) => {
-    console.log(req.rateLimit);
     const {errors} = validationResult(req)
+    res.status(200).json(errors);
     const idCliente = parseInt(req.params.idCliente);
     const newData = req.body; // Los nuevos datos para actualizar el cliente
     try {
+        const db = await con();
+        const clientes = db.collection("clientes");
         const result = await clientes.updateOne({ idCliente }, { $set: newData });
         if (result.matchedCount === 1) {
             res.send("Cliente actualizado correctamente");
