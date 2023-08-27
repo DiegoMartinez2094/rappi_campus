@@ -1,13 +1,12 @@
 import { con } from "../db/atlas.js";
 import { Router } from "express";
+import { validationResult } from "express-validator";
 
 
 const repartidor = Router();
-
 const db = await con();
 
-repartidor.get("/todos", async(req, res)=>{
-
+repartidor.get("/", async(req, res)=>{
     try {
         const repartidor = db.collection("repartidores");
         const result = await repartidor.find({}).toArray();
@@ -16,11 +15,13 @@ repartidor.get("/todos", async(req, res)=>{
         console.error("Error al obtener los repartidores:", error);
         res.status(500).send("Error interno del servidor");
     }
-
 });
 
-repartidor.post("/agregar", async(req, res)=>{
-
+repartidor.post("/", async(req, res)=>{
+    const {errors} = validationResult(req)
+    if (errors.length > 0) {
+        return res.status(400).json({ errors: errors });
+      }
     let result;
     try {
         const repartidor = db.collection("repartidores");
@@ -30,14 +31,16 @@ repartidor.post("/agregar", async(req, res)=>{
         console.log(error.errInfo.details.schemaRulesNotSatisfied[0]);
         res.send();
     }
-
 });
 
 repartidor.put("/:idRepartidor", async(req, res)=>{
 
     const idRepartidor = parseInt(req.params.idRepartidor);
     const newData = req.body; 
-
+    const {errors} = validationResult(req)
+    if (errors.length > 0) {
+        return res.status(400).json({ errors: errors });
+      }
     try {
         const db = await con();
         const repartidor = db.collection("repartidores");

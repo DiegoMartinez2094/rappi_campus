@@ -68,8 +68,10 @@ cliente2.delete("/:idCliente", async (req, res) => {
 });
 
 cliente2.put("/:idCliente", async (req, res) => {
-    const {errors} = validationResult(req)
-    res.status(200).json(errors);
+      const {errors} = validationResult(req)
+    if (errors.length > 0) {
+        return res.status(400).json({ errors: errors });
+      }
     const idCliente = parseInt(req.params.idCliente);
     const newData = req.body; // Los nuevos datos para actualizar el cliente
     try {
