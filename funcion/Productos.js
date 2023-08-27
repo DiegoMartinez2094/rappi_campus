@@ -10,7 +10,7 @@ producto.get("/",limitGrt(), async(req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     try {
-        const producto = db.collection("productos");
+        const producto = db.collection("producto");
         const result = await producto.find({ cantidad: { $gte: 1 } }).toArray();
         res.send(result);
     } catch (error) {
@@ -19,14 +19,14 @@ producto.get("/",limitGrt(), async(req, res) => {
     }
 });
 
-producto.get("/:id",limitGrt(), async (req, res) => {
+producto.get("/:id_producto",limitGrt(), async (req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
-    const id = parseInt(req.params.id); // Parsea el parámetro como un número entero
+    const id_producto = parseInt(req.params.id_producto); // Parsea el parámetro como un número entero
     try {
         const db = await con();
-        const productos = db.collection("productos");
-        const result = await productos.findOne({ id }); 
+        const productos = db.collection("producto");
+        const result = await productos.findOne({ id_producto }); 
         if (result) {
             res.send(result);
         } else {
@@ -47,7 +47,7 @@ producto.post("/",limitGrt(), async(req, res)=>{
       }
     let result;
     try {
-        const producto = db.collection("productos");
+        const producto = db.collection("producto");
         result = await producto.insertOne(req.body);
         res.status(201).send(result);
     } catch (error) {
@@ -57,18 +57,18 @@ producto.post("/",limitGrt(), async(req, res)=>{
 
 });
 
-producto.put("/:id",limitGrt(), async(req, res)=>{
+producto.put("/:id_producto",limitGrt(), async(req, res)=>{
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     const {errors} = validationResult(req)
     if (errors.length > 0) {
         return res.status(400).json({ errors: errors });
       }
-    const id = parseInt(req.params.id);
+    const id_producto = parseInt(req.params.id_producto);
     const newData = req.body; 
     try {
-        const productos = db.collection("productos");
-        const result = await productos.updateOne({ id }, { $set: newData });
+        const productos = db.collection("producto");
+        const result = await productos.updateOne({ id_producto }, { $set: newData });
 
         if (result.matchedCount === 1) {
             res.send("Producto actualizado correctamente");
@@ -81,13 +81,13 @@ producto.put("/:id",limitGrt(), async(req, res)=>{
     }
 });
 
-producto.delete("/:id",limitGrt(), async(req, res)=>{
+producto.delete("/:id_producto",limitGrt(), async(req, res)=>{
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
-    const id = parseInt(req.params.id);
+    const id_producto = parseInt(req.params.id_producto);
     try {
-        const producto = db.collection("productos");
-        const result = await producto.deleteOne({ id });
+        const producto = db.collection("producto");
+        const result = await producto.deleteOne({ id_producto });
 
         if (result.deletedCount === 1) {
             res.send("Producto eliminado correctamente");

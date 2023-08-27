@@ -28,7 +28,7 @@ db.cliente.insertMany([
 /** Colección Producto */
 
 db.producto.insertMany([
-  {id_Producto: 1,nombre_Producto: "Manzanas",descripcion_Producto: "Frescas manzanas rojas de temporada",precio_und: 1.500, nombre_Restaurante: "Delicias del Mar"
+  {id_Producto: 1,nombre_Producto: "Manzanas",descripcion_Producto: "Frescas manzanas rojas de temporada",precio_und: 1.500,
   },
   {id_Producto: 2,nombre_Producto: "Arroz integral",descripcion_Producto: "Arroz integral de grano entero, rico en nutrientes",precio_und: 2.000
   },

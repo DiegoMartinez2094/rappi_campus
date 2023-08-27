@@ -11,7 +11,7 @@ repartidor.get("/",limitGrt(), async(req, res)=>{
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     try {
-        const repartidor = db.collection("repartidores");
+        const repartidor = db.collection("repartidor");
         const result = await repartidor.find({}).toArray();
         res.send(result);
     } catch (error) {
@@ -29,7 +29,7 @@ repartidor.post("/",limitGrt(), async(req, res)=>{
       }
     let result;
     try {
-        const repartidor = db.collection("repartidores");
+        const repartidor = db.collection("repartidor");
         result = await repartidor.insertOne(req.body);
         res.status(201).send(result);
     } catch (error) {
@@ -38,10 +38,10 @@ repartidor.post("/",limitGrt(), async(req, res)=>{
     }
 });
 
-repartidor.put("/:idRepartidor",limitGrt(), async(req, res)=>{
+repartidor.put("/:id_Repartidor",limitGrt(), async(req, res)=>{
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
-    const idRepartidor = parseInt(req.params.idRepartidor);
+    const id_Repartidor = parseInt(req.params.id_Repartidor);
     const newData = req.body; 
     const {errors} = validationResult(req)
     if (errors.length > 0) {
@@ -49,8 +49,8 @@ repartidor.put("/:idRepartidor",limitGrt(), async(req, res)=>{
       }
     try {
         const db = await con();
-        const repartidor = db.collection("repartidores");
-        const result = await repartidor.updateOne({ idRepartidor }, { $set: newData });
+        const repartidor = db.collection("repartidor");
+        const result = await repartidor.updateOne({ id_Repartidor }, { $set: newData });
 
         if (result.matchedCount === 1) {
             res.send("Repartidor actualizado correctamente");
@@ -63,5 +63,7 @@ repartidor.put("/:idRepartidor",limitGrt(), async(req, res)=>{
     }
 
 });
+
+
 
 export default repartidor;
