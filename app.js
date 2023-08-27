@@ -79,8 +79,28 @@ check("nivel")
    "1.0.0": repartidor,
 }));
 
+app.use('/producto',[check("id")
+.notEmpty().withMessage('el id es obligatorio')
+.custom(value => /^\d+$/.test(value)).withMessage('El id debe ser numérico sin letras')
+.toInt(),
 
-app.use('/producto', versionRoute({
+check("nombre")
+.notEmpty().withMessage('el nombre es obligatorio')
+.isString().withMessage('el nombre debe ser string'),
+
+check("descripcion")
+.notEmpty().withMessage('la descripcion es obligatoria')
+.isString().withMessage('la descripcion debe ser tipo string'),
+
+check("cantidad")
+.notEmpty().withMessage('la cantidad es obligatoria')
+.custom(value => /^\d+$/.test(value)).withMessage('La cantidad debe ser numérica sin letras')
+.toInt(),
+
+check("precio")
+.notEmpty().withMessage('el precio es obligatorio')
+.custom(value => /^\d+$/.test(value)).withMessage('el precio debe ser numérico sin letras')
+.toInt()], versionRoute({
    "1.0.0": producto,
 }));
 
