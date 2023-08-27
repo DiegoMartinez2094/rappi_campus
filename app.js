@@ -27,7 +27,8 @@ app.use((req, res, next) => {
 app.use('/clientes',
 [check("idCliente")
 .notEmpty().withMessage('el idCliente es obligatorio')
-.isInt().withMessage('el idCliente debe ser numerico')],
+.custom(value => /^\d+$/.test(value)).withMessage('El idCliente debe ser numérico')
+.toInt()],
 
 [check("nombre")
 .notEmpty().withMessage('el nombre es obligatorio')
