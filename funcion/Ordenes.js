@@ -9,7 +9,7 @@ ordenes.get("/todas",limitGrt(), async (req, res) => {
   console.log(req.rateLimit);
   try {
     const db = await con();
-    const ordenes = db.collection("ordenes");
+    const ordenes = db.collection("orden");
     const result = await ordenes.find({}).toArray();
     res.send(result);
   } catch (error) {
@@ -18,16 +18,16 @@ ordenes.get("/todas",limitGrt(), async (req, res) => {
   }
 });
 
-// Realizar la consulta por el idOrden
-ordenes.get("/:idOrden",limitGrt(), async (req, res) => {
+// Realizar la consulta por el id_Orden
+ordenes.get("/:id_Orden",limitGrt(), async (req, res) => {
   if(!req.rateLimit) return; 
   console.log(req.rateLimit);
   try {
-    const idOrden = parseInt(req.params.idOrden); // Convertir el parámetro a número entero
+    const id_Orden = parseInt(req.params.id_Orden); // Convertir el parámetro a número entero
     const db = await con();
-    const ordenes = db.collection("ordenes");
+    const ordenes = db.collection("orden");
 
-    const result = await ordenes.findOne({ idOrden });
+    const result = await ordenes.findOne({ id_Orden });
 
     if (result) {
       res.send(result);
@@ -40,17 +40,17 @@ ordenes.get("/:idOrden",limitGrt(), async (req, res) => {
   }
 });
 
-// Eliminar una orden por idOrden
-ordenes.delete("/:idOrden",limitGrt(), async (req, res) => {
+// Eliminar una orden por id_Orden
+ordenes.delete("/:id_Orden",limitGrt(), async (req, res) => {
   if(!req.rateLimit) return; 
   console.log(req.rateLimit);
   try {
-    const idOrden = parseInt(req.params.idOrden); // Convertir el parámetro a número entero
+    const id_Orden = parseInt(req.params.id_Orden); // Convertir el parámetro a número entero
     const db = await con();
-    const ordenes = db.collection("ordenes");
+    const ordenes = db.collection("orden");
 
-    // Eliminar la orden por idOrden
-    const result = await ordenes.deleteOne({ idOrden });
+    // Eliminar la orden por id_Orden
+    const result = await ordenes.deleteOne({ id_Orden });
 
     if (result.deletedCount === 1) {
       res.send("Orden eliminada exitosamente");
@@ -63,18 +63,18 @@ ordenes.delete("/:idOrden",limitGrt(), async (req, res) => {
   }
 });
 
-// Actualizar una orden por idOrden
-ordenes.put("/:idOrden",limitGrt(), async (req, res) => {
+// Actualizar una orden por id_Orden
+ordenes.put("/:id_Orden",limitGrt(), async (req, res) => {
   if(!req.rateLimit) return; 
   console.log(req.rateLimit);
   try {
-    const idOrden = parseInt(req.params.idOrden); // Convertir el parámetro a número entero
+    const id_Orden = parseInt(req.params.id_Orden); // Convertir el parámetro a número entero
     const updatedData = req.body; // Los datos actualizados se esperan en el cuerpo del request
     const db = await con();
-    const ordenes = db.collection("ordenes");
+    const ordenes = db.collection("orden");
 
-    // Actualizar la orden por idOrden
-    const result = await ordenes.updateOne({ idOrden }, { $set: updatedData });
+    // Actualizar la orden por id_Orden
+    const result = await ordenes.updateOne({ id_Orden }, { $set: updatedData });
 
     if (result.matchedCount === 1) {
       res.send("Orden actualizada exitosamente");

@@ -24,27 +24,27 @@ app.use((req, res, next) => {
 
 
 
-app.use('/clientes',
-[check("idCliente")
-.notEmpty().withMessage('el idCliente es obligatorio')
-.custom(value => /^\d+$/.test(value)).withMessage('El idCliente debe ser numérico sin letras')
+app.use('/cliente',
+[check("id_Cliente")
+.notEmpty().withMessage('el id_Cliente es obligatorio')
+.custom(value => /^\d+$/.test(value)).withMessage('El id_Cliente debe ser numérico sin letras')
 .toInt(),
 
-check("nombre")
-.notEmpty().withMessage('el nombre es obligatorio')
-.isString().withMessage('el nombre debe ser string'),
+check("nombre_Cliente")
+.notEmpty().withMessage('el nombre_Cliente es obligatorio')
+.isString().withMessage('el nombre_Cliente debe ser string'),
 
-check("direccion")
-.notEmpty().withMessage('la direccion es obligatorio')
-.isString().withMessage('la direccion debe ser string'),
+check("direccion_Cliente")
+.notEmpty().withMessage('la direccion_Cliente es obligatorio')
+.isString().withMessage('la direccion_Cliente debe ser string'),
 
-check("telefono")
-.notEmpty().withMessage('el telefono es obligatorio')
-.isString().withMessage('el telefono debe ser string'),
+check("telefono_Cliente")
+.notEmpty().withMessage('el telefono_Cliente es obligatorio')
+.isString().withMessage('el telefono_Cliente debe ser string'),
 
-check("nivel")
-.notEmpty().withMessage('el nivel es obligatorio')
-.custom((value) => ['diamante', 'oro', 'plata', 'bronce'].includes(value.toLowerCase())).withMessage('nivel no válido debee ser alguno de estos: diamante, oro, plata, bronce'),
+check("nivel_Cliente")
+.notEmpty().withMessage('el nivel_Cliente es obligatorio')
+.custom((value) => ['diamante', 'oro', 'plata', 'bronce'].includes(value.toLowerCase())).withMessage('nivel_Cliente no válido debee ser alguno de estos: diamante, oro, plata, bronce'),
 ],
 
 versionRoute({
@@ -55,60 +55,57 @@ versionRoute({
 
 app.use('/repartidor',
 
-[check("idRepartidor")
-.notEmpty().withMessage('el idRepartidor es obligatorio')
-.custom(value => /^\d+$/.test(value)).withMessage('El idRepartidor debe ser numérico sin letras')
+[check("id_Repartidor")
+.notEmpty().withMessage('el id_Repartidor es obligatorio')
+.custom(value => /^\d+$/.test(value)).withMessage('El id_Repartidor debe ser numérico sin letras')
 .toInt(),
 
-check("nombre")
-.notEmpty().withMessage('el nombre es obligatorio')
-.isString().withMessage('el nombre debe ser string'),
+check("nombre_Repartidor")
+.notEmpty().withMessage('el nombre_Repartidor es obligatorio')
+.isString().withMessage('el nombre_Repartidor debe ser string'),
 
-check("telefono")
-.notEmpty().withMessage('el telefono es obligatorio')
-.isString().withMessage('el telefono debe ser string'),
+check("telefono_Repartidor")
+.notEmpty().withMessage('el telefono_Repartidor es obligatorio')
+.isString().withMessage('el telefono_Repartidor debe ser string'),
 
 check("vehiculo")
 .notEmpty().withMessage('el vehiculo es obligatorio')
 .custom((value) => ['caminando', 'moto', 'bicicleta', 'auto'].includes(value.toLowerCase())).withMessage('vehiculo no válido debe ser alguno de estos: caminando, moto, bicicleta, auto'),
 
-check("nivel")
-.notEmpty().withMessage('el nivel es obligatorio')
-.custom((value) => ['diamante', 'oro', 'plata', 'bronce'].includes(value.toLowerCase())).withMessage('nivel no válido debee ser alguno de estos: diamante, oro, plata, bronce'),
+check("nivel_repartidor")
+.notEmpty().withMessage('el nivel_repartidor es obligatorio')
+.custom((value) => ['diamante', 'oro', 'plata', 'bronce'].includes(value.toLowerCase())).withMessage('nivel_repartidor no válido debee ser alguno de estos: diamante, oro, plata, bronce'),
 ], versionRoute({
    "1.0.0": repartidor,
 }));
 
-app.use('/producto',[check("id")
-.notEmpty().withMessage('el id es obligatorio')
-.custom(value => /^\d+$/.test(value)).withMessage('El id debe ser numérico sin letras')
+app.use('/producto',
+
+[check("id_Producto")
+.notEmpty().withMessage('el id_Producto es obligatorio')
+.custom(value => /^\d+$/.test(value)).withMessage('El id_Producto debe ser numérico sin letras')
 .toInt(),
 
-check("nombre")
-.notEmpty().withMessage('el nombre es obligatorio')
-.isString().withMessage('el nombre debe ser string'),
+check("nombre_Producto")
+.notEmpty().withMessage('el nombre_Producto es obligatorio')
+.isString().withMessage('el nombre_Producto debe ser string'),
 
-check("descripcion")
-.notEmpty().withMessage('la descripcion es obligatoria')
-.isString().withMessage('la descripcion debe ser tipo string'),
+check("descripcion_Producto")
+.notEmpty().withMessage('la descripcion_Producto es obligatoria')
+.isString().withMessage('la descripcion_Producto debe ser tipo string'),
 
-check("cantidad")
-.notEmpty().withMessage('la cantidad es obligatoria')
-.custom(value => /^\d+$/.test(value)).withMessage('La cantidad debe ser numérica sin letras')
-.toInt(),
-
-check("precio")
-.notEmpty().withMessage('el precio es obligatorio')
-.custom(value => /^\d+$/.test(value)).withMessage('el precio debe ser numérico sin letras')
+check("precio_und")
+.notEmpty().withMessage('el precio_und es obligatorio')
+.custom(value => /^\d+$/.test(value)).withMessage('el precio_und debe ser numérico sin letras')
 .toInt()], versionRoute({
    "1.0.0": producto,
 }));
 
-app.use('/ordenes', versionRoute({
+app.use('/orden', versionRoute({
    "1.0.0": orden,
 }));
 
-app.use('/restaurantes', versionRoute({
+app.use('/restaurante', versionRoute({
    "1.0.0": restaurante,
 }));
 
