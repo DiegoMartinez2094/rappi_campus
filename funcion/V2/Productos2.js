@@ -1,39 +1,32 @@
-import { con } from "../db/atlas.js";
+import { con } from "../../db/atlas.js";
 import { Router } from "express";
 import { validationResult } from "express-validator";
-import { limitGrt } from "../limit/config.js";
+import { limitGrt } from "../../limit/config.js";
 
 const producto = Router();
 const db = await con();
 
-producto.get("/",limitGrt(), async(req, res) => {
-    if(!req.rateLimit) return; 
+producto.get("/:id_Producto?", limitGrt(), async (req, res) => {
+    if (!req.rateLimit) return;
     console.log(req.rateLimit);
-    try {
-        const producto = db.collection("producto");
-        const result = await producto.find({ cantidad: { $gte: 1 } }).toArray();
-        res.send(result);
-    } catch (error) {
-        console.error("Error al obtener los productos:", error);
-        res.status(500).send("Error interno del servidor");
-    }
-});
-
-producto.get("/:id_producto",limitGrt(), async (req, res) => {
-    if(!req.rateLimit) return; 
-    console.log(req.rateLimit);
-    const id_producto = parseInt(req.params.id_producto); // Parsea el parámetro como un número entero
+    const id_Producto = req.params.id_Producto ? parseInt(req.params.id_Producto) : null;
     try {
         const db = await con();
         const productos = db.collection("producto");
-        const result = await productos.findOne({ id_producto }); 
-        if (result) {
-            res.send(result);
+
+        if (id_Producto !== null) {
+            const result = await productos.findOne({ id_Producto });
+            if (result) {
+                res.send(result);
+            } else {
+                res.status(404).send("Producto no encontrado");
+            }
         } else {
-            res.status(404).send("producto no encontrado");
+            const allProductos = await productos.find({}).toArray(); // Obtiene todos los productos
+            res.send(allProductos);
         }
     } catch (error) {
-        console.error("Error al obtener el producto:", error);
+        console.error("Error al obtener los productos:", error);
         res.status(500).send("Error interno del servidor");
     }
 });
@@ -57,18 +50,18 @@ producto.post("/",limitGrt(), async(req, res)=>{
 
 });
 
-producto.put("/:id_producto",limitGrt(), async(req, res)=>{
+producto.put("/:id_Producto",limitGrt(), async(req, res)=>{
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     const {errors} = validationResult(req)
     if (errors.length > 0) {
         return res.status(400).json({ errors: errors });
       }
-    const id_producto = parseInt(req.params.id_producto);
+    const id_Producto = parseInt(req.params.id_Producto);
     const newData = req.body; 
     try {
         const productos = db.collection("producto");
-        const result = await productos.updateOne({ id_producto }, { $set: newData });
+        const result = await productos.updateOne({ id_Producto }, { $set: newData });
 
         if (result.matchedCount === 1) {
             res.send("Producto actualizado correctamente");
@@ -81,13 +74,13 @@ producto.put("/:id_producto",limitGrt(), async(req, res)=>{
     }
 });
 
-producto.delete("/:id_producto",limitGrt(), async(req, res)=>{
+producto.delete("/:id_Producto",limitGrt(), async(req, res)=>{
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
-    const id_producto = parseInt(req.params.id_producto);
+    const id_Producto = parseInt(req.params.id_Producto);
     try {
         const producto = db.collection("producto");
-        const result = await producto.deleteOne({ id_producto });
+        const result = await producto.deleteOne({ id_Producto });
 
         if (result.deletedCount === 1) {
             res.send("Producto eliminado correctamente");

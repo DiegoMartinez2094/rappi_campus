@@ -1,7 +1,7 @@
-import { con } from "../db/atlas.js";
+import { con } from "../../db/atlas.js";
 import { Router } from "express";
 import { validationResult } from "express-validator";
-import { limitGrt } from "../limit/config.js";
+import { limitGrt } from "../../limit/config.js";
 
 const cliente2 = Router();
 
@@ -23,6 +23,25 @@ cliente2.get("/:id_Cliente?", limitGrt(), async (req, res) => {
         } else {
             const allClientes = await clientes.find({}).toArray(); // Obtiene todos los clientes
             res.send(allClientes);
+        }
+    } catch (error) {
+        console.error("Error al obtener los clientes:", error);
+        res.status(500).send("Error interno del servidor");
+    }
+});
+
+cliente2.get("/nombre/:nombre_Cliente", limitGrt(), async (req, res) => {
+    if (!req.rateLimit) return;
+    console.log(req.rateLimit);
+    const nombre_Cliente = req.params.nombre_Cliente;
+    try {
+        const db = await con();
+        const clientes = db.collection("cliente");
+        const matchingClientes = await clientes.find({ nombre_Cliente }).toArray();
+        if (matchingClientes.length > 0) {
+            res.send(matchingClientes);
+        } else {
+            res.status(404).send("Clientes no encontrados con el nombre especificado");
         }
     } catch (error) {
         console.error("Error al obtener los clientes:", error);
