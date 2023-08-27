@@ -1,10 +1,13 @@
 import { con } from "../db/atlas.js";
 import { Router } from "express";
+import { limitGrt } from "../limit/config.js";
 
 
 const restaurante = Router();
 
-restaurante.post("/", async (req, res) => {
+restaurante.post("/",limitGrt(), async (req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     try {
         const db = await con(); 
         const restaurantes = db.collection("restaurantes"); 
@@ -17,7 +20,9 @@ restaurante.post("/", async (req, res) => {
     }
 });
 
-restaurante.get("/todos", async (req, res) => {
+restaurante.get("/todos",limitGrt(), async (req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     try {
         const db = await con();
         const restaurantes = db.collection("restaurantes");
@@ -29,7 +34,9 @@ restaurante.get("/todos", async (req, res) => {
     }
 });
 
-restaurante.get("/nombre/:nombreRestaurante", async (req, res) => {
+restaurante.get("/nombre/:nombreRestaurante",limitGrt(), async (req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     const nombreRestaurante = req.params.nombreRestaurante;
 
     try {
@@ -48,7 +55,9 @@ restaurante.get("/nombre/:nombreRestaurante", async (req, res) => {
     }
 });
 
-restaurante.put("/nombre/:nombreRestaurante", async (req, res) => {
+restaurante.put("/nombre/:nombreRestaurante",limitGrt(), async (req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     const nombreRestaurante = req.params.nombreRestaurante;
 
     try {
@@ -71,7 +80,9 @@ restaurante.put("/nombre/:nombreRestaurante", async (req, res) => {
     }
 });
 
-restaurante.delete("/nombre/:nombreRestaurante", async (req, res) => {
+restaurante.delete("/nombre/:nombreRestaurante",limitGrt(), async (req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     const nombreRestaurante = req.params.nombreRestaurante;
     try {
         const db = await con(); 

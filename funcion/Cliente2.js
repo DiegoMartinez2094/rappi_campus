@@ -1,10 +1,13 @@
 import { con } from "../db/atlas.js";
 import { Router } from "express";
 import { validationResult } from "express-validator";
+import { limitGrt } from "../limit/config.js";
 
 const cliente2 = Router();
 
-cliente2.get("/", async (req, res) => {
+cliente2.get("/",limitGrt(), async (req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     try {
         const db = await con();
         const clientes = db.collection("clientes");
@@ -16,7 +19,9 @@ cliente2.get("/", async (req, res) => {
     }
 });
 
-cliente2.get("/:idCliente", async (req, res) => {
+cliente2.get("/:idCliente",limitGrt(), async (req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     const idCliente = parseInt(req.params.idCliente); // Parsea el parámetro como un número entero
     try {
         const db = await con();
@@ -33,7 +38,9 @@ cliente2.get("/:idCliente", async (req, res) => {
     }
 });
 
-cliente2.post("/", async(req, res) => {
+cliente2.post("/",limitGrt(), async(req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     const {errors} = validationResult(req)
     if (errors.length > 0) {
         return res.status(400).json({ errors: errors });
@@ -50,7 +57,9 @@ try {
 }
 });    
 
-cliente2.delete("/:idCliente", async (req, res) => {
+cliente2.delete("/:idCliente",limitGrt(), async (req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     const idCliente = parseInt(req.params.idCliente);
     try {
         const db = await con();
@@ -67,7 +76,9 @@ cliente2.delete("/:idCliente", async (req, res) => {
     }
 });
 
-cliente2.put("/:idCliente", async (req, res) => {
+cliente2.put("/:idCliente",limitGrt(), async (req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
       const {errors} = validationResult(req)
     if (errors.length > 0) {
         return res.status(400).json({ errors: errors });
