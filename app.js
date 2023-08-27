@@ -27,24 +27,24 @@ app.use((req, res, next) => {
 app.use('/clientes',
 [check("idCliente")
 .notEmpty().withMessage('el idCliente es obligatorio')
-.custom(value => /^\d+$/.test(value)).withMessage('El idCliente debe ser numérico')
-.toInt()],
+.custom(value => /^\d+$/.test(value)).withMessage('El idCliente debe ser numérico sin letras')
+.toInt(),
 
-[check("nombre")
+check("nombre")
 .notEmpty().withMessage('el nombre es obligatorio')
-.isString().withMessage('el nombre debe ser string')],
+.isString().withMessage('el nombre debe ser string'),
 
-[check("direccion")
+check("direccion")
 .notEmpty().withMessage('la direccion es obligatorio')
-.isString().withMessage('la direccion debe ser string')],
+.isString().withMessage('la direccion debe ser string'),
 
-[check("telefono")
+check("telefono")
 .notEmpty().withMessage('el telefono es obligatorio')
-.isString().withMessage('el telefono debe ser string')],
+.isString().withMessage('el telefono debe ser string'),
 
-[check("nivel")
+check("nivel")
 .notEmpty().withMessage('el nivel es obligatorio')
-.custom((value) => ['diamante', 'oro', 'plata', 'bronce'].includes(value.toLowerCase())).withMessage('nivel no válido'),
+.custom((value) => ['diamante', 'oro', 'plata', 'bronce'].includes(value.toLowerCase())).withMessage('nivel no válido debee ser alguno de estos: diamante, oro, plata, bronce'),
 ],
 
 versionRoute({
@@ -52,9 +52,33 @@ versionRoute({
    "1.0.1": cliente2,
 }));
 
-app.use('/repartidor', versionRoute({
+
+app.use('/repartidor',
+
+[check("idRepartidor")
+.notEmpty().withMessage('el idRepartidor es obligatorio')
+.custom(value => /^\d+$/.test(value)).withMessage('El idRepartidor debe ser numérico sin letras')
+.toInt(),
+
+check("nombre")
+.notEmpty().withMessage('el nombre es obligatorio')
+.isString().withMessage('el nombre debe ser string'),
+
+check("telefono")
+.notEmpty().withMessage('el telefono es obligatorio')
+.isString().withMessage('el telefono debe ser string'),
+
+check("vehiculo")
+.notEmpty().withMessage('el vehiculo es obligatorio')
+.custom((value) => ['caminando', 'moto', 'bicicleta', 'auto'].includes(value.toLowerCase())).withMessage('vehiculo no válido debe ser alguno de estos: caminando, moto, bicicleta, auto'),
+
+check("nivel")
+.notEmpty().withMessage('el nivel es obligatorio')
+.custom((value) => ['diamante', 'oro', 'plata', 'bronce'].includes(value.toLowerCase())).withMessage('nivel no válido debee ser alguno de estos: diamante, oro, plata, bronce'),
+], versionRoute({
    "1.0.0": repartidor,
 }));
+
 
 app.use('/producto', versionRoute({
    "1.0.0": producto,
