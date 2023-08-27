@@ -1,11 +1,14 @@
 import { con } from "../db/atlas.js";
 import { Router } from "express";
 import { validationResult } from "express-validator";
+import { limitGrt } from "../limit/config.js";
 
 const producto = Router();
 const db = await con();
 
-producto.get("/", async(req, res) => {
+producto.get("/",limitGrt(), async(req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     try {
         const producto = db.collection("productos");
         const result = await producto.find({ cantidad: { $gte: 1 } }).toArray();
@@ -16,7 +19,9 @@ producto.get("/", async(req, res) => {
     }
 });
 
-producto.get("/:id", async (req, res) => {
+producto.get("/:id",limitGrt(), async (req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     const id = parseInt(req.params.id); // Parsea el parámetro como un número entero
     try {
         const db = await con();
@@ -33,7 +38,9 @@ producto.get("/:id", async (req, res) => {
     }
 });
 
-producto.post("/", async(req, res)=>{
+producto.post("/",limitGrt(), async(req, res)=>{
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     const {errors} = validationResult(req)
     if (errors.length > 0) {
         return res.status(400).json({ errors: errors });
@@ -50,7 +57,9 @@ producto.post("/", async(req, res)=>{
 
 });
 
-producto.put("/:id", async(req, res)=>{
+producto.put("/:id",limitGrt(), async(req, res)=>{
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     const {errors} = validationResult(req)
     if (errors.length > 0) {
         return res.status(400).json({ errors: errors });
@@ -72,7 +81,9 @@ producto.put("/:id", async(req, res)=>{
     }
 });
 
-producto.delete("/:id", async(req, res)=>{
+producto.delete("/:id",limitGrt(), async(req, res)=>{
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     const id = parseInt(req.params.id);
     try {
         const producto = db.collection("productos");

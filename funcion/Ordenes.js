@@ -1,9 +1,12 @@
 import { con } from "../db/atlas.js";
 import { Router } from "express";
+import { limitGrt } from "../limit/config.js";
 
 const ordenes = Router();
 
-ordenes.get("/todas", async (req, res) => {
+ordenes.get("/todas",limitGrt(), async (req, res) => {
+  if(!req.rateLimit) return; 
+  console.log(req.rateLimit);
   try {
     const db = await con();
     const ordenes = db.collection("ordenes");
@@ -16,7 +19,9 @@ ordenes.get("/todas", async (req, res) => {
 });
 
 // Realizar la consulta por el idOrden
-ordenes.get("/:idOrden", async (req, res) => {
+ordenes.get("/:idOrden",limitGrt(), async (req, res) => {
+  if(!req.rateLimit) return; 
+  console.log(req.rateLimit);
   try {
     const idOrden = parseInt(req.params.idOrden); // Convertir el parámetro a número entero
     const db = await con();
@@ -36,7 +41,9 @@ ordenes.get("/:idOrden", async (req, res) => {
 });
 
 // Eliminar una orden por idOrden
-ordenes.delete("/:idOrden", async (req, res) => {
+ordenes.delete("/:idOrden",limitGrt(), async (req, res) => {
+  if(!req.rateLimit) return; 
+  console.log(req.rateLimit);
   try {
     const idOrden = parseInt(req.params.idOrden); // Convertir el parámetro a número entero
     const db = await con();
@@ -57,7 +64,9 @@ ordenes.delete("/:idOrden", async (req, res) => {
 });
 
 // Actualizar una orden por idOrden
-ordenes.put("/:idOrden", async (req, res) => {
+ordenes.put("/:idOrden",limitGrt(), async (req, res) => {
+  if(!req.rateLimit) return; 
+  console.log(req.rateLimit);
   try {
     const idOrden = parseInt(req.params.idOrden); // Convertir el parámetro a número entero
     const updatedData = req.body; // Los datos actualizados se esperan en el cuerpo del request

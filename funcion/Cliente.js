@@ -1,10 +1,13 @@
 import { con } from "../db/atlas.js";
 import { Router } from "express";
+import { limitGrt } from "../limit/config.js";
 
 
 const cliente = Router();
 
-cliente.get("/todos", async (req, res) => {
+cliente.get("/",limitGrt(), async (req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     try {
         const db = await con();
         const clientes = db.collection("clientes");
@@ -16,7 +19,9 @@ cliente.get("/todos", async (req, res) => {
     }
 });
 
-cliente.post("/",  async(req, res) => {
+cliente.post("/",limitGrt(),  async(req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     let resul;
     try {
         resul = await cliente.insertOne(req.body);
@@ -29,7 +34,9 @@ cliente.post("/",  async(req, res) => {
 
 
 
-cliente.delete("/:idCliente", async (req, res) => {
+cliente.delete("/:idCliente",limitGrt(), async (req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     const idCliente = parseInt(req.params.idCliente);
 
     try {
@@ -48,7 +55,9 @@ cliente.delete("/:idCliente", async (req, res) => {
     }
 });
 
-cliente.put("/:idCliente",  async (req, res) => {
+cliente.put("/:idCliente",limitGrt(),  async (req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     const idCliente = parseInt(req.params.idCliente);
     const newData = req.body; // Los nuevos datos para actualizar el cliente
 

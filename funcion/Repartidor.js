@@ -1,12 +1,15 @@
 import { con } from "../db/atlas.js";
 import { Router } from "express";
 import { validationResult } from "express-validator";
+import { limitGrt } from "../limit/config.js";
 
 
 const repartidor = Router();
 const db = await con();
 
-repartidor.get("/", async(req, res)=>{
+repartidor.get("/",limitGrt(), async(req, res)=>{
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     try {
         const repartidor = db.collection("repartidores");
         const result = await repartidor.find({}).toArray();
@@ -17,7 +20,9 @@ repartidor.get("/", async(req, res)=>{
     }
 });
 
-repartidor.post("/", async(req, res)=>{
+repartidor.post("/",limitGrt(), async(req, res)=>{
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     const {errors} = validationResult(req)
     if (errors.length > 0) {
         return res.status(400).json({ errors: errors });
@@ -33,8 +38,9 @@ repartidor.post("/", async(req, res)=>{
     }
 });
 
-repartidor.put("/:idRepartidor", async(req, res)=>{
-
+repartidor.put("/:idRepartidor",limitGrt(), async(req, res)=>{
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     const idRepartidor = parseInt(req.params.idRepartidor);
     const newData = req.body; 
     const {errors} = validationResult(req)
