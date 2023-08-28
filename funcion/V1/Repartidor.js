@@ -1,11 +1,12 @@
 import { con } from "../../db/atlas.js";
 import { Router } from "express";
 import { limitGrt } from "../../limit/config.js";
+import { validarToken } from '../../middleware_token/middlewareJWT.js';
 
 const repartidor = Router();
 const db = await con();
 
-repartidor.get("/",limitGrt(), async(req, res)=>{
+repartidor.get("/repartidor",limitGrt(),validarToken, async(req, res)=>{
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     try {

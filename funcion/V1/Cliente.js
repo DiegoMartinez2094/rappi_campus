@@ -1,11 +1,12 @@
 import { con } from "../../db/atlas.js";
 import { Router } from "express";
 import { limitGrt } from "../../limit/config.js";
+import { validarToken } from '../../middleware_token/middlewareJWT.js';
 
 
 const cliente = Router();
 
-cliente.get("/",limitGrt(), async (req, res) => {
+cliente.get("/cliente",limitGrt(),validarToken, async (req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     try {

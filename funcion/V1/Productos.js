@@ -1,11 +1,12 @@
 import { con } from "../../db/atlas.js";
 import { Router } from "express";
 import { limitGrt } from "../../limit/config.js";
+import { validarToken } from '../../middleware_token/middlewareJWT.js';
 
 const producto = Router();
 const db = await con();
 
-producto.get("/",limitGrt(), async(req, res) => {
+producto.get("/producto",limitGrt(),validarToken, async(req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     try {

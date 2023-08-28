@@ -2,10 +2,11 @@ import { con } from "../../db/atlas.js";
 import { Router } from "express";
 import { validationResult } from "express-validator";
 import { limitGrt } from "../../limit/config.js";
+import { validarToken } from '../../middleware_token/middlewareJWT.js';
 
 const cliente2 = Router();
 
-cliente2.get("/:id_Cliente?", limitGrt(), async (req, res) => {
+cliente2.get("/cliente/:id_Cliente?", limitGrt(),validarToken, async (req, res) => {
     if (!req.rateLimit) return; 
     console.log(req.rateLimit);
     const id_Cliente = req.params.id_Cliente ? parseInt(req.params.id_Cliente) : null; // Parsea el parámetro como un número entero si está presente
@@ -30,7 +31,7 @@ cliente2.get("/:id_Cliente?", limitGrt(), async (req, res) => {
     }
 });
 
-cliente2.get("/nombre/:nombre_Cliente", limitGrt(), async (req, res) => {
+cliente2.get("/cliente/nombre/:nombre_Cliente", limitGrt(),validarToken, async (req, res) => {
     if (!req.rateLimit) return;
     console.log(req.rateLimit);
     const nombre_Cliente = req.params.nombre_Cliente;
@@ -49,7 +50,7 @@ cliente2.get("/nombre/:nombre_Cliente", limitGrt(), async (req, res) => {
     }
 });
 
-cliente2.get("/nivel/:nivel_Cliente", limitGrt(), async (req, res) => {
+cliente2.get("/cliente/nivel/:nivel_Cliente", limitGrt(),validarToken, async (req, res) => {
     if (!req.rateLimit) return;
     console.log(req.rateLimit);
     const nivel_Cliente = req.params.nivel_Cliente;
@@ -68,7 +69,7 @@ cliente2.get("/nivel/:nivel_Cliente", limitGrt(), async (req, res) => {
     }
 });
 
-cliente2.post("/",limitGrt(), async(req, res) => {
+cliente2.post("/cliente",limitGrt(),validarToken, async(req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     const {errors} = validationResult(req)
@@ -87,7 +88,7 @@ try {
 }
 });    
 
-cliente2.delete("/:id_Cliente",limitGrt(), async (req, res) => {
+cliente2.delete("/cliente/:id_Cliente",limitGrt(),validarToken, async (req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     const id_Cliente = parseInt(req.params.id_Cliente);
@@ -106,7 +107,7 @@ cliente2.delete("/:id_Cliente",limitGrt(), async (req, res) => {
     }
 });
 
-cliente2.put("/:id_Cliente",limitGrt(), async (req, res) => {
+cliente2.put("/cliente/:id_Cliente",limitGrt(),validarToken, async (req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
       const {errors} = validationResult(req)

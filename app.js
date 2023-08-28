@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import express from "express";
 import versionRoutes from 'express-routes-versioning';
 import {check} from 'express-validator'
+import { crearToken } from './middleware_token/middlewareJWT.js';
 
 import cliente from "./funcion/V1/Cliente.js";
 import cliente2 from "./funcion/V2/Cliente2.js";
@@ -24,7 +25,7 @@ app.use((req, res, next) => {
    next();
 });
 
-
+app.get('/token/:rol', crearToken);
 
 app.use('/cliente',
 [check("id_Cliente")
