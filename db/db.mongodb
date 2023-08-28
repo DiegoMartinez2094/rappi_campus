@@ -169,3 +169,22 @@ db.orden.insertMany([
     restaurante: { nombre_Restaurante: "Cocina Vegana Verde", telefono_Restaurante: "8456455"},
   }
 ]);
+
+
+db.rol.insertMany([
+  {
+    Id_rol:1,
+    nombre_rol: "administrador",
+    acceso_rol: ["cliente, producto, repartidor, orden, restaurante, roles"]
+  },
+  {
+    Id_rol:2,
+    nombre_rol: "cliente",
+    acceso_rol: ["restaurante", "producto"]
+  },
+  {
+    Id_rol:3,
+    nombre_rol: "repartidor",
+    acceso_rol: ["orden"]
+  }
+]);

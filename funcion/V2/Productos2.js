@@ -2,11 +2,12 @@ import { con } from "../../db/atlas.js";
 import { Router } from "express";
 import { validationResult } from "express-validator";
 import { limitGrt } from "../../limit/config.js";
+import { validarToken } from '../../middleware_token/middlewareJWT.js';
 
 const producto = Router();
 const db = await con();
 
-producto.get("/:id_Producto?", limitGrt(), async (req, res) => {
+producto.get("/producto/:id_Producto?", limitGrt(), async (req, res) => {
     if (!req.rateLimit) return;
     console.log(req.rateLimit);
     const id_Producto = req.params.id_Producto ? parseInt(req.params.id_Producto) : null;
@@ -31,7 +32,7 @@ producto.get("/:id_Producto?", limitGrt(), async (req, res) => {
     }
 });
 
-producto.post("/",limitGrt(), async(req, res)=>{
+producto.post("/producto",limitGrt(), async(req, res)=>{
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     const {errors} = validationResult(req)
@@ -50,7 +51,7 @@ producto.post("/",limitGrt(), async(req, res)=>{
 
 });
 
-producto.put("/:id_Producto",limitGrt(), async(req, res)=>{
+producto.put("/producto/:id_Producto",limitGrt(), async(req, res)=>{
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     const {errors} = validationResult(req)
@@ -74,7 +75,7 @@ producto.put("/:id_Producto",limitGrt(), async(req, res)=>{
     }
 });
 
-producto.delete("/:id_Producto",limitGrt(), async(req, res)=>{
+producto.delete("/producto/:id_Producto",limitGrt(), async(req, res)=>{
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     const id_Producto = parseInt(req.params.id_Producto);
