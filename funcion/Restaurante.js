@@ -21,7 +21,7 @@ restaurante.post("/",limitGrt(), validarToken, async (req, res) => {
     }
 });
 
-restaurante.get("/todos",limitGrt(), async (req, res) => {
+restaurante.get("/todos",limitGrt(), validarToken, async (req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     try {
@@ -35,7 +35,7 @@ restaurante.get("/todos",limitGrt(), async (req, res) => {
     }
 });
 
-restaurante.get("/nombre/:nombreRestaurante",limitGrt(), async (req, res) => {
+restaurante.get("/nombre/:nombreRestaurante",limitGrt(), validarToken, async (req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     const nombreRestaurante = req.params.nombreRestaurante;
