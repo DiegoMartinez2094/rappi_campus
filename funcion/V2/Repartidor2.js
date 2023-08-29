@@ -107,7 +107,7 @@ repartidor.post("/repartidor",limitGrt(), validarToken,async(req, res)=>{
     }
 });
 
-repartidor.put("/repartidor/:id_Repartidor",limitGrt(), async(req, res)=>{
+repartidor.put("/repartidor/:id_Repartidor",limitGrt(), validarToken, async(req, res)=>{
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     const id_Repartidor = parseInt(req.params.id_Repartidor);
@@ -133,7 +133,7 @@ repartidor.put("/repartidor/:id_Repartidor",limitGrt(), async(req, res)=>{
 
 });
 
-repartidor.delete("/repartidor/:id_Repartidor", limitGrt(), async (req, res) => {
+repartidor.delete("/repartidor/:id_Repartidor", limitGrt(), validarToken,async (req, res) => {
     if (!req.rateLimit) return;
     console.log(req.rateLimit);
     const id_Repartidor = parseInt(req.params.id_Repartidor);
