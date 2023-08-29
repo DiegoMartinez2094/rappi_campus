@@ -7,7 +7,7 @@ import { validarToken } from '../../middleware_token/middlewareJWT.js';
 const producto = Router();
 const db = await con();
 
-producto.get("/producto/producto", limitGrt(), validarToken,async (req, res) => {
+producto.get("/producto", limitGrt(), validarToken,async (req, res) => {
     if (!req.rateLimit) return;
     console.log(req.rateLimit);
     const id_Producto = req.params.id_Producto ? parseInt(req.params.id_Producto) : null;
@@ -51,7 +51,7 @@ producto.post("/producto",limitGrt(), validarToken, async(req, res)=>{
 
 });
 
-producto.put("/producto/:id_Producto",limitGrt(), async(req, res)=>{
+producto.put("/producto/:id_Producto",limitGrt(), validarToken, async(req, res)=>{
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     const {errors} = validationResult(req)
@@ -75,7 +75,7 @@ producto.put("/producto/:id_Producto",limitGrt(), async(req, res)=>{
     }
 });
 
-producto.delete("/producto/:id_Producto",limitGrt(), async(req, res)=>{
+producto.delete("/producto/:id_Producto",limitGrt(), validarToken, async(req, res)=>{
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     const id_Producto = parseInt(req.params.id_Producto);
