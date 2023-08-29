@@ -89,7 +89,7 @@ repartidor.get("/repartidor/nombre/:nombre_Repartidor", limitGrt(), validarToken
     }
 });
 
-repartidor.post("/repartidor",limitGrt(), async(req, res)=>{
+repartidor.post("/repartidor",limitGrt(), validarToken,async(req, res)=>{
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     const {errors} = validationResult(req)
