@@ -1,10 +1,11 @@
 import { con } from "../db/atlas.js";
 import { Router } from "express";
 import { limitGrt } from "../limit/config.js";
+import { validarToken } from "../middleware_token/middlewareJWT.js";
 
 const ordenes = Router();
 
-ordenes.get("/todas",limitGrt(), async (req, res) => {
+ordenes.get("/todas",limitGrt(), validarToken, async (req, res) => {
   if(!req.rateLimit) return; 
   console.log(req.rateLimit);
   try {
@@ -19,7 +20,7 @@ ordenes.get("/todas",limitGrt(), async (req, res) => {
 });
 
 // Realizar la consulta por el id_Orden
-ordenes.get("/:id_Orden",limitGrt(), async (req, res) => {
+ordenes.get("/:id_Orden",limitGrt(), validarToken, async (req, res) => {
   if(!req.rateLimit) return; 
   console.log(req.rateLimit);
   try {
