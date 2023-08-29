@@ -88,9 +88,7 @@ Desarrolla una función que permita a los restaurantes y usuarios generar factur
 
 [https://estudioalfa.com/por-que-deberias-tener-tu-propia-app-de-reparto-domicilio](https://estudioalfa.com/por-que-deberias-tener-tu-propia-app-de-reparto-domicilio)
 
-
 ## Investigación Github Ramas (branch)
-
 
 ##### **Git branch:**
 
@@ -137,7 +135,7 @@ Git no te permitirá eliminar una rama en la que te encuentres actualmente. Prim
 git branch -d RAMA-A-ELIMINAR
 ```
 
-no se puede eliminar la rama donde se encuentra ubicado el asterisco 
+no se puede eliminar la rama donde se encuentra ubicado el asterisco
 
 ##### **Comparar Ramas**
 
@@ -174,7 +172,6 @@ git merge NOMBRE-DE-LA-RAMA
 ```shell
 git reset --hard        # remueve todos los cambios pendientes
 ```
-
 
 ## ¿Cómo realizar un release en github?
 
@@ -229,8 +226,6 @@ git reset --hard        # remueve todos los cambios pendientes
 
    **Ejemplo:**
 
-   ![1691814032173](image/README/1691814032173.png)
-
 Bibliografia:
 
 [https://www.freecodecamp.org/espanol/news/explicacion-de-la-rama-de-gi-como-eliminar/]()
@@ -238,3 +233,60 @@ Bibliografia:
 [https://keepcoding.io/blog/que-es-la-rama-release-en-git/#:~:text=La%20rama%20release%20en%20Git%20se%20define%20como%20un%20tipo,determinada%20fecha%20de%20publicaci%C3%B3n%20estipulada.]()
 
 [https://www.notion.so/help/tasks-and-dependencies]()
+
+
+## **Descripción del Proyecto: Aplicación de Delivery con Express y Node.js**
+
+El proyecto es una aplicación de delivery basada en Node.js que utiliza el framework Express para crear un servidor. El objetivo principal de esta aplicación es recrear las funcion básica de una plataforma de delivery, permitiendo la gestión de clientes, repartidores, restaurantes, productos,  y órdenes a través de una base de datos. El enfoque se pone en la seguridad, la validación de datos y la gestión eficiente de peticiones.
+
+#### **Características:**
+
+1. **Servidor Express:** El proyecto comienza configurando un servidor utilizando Express, facilitando la creación de rutas y el manejo de peticiones.
+2. **Base de Datos:** Se integra una base de datos NoSQL con MongoDB. Se crean colecciones para cada entidad del sistema: cliente, repartidor, restaurante, producto, rol y orden.
+3. **Autenticación y Autorización:** Se implementa un sistema de autenticación y autorización utilizando JSON Web Tokens (JWT) y middlewares de Express. Se verifican los tokens para asegurar que solo los usuarios autenticados y autorizados puedan acceder a rutas específicas.
+4. **Gestión de Roles:** Se asignan roles a los usuarios (cliente, repartidor,administrador etc.) y se utilizan middlewares para restringir el acceso a ciertas rutas basado en los roles asignados.
+5. **Limitación de Peticiones:** Se implementa un mecanismo para limitar la cantidad de peticiones que un usuario puede hacer en un determinado período de tiempo. Esto evita abusos o ataques de fuerza bruta.
+6. **Validación de Datos de Entrada:** Se utiliza un enfoque de Transferencia de Objeto de Datos (DTO) para validar y procesar los datos de entrada. Esto garantiza que los datos ingresados en las solicitudes POST sean coherentes y cumplan con los requisitos del sistema.
+7. **Manejo de Versiones:** Se utiliza el encabezado "Accept-Version" en las solicitudes para manejar versiones de la API de manera efectiva. Esto permite realizar cambios y actualizaciones en la API sin afectar a los clientes existentes.
+8. **Funcionalidades de Delivery:** Se implementan rutas y controladores para permitir a los usuarios crear órdenes, ver restaurantes y productos, realizar seguimiento de pedidos, etc.
+
+**Flujo de Trabajo Típico:**
+
+1. Un usuario inicia sesión utilizando sus credenciales. Se genera un JWT después de una autenticación exitosa.
+2. El usuario accede a diversas rutas dependiendo de su rol, como realizar un pedido, administrar productos o creación de clientes.
+3. Antes de acceder a rutas protegidas, los middlewares verifican la validez del token y el rol del usuario para garantizar el acceso autorizado.
+
+# **Pasos para Configurar y Usar la Aplicación:**
+
+***1. Clonar el Repositorio:*** Clona este repositorio en tu máquina local usando el comando:
+
+```
+git clone https://github.com/DiegoMartinez2094/rappi_campus.git
+```
+
+***2. Instalar Dependencias:*** Asegúrate de tener Node.js instalado. Luego, desde la raíz del proyecto, ejecuta el siguiente comando para instalar las dependencias:
+
+```
+npm install
+```
+
+***3. Configurar Variables de Entorno:*** Abre el archivo `.env.example` y verifica las variables de entorno necesarias para la conexión al servidor y a la base de datos en Atlas. Asegúrate de proporcionar los valores correctos para `My_server`, `ATLAS_USER`, `ATLAS_PASSWORD` y `ATLAS_DB`. y quita .example que el nombre del archivo sea solo `.env`
+
+***4. Conectar la Base de Datos:*** Para conectar la base de datos utilizando la extensión "MongoDB for VS Code":
+
+* Abre la extensión y selecciona "Connect". Se te pedirá el enlace de conexión de la base de datos que encontrarás en tu página de Atlas.
+* Ingresa el enlace de la forma:
+
+  ```
+  mongodb+srv://<nombreusuario>:<password>@cluster0.<subdominio>.mongodb.net/
+  ```
+* Reemplaza `nombreusuaio, password y subdominio`
+* Una vez conectado, ejecuta el archivo `db/base_datos.mongodb` haciendo clic en el botón "Mongo Run" en la esquina superior derecha.
+
+***5.Iniciar archivo:*** Ejecutamos el archivo `app.js` mediante el siguiente comando en la terminal:
+
+```
+npm run dev
+```
+
+Nos dará un mensaje similar a este: `Servidor iniciado en http://127.10.10.10:5011` que nos indica la direccion url donde está corriendo el servidor.

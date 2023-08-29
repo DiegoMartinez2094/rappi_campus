@@ -1,13 +1,16 @@
 import { con } from "../db/atlas.js";
 import { Router } from "express";
-import DTO from "../middlewares/Restaurantes.js";
+import { limitGrt } from "../limit/config.js";
+
 
 const restaurante = Router();
 
-restaurante.post("/", DTO, async (req, res) => {
+restaurante.post("/",limitGrt(), async (req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     try {
         const db = await con(); 
-        const restaurantes = db.collection("restaurantes"); 
+        const restaurantes = db.collection("restaurante"); 
         const nuevoRestaurante = req.body;
         const resultado = await restaurantes.insertOne(nuevoRestaurante);
         res.status(201).json({ mensaje: "Restaurante agregado exitosamente", id: resultado.insertedId });
@@ -17,10 +20,12 @@ restaurante.post("/", DTO, async (req, res) => {
     }
 });
 
-restaurante.get("/todos", async (req, res) => {
+restaurante.get("/todos",limitGrt(), async (req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     try {
         const db = await con();
-        const restaurantes = db.collection("restaurantes");
+        const restaurantes = db.collection("restaurante");
         const result = await restaurantes.find({}).toArray();
         res.send(result);
     } catch (error) {
@@ -29,12 +34,14 @@ restaurante.get("/todos", async (req, res) => {
     }
 });
 
-restaurante.get("/nombre/:nombreRestaurante", async (req, res) => {
+restaurante.get("/nombre/:nombreRestaurante",limitGrt(), async (req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     const nombreRestaurante = req.params.nombreRestaurante;
 
     try {
         const db = await con();
-        const restaurantes = db.collection("restaurantes");
+        const restaurantes = db.collection("restaurante");
         const result = await restaurantes.findOne({ nombre: { $regex: nombreRestaurante, $options: "i" } });
 
         if (result) {
@@ -48,12 +55,14 @@ restaurante.get("/nombre/:nombreRestaurante", async (req, res) => {
     }
 });
 
-restaurante.put("/nombre/:nombreRestaurante", DTO, async (req, res) => {
+restaurante.put("/nombre/:nombreRestaurante",limitGrt(), async (req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     const nombreRestaurante = req.params.nombreRestaurante;
 
     try {
         const db = await con(); 
-        const restaurantes = db.collection("restaurantes");
+        const restaurantes = db.collection("restaurante");
         const datosActualizados = req.body;
         const resultado = await restaurantes.updateOne(
             { nombre: nombreRestaurante },
@@ -71,11 +80,13 @@ restaurante.put("/nombre/:nombreRestaurante", DTO, async (req, res) => {
     }
 });
 
-restaurante.delete("/nombre/:nombreRestaurante", async (req, res) => {
+restaurante.delete("/nombre/:nombreRestaurante",limitGrt(), async (req, res) => {
+    if(!req.rateLimit) return; 
+    console.log(req.rateLimit);
     const nombreRestaurante = req.params.nombreRestaurante;
     try {
         const db = await con(); 
-        const restaurantes = db.collection("restaurantes");
+        const restaurantes = db.collection("restaurante");
         const resultado = await restaurantes.deleteOne({ nombre: nombreRestaurante });
         if (resultado.deletedCount > 0) {
             res.send("Restaurante eliminado exitosamente");

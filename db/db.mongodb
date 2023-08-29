@@ -2,103 +2,189 @@ use("db_ordenes_rappi");
 
 /** Colección Cliente */
 
-db.clientes.insertMany([
-    {
-        idCliente: 1,
-        nombre: "Cliente1",
-        direccion: "Dirección1",
-        telefono: "123-456-7890",
-        nivel: "plata"
-    },
-    {
-        idCliente: 2,
-        nombre: "Cliente2",
-        direccion: "Dirección2",
-        telefono: "987-654-3210",
-        nivel: "oro"
-    }
+db.cliente.insertMany([
+  {id_Cliente: 1,nombre_Cliente: "Carlos Rodríguez",direccion_Cliente: "Cll 23c 58-94 barrio Alcala",telefono_Cliente: "123-456-7890",nivel_Cliente: "plata",
+  },
+  {id_Cliente: 2,nombre_Cliente: "Sofía Fernández",direccion_Cliente: "av25 48-73 barrio provenza",telefono_Cliente: "987-654-3210",nivel_Cliente: "oro",
+  },
+  {id_Cliente: 3,nombre_Cliente: "Marta Sánchez",direccion_Cliente: "avrosales  57-12 barrio Villamil",telefono_Cliente: "3185472568",nivel_Cliente: "diamante",
+  },
+  {id_Cliente: 4,nombre_Cliente: "Roberto Fernández",direccion_Cliente: "  57-12 barrio Alarcón",telefono_Cliente: "257-658-254",nivel_Cliente: "bronce",
+  },
+  {id_Cliente: 5,nombre_Cliente: "Javier Torres",direccion_Cliente: " occ 17-11 barrio Carmen",telefono_Cliente: "274856233",nivel_Cliente: "bronce",
+  },
+  {id_Cliente: 6,nombre_Cliente: "Javier Torres",direccion_Cliente: " occ 17-11 barrio Carmen",telefono_Cliente: "274856233",nivel_Cliente: "bronce",
+  },
+  {id_Cliente: 7,nombre_Cliente: "Lucas Martinez",direccion_Cliente: " cra 3ra 28-59 barrio Alfonzo lopez",telefono_Cliente: "311487521",nivel_Cliente: "oro",
+  },
+  {id_Cliente: 8,nombre_Cliente: "Leonardo Sanchez",direccion_Cliente: " cra 27  28-69 barrio Primavera",telefono_Cliente: "2215454",nivel_Cliente: "oro",
+  },
+  {id_Cliente: 9,nombre_Cliente: "Diego Fernandez",direccion_Cliente: " cra 33 58-24 barrio Cabecera",telefono_Cliente: "245875665",nivel_Cliente: "oro",
+  },
+  {id_Cliente: 10,nombre_Cliente: "Camila Ramirez",direccion_Cliente: " cll 105 35-124 barrio Caldas",telefono_Cliente: "2598456",nivel_Cliente: "diamante",
+  },
 ]);
 
 /** Colección Producto */
 
-db.productos.insertMany([
-    {
-        id: 1,
-        nombre: "Producto1",
-        descripcion: "Descripción del producto 1",
-        cantidad: 10,
-        precio: 20
-    },
-    {
-        id: 2,
-        nombre: "Producto2",
-        descripcion: "Descripción del producto 2",
-        cantidad: 5,
-        precio: 15
-    }
+db.producto.insertMany([
+  {id_Producto: 1,nombre_Producto: "Manzanas",descripcion_Producto: "Frescas manzanas rojas de temporada",precio_und: 1.500,
+  },
+  {id_Producto: 2,nombre_Producto: "Arroz integral",descripcion_Producto: "Arroz integral de grano entero, rico en nutrientes",precio_und: 2.000
+  },
+  {id_Producto: 3,nombre_Producto: "Yogur griego",descripcion_Producto: "Yogur cremoso estilo griego, sin azúcares añadidos",precio_und: 3.500
+  },
+  {id_Producto: 4,nombre_Producto: "Pan integral",descripcion_Producto: "Pan integral recién horneado, perfecto para sándwiches",precio_und: 4.000
+  },
+  {id_Producto: 5,nombre_Producto: "Pollo orgánico",descripcion_Producto: "Pechugas de pollo orgánico, criado en condiciones naturales",precio_und: 8.000
+  },
+  {id_Producto: 6,nombre_Producto: "Ensalada mixta",descripcion_Producto: "Mezcla fresca de lechugas, tomates y zanahorias",precio_und: 5.500
+  },
+  {id_Producto: 7,nombre_Producto: "Salmón fresco",descripcion_Producto: "Filete de salmón atlántico fresco, alto en omega-3",precio_und: 12.000
+  },
+  {id_Producto: 8,nombre_Producto: "Pasta de trigo integral",descripcion_Producto: "Pasta de trigo integral para platos saludables"
+  },
+  {id_Producto: 9,nombre_Producto: "Miel pura",descripcion_Producto: "Miel natural y pura, directo del colmenar",precio_und: 6.000
+  },
+  {id_Producto: 10,nombre_Producto: "Vegetales congelados",descripcion_Producto: "Mezcla de vegetales congelados para guisos y salteados",precio_und: 3.200
+  },
 ]);
 
 /** Colección Repartidor */
 
-db.repartidores.insertMany([
-    {
-        idRepartidor: 1,
-        nombre: "Repartidor1",
-        telefono: "555-123-4567",
-        vehiculo: "Moto",
-        nivel: "plata"
-    },
-    {
-        idRepartidor: 2,
-        nombre: "Repartidor2",
-        telefono: "555-987-6543",
-        vehiculo: "Bicicleta",
-        nivel: "oro"
-    }
+db.repartidor.insertMany([
+  {id_Repartidor: 1,nombre_Repartidor: "Luis Hernandez",telefono_Repartidor: "555-123-4567",vehiculo: "Caminando",nivel_repartidor: "Diamante",
+  },
+  {id_Repartidor: 2,nombre_Repartidor: "Ana Torres",telefono_Repartidor: "555-987-6543",vehiculo: "Bicicleta",nivel_repartidor: "Oro",
+  },
+  {id_Repartidor: 3,nombre_Repartidor: "Carlos Martinez",telefono_Repartidor: "555-555-5555",vehiculo: "Moto",nivel_repartidor: "Plata",
+  },
+  {id_Repartidor: 4,nombre_Repartidor: "Laura Gonzalez",telefono_Repartidor: "555-222-3333",vehiculo: "Auto",nivel_repartidor: "Bronce",
+  },
+  {id_Repartidor: 5,nombre_Repartidor: "Daniel Ramirez",telefono_Repartidor: "555-444-7777",vehiculo: "Bicicleta",nivel_repartidor: "Oro",
+  },
+  {id_Repartidor: 6,nombre_Repartidor: "María Silva",telefono_Repartidor: "555-666-8888",vehiculo: "Moto",nivel_repartidor: "Plata",
+  },
+  {id_Repartidor: 7,nombre_Repartidor: "Eduardo Perez",telefono_Repartidor: "555-111-2222",vehiculo: "Auto",nivel_repartidor: "Bronce",
+  },
+  {id_Repartidor: 8,nombre_Repartidor: "Isabel Diaz",telefono_Repartidor: "555-333-4444",vehiculo: "Caminando",nivel_repartidor: "Diamante",
+  },
+  {id_Repartidor: 9,nombre_Repartidor: "Hector Vega",telefono_Repartidor: "555-777-9999",vehiculo: "Moto",nivel_repartidor: "Plata",
+  },
+  {id_Repartidor: 10,nombre_Repartidor: "Patricia Luna",telefono_Repartidor: "555-999-1111",vehiculo: "Auto",nivel_repartidor: "Oro",
+  },
 ]);
 
 /** Colección Restaurante */
 
-db.restaurantes.insertMany([
-    {
-        nombre: "Restaurante1",
-        direccion: "Dirección del restaurante 1",
-        calificacion: 4.5
-    },
-    {
-        nombre: "Restaurante2",
-        direccion: "Dirección del restaurante 2",
-        calificacion: 3.8
-    }
+db.restaurante.insertMany([
+  {id_Restaurante: 1,nombre_Restaurante: "Delicias del Mar", telefono_Restaurante: "1234569877", direccion_Restaurante: "Calle de los Sabores 123",calificacion_Restaurante: 4.2,
+  },
+  {id_Restaurante: 2,nombre_Restaurante: "La Parrilla Dorada", telefono_Restaurante: "65456", direccion_Restaurante: "Avenida de la Brasa 456",calificacion_Restaurante: 4.5,
+  },
+  {id_Restaurante: 3,nombre_Restaurante: "Sabor y Tradición", telefono_Restaurante: "456454654", direccion_Restaurante: "Plaza de las Especias 789",calificacion_Restaurante: 3.8,
+  },
+  {id_Restaurante: 4,nombre_Restaurante: "Fusión Oriental", telefono_Restaurante: "4456445", direccion_Restaurante: "Calle del Bambú 234",calificacion_Restaurante: 4.0,
+  },
+  {id_Restaurante: 5,nombre_Restaurante: "El Rincón Criollo", telefono_Restaurante: "453456453", direccion_Restaurante: "Avenida de los Sabores 567",calificacion_Restaurante: 4.7,
+  },
+  {id_Restaurante: 6,nombre_Restaurante: "La Cantina Mexicana", telefono_Restaurante: "45345345", direccion_Restaurante: "Calle del Tequila 890",calificacion_Restaurante: 4.1,
+  },
+  {id_Restaurante: 7,nombre_Restaurante: "Sabores Mediterráneos", telefono_Restaurante: "45864558", direccion_Restaurante: "Paseo de las Olivas 123",calificacion_Restaurante: 3.6,
+  },
+  {id_Restaurante: 8,nombre_Restaurante: "Cocina Vegana Verde", telefono_Restaurante: "8456455", direccion_Restaurante: "Avenida de las Hojas 456",calificacion_Restaurante: 4.3,
+  },
+  {id_Restaurante: 9,nombre_Restaurante: "La Brasserie Elegante", telefono_Restaurante: "483544545", direccion_Restaurante: "Plaza de la Elegancia 789",calificacion_Restaurante: 4.8,
+  },
+  {id_Restaurante: 10,nombre_Restaurante: "Sazón Criollo", telefono_Restaurante: "4545884548", direccion_Restaurante: "Calle de los Aromas 234",calificacion_Restaurante: 3.9,
+  },
 ]);
 
 /** Colección Ordenes */
 
-db.ordenes.insertMany([
-    {
-        idOrden: 1,
-        fechaCreacion: new Date(),
-        Cliente: { idCliente: 1, nombre: "Cliente1" },
-        Producto: { id: 1, nombre: "Producto1" },
-        pagoTotal: { monto: 20, metodoPago: "Tarjeta" },
-        estado: "pendiente",
-        instruccionesEspeciales: ["tocar el timbre dos veces", "dejar en la puerta"],
-        repartidorAsignado: { idRepartidor: 1, nombre: "Repartidor1" },
-        fechaHoraEntrega: new Date(),
-        calificacion: { min: 1, max: 5 },
-        Restaurante: { nombre: "Restaurante1" }
-    },
-    {
-        idOrden: 2,
-        fechaCreacion: new Date(),
-        Cliente: { idCliente: 2, nombre: "Cliente2" },
-        Producto: { id: 2, nombre: "Producto2" },
-        pagoTotal: { monto: 15, metodoPago: "Efectivo" },
-        estado: "preparando",
-        instruccionesEspeciales: ["preguntar por alguien"],
-        repartidorAsignado: { idRepartidor: 2, nombre: "Repartidor2" },
-        fechaHoraEntrega: new Date(),
-        calificacion: { min: 1, max: 5 },
-        Restaurante: { nombre: "Restaurante2" }
-    }
+db.orden.insertMany([
+  {
+    id_Orden: 1,
+    fecha_Creacion: "2023-08-29",
+    cliente: { nombre_Cliente: "Carlos Rodríguez",direccion_Cliente: "Cll 23c 58-94 barrio Alcala",telefono_Cliente:"123-456-7890"},
+    producto: { id: 1, nombre_Producto: "Manzanas",precio_und: 1.500, cantidad_Producto:10},
+    pago: { monto: 15.000, metodo_Pago: "Tarjeta", costo_domicilio: 5000, pago_total: 20.000 },
+    estado: "pendiente",
+    instrucciones_Especiales:"dejar en la puerta",
+    repartidor_Asignado: { nombre_Repartidor: "Luis Hernandez",telefono_Repartidor: "555-123-4567",vehiculo: "Caminando",nivel_repartidor: "Diamante" },
+    fecha_Entrega: "2023-08-31",
+    calificacion: 3.5,
+    restaurante: { nombre: "El Rincón Criollo", telefono_Restaurante: "453456453" },
+  },
+  {
+    id_Orden: 2,
+    fecha_Creacion: "2023-08-25",
+    cliente: { nombre_Cliente: "Sofía Fernández",direccion_Cliente: "av25 48-73 barrio provenza",telefono_Cliente: "987-654-3210"},
+    producto: { id: 2, nombre: "Arroz integral",precio_und: 2.000, cantidad_Producto:1 },
+    pago: { monto:2000 , metodo_Pago: "Efectivo",costo_domicilio: 4000, pago_total: 6.000 },
+    estado: "entregado",
+    instrucciones_Especiales: "preguntar por Juan",
+    repartidor_Asignado: { nombre_Repartidor: "Ana Torres",telefono_Repartidor: "555-987-6543",vehiculo: "Bicicleta",nivel_repartidor: "Oro"},
+    fecha_Entrega: "2023-08-26",
+    calificacion: 4.3,
+    restaurante: { nombre: "Fusión Oriental",telefono_Restaurante: "4456445" },
+  },
+  {
+    id_Orden: 3,
+    fecha_Creacion: "2023-08-27",
+    cliente: { nombre_Cliente: "Marta Sánchez",direccion_Cliente: "avrosales  57-12 barrio Villamil",telefono_Cliente: "3185472568"},
+    producto: { id_Producto: 3,nombre_Producto: "Yogur griego",precio_und: 3.500, cantidad_Producto:2 },
+    pago: { monto:7000 , metodo_Pago: "Efectivo",costo_domicilio: 6000, pago_total: 13.000 },
+    estado: "entregado",
+    instrucciones_Especiales: "dejar en porteria",
+    repartidor_Asignado: {nombre_Repartidor: "Carlos Martinez",telefono_Repartidor: "555-555-5555",vehiculo: "Moto",nivel_repartidor: "Plata"},
+    fecha_Entrega: "2023-08-26",
+    calificacion: 4.3,
+    restaurante: { nombre_Restaurante: "Sabores Mediterráneos", telefono_Restaurante: "45864558"},
+  },
+  {
+    id_Orden: 4,
+    fecha_Creacion: "2023-08-10",
+    cliente: { id_Cliente: 5,nombre_Cliente: "Javier Torres",direccion_Cliente: " occ 17-11 barrio Carmen",telefono_Cliente: "274856233"},
+    producto: { id_Producto: 3,nombre_Producto: "Pollo orgánico",precio_und: 8.000, cantidad_Producto:2 },
+    pago: { monto:16000 , metodo_Pago: "trajeta de credito", costo_domicilio: 8000, pago_total: 24.000 },
+    estado: "entregado",
+    instrucciones_Especiales: "tocar la puerta",
+    repartidor_Asignado: {nombre_Repartidor: "Patricia Luna",telefono_Repartidor: "555-999-1111",vehiculo: "Auto",nivel_repartidor: "Oro"},
+    fecha_Entrega: "2023-08-11",
+    calificacion: 5,
+    restaurante: { nombre_Restaurante: "Delicias del Mar", telefono_Restaurante: "1234569877"},
+  },
+  {
+    id_Orden: 5,
+    fecha_Creacion: "2023-08-10",
+    cliente: { id_Cliente: 9,nombre_Cliente: "Diego Fernandez",direccion_Cliente: " cra 33 58-24 barrio Cabecera",telefono_Cliente: "245875665"},
+    producto: { id_Producto: 6,nombre_Producto: "Ensalada mixta",precio_und: 5.500, cantidad_Producto:3 },
+    pago: { monto:16.500 , metodo_Pago: "trajeta de debito", costo_domicilio: 6.500, pago_total: 23.000 },
+    estado: "entregado",
+    instrucciones_Especiales: "llamar al telefono del cliente",
+    repartidor_Asignado: {nombre_Repartidor: "María Silva",telefono_Repartidor: "555-666-8888",vehiculo: "Moto",nivel_repartidor: "Plata"},
+    fecha_Entrega: "2023-08-10",
+    calificacion: 4,
+    restaurante: { nombre_Restaurante: "Cocina Vegana Verde", telefono_Restaurante: "8456455"},
+  }
+]);
+
+
+db.rol.insertMany([
+  {
+    Id_rol:1,
+    nombre_rol: "administrador",
+    acceso_rol: ["cliente, producto, repartidor, orden, restaurante, roles"]
+  },
+  {
+    Id_rol:2,
+    nombre_rol: "cliente",
+    acceso_rol: ["restaurante", "producto"]
+  },
+  {
+    Id_rol:3,
+    nombre_rol: "repartidor",
+    acceso_rol: ["orden"]
+  }
 ]);
