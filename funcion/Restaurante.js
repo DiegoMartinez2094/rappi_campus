@@ -56,7 +56,7 @@ restaurante.get("/nombre/:nombreRestaurante",limitGrt(), validarToken, async (re
     }
 });
 
-restaurante.put("/nombre/:nombreRestaurante",limitGrt(), async (req, res) => {
+restaurante.put("/nombre/:nombreRestaurante",limitGrt(), validarToken, async (req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     const nombreRestaurante = req.params.nombreRestaurante;
@@ -81,7 +81,7 @@ restaurante.put("/nombre/:nombreRestaurante",limitGrt(), async (req, res) => {
     }
 });
 
-restaurante.delete("/nombre/:nombreRestaurante",limitGrt(), async (req, res) => {
+restaurante.delete("/nombre/:nombreRestaurante",limitGrt(), validarToken, async (req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     const nombreRestaurante = req.params.nombreRestaurante;
