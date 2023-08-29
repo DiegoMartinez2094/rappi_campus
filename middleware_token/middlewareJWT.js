@@ -9,7 +9,7 @@ const conexionDB = await con();
 const crearToken = async (req, res) => {
     const encoder = new TextEncoder();
     const roles = {
-        administrador: ["cliente, producto, repartidor, orden, restaurante, roles"],
+        administrador: ["cliente", "producto", "repartidor", "orden", "restaurante", "roles"],
         cliente: ["restaurante", "producto"],
         repartidor:["orden"]
     };

@@ -175,7 +175,7 @@ db.rol.insertMany([
   {
     Id_rol:1,
     nombre_rol: "administrador",
-    acceso_rol: ["cliente, producto, repartidor, orden, restaurante, roles"]
+    acceso_rol: ["cliente", "producto", "repartidor", "orden", "restaurante", "roles"]
   },
   {
     Id_rol:2,
