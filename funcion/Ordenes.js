@@ -42,7 +42,7 @@ ordenes.get("/:id_Orden",limitGrt(), validarToken, async (req, res) => {
 });
 
 // Eliminar una orden por id_Orden
-ordenes.delete("/:id_Orden",limitGrt(), async (req, res) => {
+ordenes.delete("/:id_Orden",limitGrt(), validarToken, async (req, res) => {
   if(!req.rateLimit) return; 
   console.log(req.rateLimit);
   try {
@@ -65,7 +65,7 @@ ordenes.delete("/:id_Orden",limitGrt(), async (req, res) => {
 });
 
 // Actualizar una orden por id_Orden
-ordenes.put("/:id_Orden",limitGrt(), async (req, res) => {
+ordenes.put("/:id_Orden",limitGrt(), validarToken, async (req, res) => {
   if(!req.rateLimit) return; 
   console.log(req.rateLimit);
   try {
