@@ -143,6 +143,7 @@ db.rol.insertMany([
 
 db.usuario.insertMany([
   {
+    id_usuario:1,
     nombre: "Adrian Bueno",
     correo: "adrianjbuenop@gmail.com",
     contraseña:"Ajbp170605",
@@ -151,6 +152,7 @@ db.usuario.insertMany([
     direccion: "cra14aw#45b17"
    },
   {
+    id_usuario:2,
     nombre: "Diego Martinez",
     correo: "diegofernadndomartinezcalderon@gmail.com",
     contraseña:"123456789dm",
@@ -159,6 +161,7 @@ db.usuario.insertMany([
     direccion: "cra14afk#15"
   },
   {
+    id_usuario:3,
    nombre: "Diego Hernando",
    correo: "diego63_19@hotmail.com",
    contraseña:"facil789",
@@ -167,6 +170,7 @@ db.usuario.insertMany([
    direccion: "cra14afk#15"
   },
   {
+    id_usuario:4,
     nombre: "Adrian Pedraza",
     correo: "Adrian123@hotmail.com",
     contraseña:"123456789ab",
@@ -175,6 +179,7 @@ db.usuario.insertMany([
     direccion: "calle45"
   },
   {
+    id_usuario:5,
     nombre: "fernando Calderon",
     correo: "fernando@hotmail.com",
     contraseña:"123456789fc",
@@ -183,6 +188,7 @@ db.usuario.insertMany([
     direccion: "cra48"
   },
   {
+    id_usuario:6,
     nombre: "carlo lopez",
     correo: "carlos@hotmail.com",
     contraseña:"123456789cp",
@@ -191,6 +197,7 @@ db.usuario.insertMany([
     direccion: "cra50"
   },
   {
+    id_usuario:7,
     nombre: "Joel Pedraza",
     correo: "joel@gmail.com",
     contraseña:"hola1234",
@@ -199,6 +206,7 @@ db.usuario.insertMany([
     direccion: "cra51"
   },
   {
+    id_usuario:8,
     nombre: "juan manito",
     correo: "juan@hotmail.com",
     contraseña:"si123456789",
@@ -207,6 +215,7 @@ db.usuario.insertMany([
     direccion: "cra52"
   },
   {
+    id_usuario:9,
     nombre: "maria gonzales",
     correo: "maria@hotmail.com",
     contraseña:"facil1234",
@@ -215,6 +224,7 @@ db.usuario.insertMany([
     direccion: "cra53"
   },
   {
+    id_usuario:10,
     nombre: "juana martinez",
     correo: "juana@hotmail.com",
     contraseña:"juana123",
@@ -223,6 +233,7 @@ db.usuario.insertMany([
     direccion: "cra54"
   },
   {
+    id_usuario:11,
     nombre: "mariana palacio",
     correo: "mariana@hotmail.com",
     contraseña:"no12345",
@@ -231,6 +242,7 @@ db.usuario.insertMany([
     direccion: "cra56"
   },
   {
+    id_usuario:12,
     nombre: "diego manga",
     correo: "diego@hotmail.com",
     contraseña:"diego1234",
