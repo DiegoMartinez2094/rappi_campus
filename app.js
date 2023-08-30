@@ -223,12 +223,33 @@ app.use("/orden",
     "1.0.0": orden,
   })
 );
+app.use('/restaurante', 
 
-app.use("/restaurante",
-  versionRoute({
-    "1.0.0": restaurante,
-  })
-);
+[check("id_Restaurante")
+.notEmpty().withMessage('El id_Restaurante es obligatorio')
+.custom(value => /^\d+$/.test(value)).withMessage('El id_Restaurante debe ser numérico sin letras')
+.toInt(),
+
+check("nombre_Restaurante")
+.notEmpty().withMessage('El nombre_Restaurante es obligatorio')
+.isString().withMessage('El nombre_Restaurante debe ser string'),
+
+check("telefono_Restaurante")
+.notEmpty().withMessage('El telefono_Restaurante es obligatorio')
+.isString().withMessage('El nombre_Producto debe ser string'),
+
+check("direccion_Restaurante")
+.notEmpty().withMessage('La direccion_Restaurante es obligatorio')
+.isString().withMessage('La direccion_Restaurante debe ser string'),
+
+check("calificacion_Restaurante")
+.notEmpty().withMessage('La calificacion_Restaurante es obligatorio')
+.custom(value => /^[1-5]$/.test(value)).withMessage('La calificacion_Restaurante debe ser un número entre 1 y 5')
+.toInt()],
+
+versionRoute({
+   "1.0.0": restaurante,
+}));
 
 app.listen(config.port, config.hostname, () => {
   console.log(`Servidor iniciado en http://${config.hostname}:${config.port}`);
