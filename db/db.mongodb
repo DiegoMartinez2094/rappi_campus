@@ -1,30 +1,5 @@
 use("db_ordenes_rappi");
 
-/** Colección Cliente */
-
-db.cliente.insertMany([
-  {id_Cliente: 1,nombre_Cliente: "Carlos Rodríguez",direccion_Cliente: "Cll 23c 58-94 barrio Alcala",telefono_Cliente: "123-456-7890",nivel_Cliente: "plata",
-  },
-  {id_Cliente: 2,nombre_Cliente: "Sofía Fernández",direccion_Cliente: "av25 48-73 barrio provenza",telefono_Cliente: "987-654-3210",nivel_Cliente: "oro",
-  },
-  {id_Cliente: 3,nombre_Cliente: "Marta Sánchez",direccion_Cliente: "avrosales  57-12 barrio Villamil",telefono_Cliente: "3185472568",nivel_Cliente: "diamante",
-  },
-  {id_Cliente: 4,nombre_Cliente: "Roberto Fernández",direccion_Cliente: "  57-12 barrio Alarcón",telefono_Cliente: "257-658-254",nivel_Cliente: "bronce",
-  },
-  {id_Cliente: 5,nombre_Cliente: "Javier Torres",direccion_Cliente: " occ 17-11 barrio Carmen",telefono_Cliente: "274856233",nivel_Cliente: "bronce",
-  },
-  {id_Cliente: 6,nombre_Cliente: "Javier Torres",direccion_Cliente: " occ 17-11 barrio Carmen",telefono_Cliente: "274856233",nivel_Cliente: "bronce",
-  },
-  {id_Cliente: 7,nombre_Cliente: "Lucas Martinez",direccion_Cliente: " cra 3ra 28-59 barrio Alfonzo lopez",telefono_Cliente: "311487521",nivel_Cliente: "oro",
-  },
-  {id_Cliente: 8,nombre_Cliente: "Leonardo Sanchez",direccion_Cliente: " cra 27  28-69 barrio Primavera",telefono_Cliente: "2215454",nivel_Cliente: "oro",
-  },
-  {id_Cliente: 9,nombre_Cliente: "Diego Fernandez",direccion_Cliente: " cra 33 58-24 barrio Cabecera",telefono_Cliente: "245875665",nivel_Cliente: "oro",
-  },
-  {id_Cliente: 10,nombre_Cliente: "Camila Ramirez",direccion_Cliente: " cll 105 35-124 barrio Caldas",telefono_Cliente: "2598456",nivel_Cliente: "diamante",
-  },
-]);
-
 /** Colección Producto */
 
 db.producto.insertMany([
@@ -47,31 +22,6 @@ db.producto.insertMany([
   {id_Producto: 9,nombre_Producto: "Miel pura",descripcion_Producto: "Miel natural y pura, directo del colmenar",precio_und: 6.000
   },
   {id_Producto: 10,nombre_Producto: "Vegetales congelados",descripcion_Producto: "Mezcla de vegetales congelados para guisos y salteados",precio_und: 3.200
-  },
-]);
-
-/** Colección Repartidor */
-
-db.repartidor.insertMany([
-  {id_Repartidor: 1,nombre_Repartidor: "Luis Hernandez",telefono_Repartidor: "555-123-4567",vehiculo: "Caminando",nivel_repartidor: "Diamante",
-  },
-  {id_Repartidor: 2,nombre_Repartidor: "Ana Torres",telefono_Repartidor: "555-987-6543",vehiculo: "Bicicleta",nivel_repartidor: "Oro",
-  },
-  {id_Repartidor: 3,nombre_Repartidor: "Carlos Martinez",telefono_Repartidor: "555-555-5555",vehiculo: "Moto",nivel_repartidor: "Plata",
-  },
-  {id_Repartidor: 4,nombre_Repartidor: "Laura Gonzalez",telefono_Repartidor: "555-222-3333",vehiculo: "Auto",nivel_repartidor: "Bronce",
-  },
-  {id_Repartidor: 5,nombre_Repartidor: "Daniel Ramirez",telefono_Repartidor: "555-444-7777",vehiculo: "Bicicleta",nivel_repartidor: "Oro",
-  },
-  {id_Repartidor: 6,nombre_Repartidor: "María Silva",telefono_Repartidor: "555-666-8888",vehiculo: "Moto",nivel_repartidor: "Plata",
-  },
-  {id_Repartidor: 7,nombre_Repartidor: "Eduardo Perez",telefono_Repartidor: "555-111-2222",vehiculo: "Auto",nivel_repartidor: "Bronce",
-  },
-  {id_Repartidor: 8,nombre_Repartidor: "Isabel Diaz",telefono_Repartidor: "555-333-4444",vehiculo: "Caminando",nivel_repartidor: "Diamante",
-  },
-  {id_Repartidor: 9,nombre_Repartidor: "Hector Vega",telefono_Repartidor: "555-777-9999",vehiculo: "Moto",nivel_repartidor: "Plata",
-  },
-  {id_Repartidor: 10,nombre_Repartidor: "Patricia Luna",telefono_Repartidor: "555-999-1111",vehiculo: "Auto",nivel_repartidor: "Oro",
   },
 ]);
 
@@ -175,7 +125,7 @@ db.rol.insertMany([
   {
     Id_rol:1,
     nombre_rol: "administrador",
-    acceso_rol: ["cliente", "producto", "repartidor", "orden", "restaurante", "roles"]
+    acceso_rol: ["usuario", "producto", "repartidor", "orden", "restaurante", "roles"]
   },
   {
     Id_rol:2,
@@ -189,29 +139,199 @@ db.rol.insertMany([
   }
 ]);
 
+/** Colección usuario */
+
 db.usuario.insertMany([
   {
-   nombre: "Diego Martinez",
-   correo: "diego63_19@hotmail.com",
-   contraseña:"123456789dm",
-   rol:"usuario"
+    nombre: "Adrian Bueno",
+    correo: "adrianjbuenop@gmail.com",
+    contraseña:"Ajbp170605",
+    rol:"administrador",
+    telefono: 3504265412,
+    direccion: "cra14aw#45b17"
+   },
+  {
+    nombre: "Diego Martinez",
+    correo: "diegofernadndomartinezcalderon@gmail.com",
+    contraseña:"123456789dm",
+    rol:"administrador",
+    telefono: 3151456321,
+    direccion: "cra14afk#15"
   },
   {
-    nombre: "Adrian Bueno",
+   nombre: "Diego Hernando",
+   correo: "diego63_19@hotmail.com",
+   contraseña:"facil789",
+   rol:"cliente",
+   telefono: 3151456321,
+   direccion: "cra14afk#15"
+  },
+  {
+    nombre: "Adrian Pedraza",
     correo: "Adrian123@hotmail.com",
     contraseña:"123456789ab",
-    rol:"repartidor"
+    rol:"repartidor",
+    telefono: 3254896541,
+    direccion: "calle45"
   },
   {
     nombre: "fernando Calderon",
     correo: "fernando@hotmail.com",
     contraseña:"123456789fc",
-    rol:"usuario"
+    rol:"cliente",
+    telefono: 3478965412,
+    direccion: "cra48"
   },
   {
     nombre: "carlo lopez",
     correo: "carlos@hotmail.com",
     contraseña:"123456789cp",
-    rol:"repartidor"
+    rol:"repartidor",
+    telefono: 310245628,
+    direccion: "cra50"
+  },
+  {
+    nombre: "Joel Pedraza",
+    correo: "joel@gmail.com",
+    contraseña:"hola1234",
+    rol:"cliente",
+    telefono: 3504265412,
+    direccion: "cra51"
+  },
+  {
+    nombre: "juan manito",
+    correo: "juan@hotmail.com",
+    contraseña:"si123456789",
+    rol:"repartidor",
+    telefono: 3201425632,
+    direccion: "cra52"
+  },
+  {
+    nombre: "maria gonzales",
+    correo: "maria@hotmail.com",
+    contraseña:"facil1234",
+    rol:"cliente",
+    telefono: 3904555485,
+    direccion: "cra53"
+  },
+  {
+    nombre: "juana martinez",
+    correo: "juana@hotmail.com",
+    contraseña:"juana123",
+    rol:"repartidor",
+    telefono: 3502145632,
+    direccion: "cra54"
+  },
+  {
+    nombre: "mariana palacio",
+    correo: "mariana@hotmail.com",
+    contraseña:"no12345",
+    rol:"cliente",
+    telefono: 3102456283,
+    direccion: "cra56"
+  },
+  {
+    nombre: "diego manga",
+    correo: "diego@hotmail.com",
+    contraseña:"diego1234",
+    rol:"repartidor",
+    telefono: 3504265412,
+    direccion: "cra57"
+  }
+]);
+
+/** Colección pedido */
+
+db.pedido.insertMany([
+  {
+    Id_pedidol:1,
+  cliente: { nombre_Cliente: "Carlos Rodríguez",direccion_Cliente: "Cll 23c 58-94 barrio Alcala",telefono_Cliente:"123-456-7890"},
+  producto: { id: 1, nombre_Producto: "Manzanas",precio_und: 1.500, cantidad_Producto:10},
+ pago: { monto: 15.000, metodo_Pago: "Tarjeta", costo_domicilio: 5000, pago_total: 20.000 },
+instrucciones_Especiales:"dejar en la puerta",
+  },
+  {
+    Id_pedido: 2,
+    cliente: { nombre_Cliente: "Ana Martínez", direccion_Cliente: "Av. Principal 123", telefono_Cliente: "987-654-3210" },
+    producto: { id: 3, nombre_Producto: "Lechugas", precio_und: 800, cantidad_Producto: 5 },
+    pago: { monto: 4000, metodo_Pago: "Efectivo", costo_domicilio: 2000, pago_total: 6000 },
+    instrucciones_Especiales: "Llamar antes de entregar",
+  },
+  {
+    Id_pedido: 3,
+    cliente: { nombre_Cliente: "María López", direccion_Cliente: "Cra 10 25-30", telefono_Cliente: "555-123-4567" },
+    producto: { id: 2, nombre_Producto: "Peras", precio_und: 1200, cantidad_Producto: 8 },
+    pago: { monto: 9600, metodo_Pago: "Tarjeta", costo_domicilio: 3500, pago_total: 13100 },
+    instrucciones_Especiales: "No incluir condimentos",
+  },
+  {
+    Id_pedido: 4,
+    cliente: { nombre_Cliente: "Juan Pérez", direccion_Cliente: "Calle 5 #10-15", telefono_Cliente: "111-222-3333" },
+    producto: { id: 4, nombre_Producto: "Plátanos", precio_und: 1000, cantidad_Producto: 6 },
+    pago: { monto: 6000, metodo_Pago: "Efectivo", costo_domicilio: 2500, pago_total: 8500 },
+    instrucciones_Especiales: "Entregar después de las 5 PM",
+  },
+  {
+    Id_pedido: 5,
+    cliente: { nombre_Cliente: "Laura Gómez", direccion_Cliente: "Av. Central 456", telefono_Cliente: "444-555-6666" },
+    producto: { id: 1, nombre_Producto: "Manzanas", precio_und: 1500, cantidad_Producto: 3 },
+    pago: { monto: 4500, metodo_Pago: "Tarjeta", costo_domicilio: 3000, pago_total: 7500 },
+    instrucciones_Especiales: "Dejar con el portero",
+  },
+  {
+    Id_pedido: 6,
+    cliente: { nombre_Cliente: "Andrés Ramírez", direccion_Cliente: "Cra 20 #30-40", telefono_Cliente: "777-888-9999" },
+    producto: { id: 5, nombre_Producto: "Tomates", precio_und: 900, cantidad_Producto: 4 },
+    pago: { monto: 3600, metodo_Pago: "Efectivo", costo_domicilio: 1800, pago_total: 5400 },
+    instrucciones_Especiales: "Ninguna",
+  },
+  {
+    Id_pedido: 7,
+    cliente: { nombre_Cliente: "Elena Torres", direccion_Cliente: "Cll 15A 28-10", telefono_Cliente: "123-789-4560" },
+    producto: { id: 3, nombre_Producto: "Lechugas", precio_und: 800, cantidad_Producto: 2 },
+    pago: { monto: 1600, metodo_Pago: "Tarjeta", costo_domicilio: 1500, pago_total: 3100 },
+    instrucciones_Especiales: "Usar caja de regalo",
+  },
+  {
+    Id_pedido: 8,
+    cliente: { nombre_Cliente: "Pedro Martínez", direccion_Cliente: "Av. Libertad 789", telefono_Cliente: "555-111-2222" },
+    producto: { id: 2, nombre_Producto: "Peras", precio_und: 1200, cantidad_Producto: 7 },
+    pago: { monto: 8400, metodo_Pago: "Efectivo", costo_domicilio: 2800, pago_total: 11200 },
+    instrucciones_Especiales: "Sin empaque plástico",
+  },
+  {
+    Id_pedido: 9,
+    cliente: { nombre_Cliente: "Sofía Díaz", direccion_Cliente: "Cra 8 15-20", telefono_Cliente: "999-888-7777" },
+    producto: { id: 6, nombre_Producto: "Zanahorias", precio_und: 700, cantidad_Producto: 5 },
+    pago: { monto: 3500, metodo_Pago: "Tarjeta", costo_domicilio: 2000, pago_total: 5500 },
+    instrucciones_Especiales: "Llamar antes de llegar",
+  },
+  {
+    Id_pedido: 10,
+    cliente: { nombre_Cliente: "Luisa Vargas", direccion_Cliente: "Cll 30 12-25", telefono_Cliente: "666-555-4444" },
+    producto: { id: 4, nombre_Producto: "Plátanos", precio_und: 1000, cantidad_Producto: 2 },
+    pago: { monto: 2000, metodo_Pago: "Efectivo", costo_domicilio: 2200, pago_total: 4200 },
+    instrucciones_Especiales: "Dejar en la puerta trasera",
+  },
+  {
+    Id_pedido: 11,
+    cliente: { nombre_Cliente: "Ricardo Silva", direccion_Cliente: "Av. Principal 789", telefono_Cliente: "111-333-5555" },
+    producto: { id: 5, nombre_Producto: "Tomates", precio_und: 900, cantidad_Producto: 3 },
+    pago: { monto: 2700, metodo_Pago: "Tarjeta", costo_domicilio: 2500, pago_total: 5200 },
+    instrucciones_Especiales: "Entregar en la oficina 305",
+  },
+  {
+    Id_pedido: 12,
+    cliente: { nombre_Cliente: "Marcela Rueda", direccion_Cliente: "Cra 12 20-15", telefono_Cliente: "555-777-9999" },
+    producto: { id: 1, nombre_Producto: "Manzanas", precio_und: 1500, cantidad_Producto: 4 },
+    pago: { monto: 6000, metodo_Pago: "Efectivo", costo_domicilio: 1800, pago_total: 7800 },
+    instrucciones_Especiales: "Dejar en la recepción",
+  },
+  {
+    Id_pedido: 13,
+    cliente: { nombre_Cliente: "Javier Gutiérrez", direccion_Cliente: "Cll 18A 35-40", telefono_Cliente: "222-444-6666" },
+    producto: { id: 3, nombre_Producto: "Lechugas", precio_und: 800, cantidad_Producto: 6 },
+    pago: { monto: 4800, metodo_Pago: "Tarjeta", costo_domicilio: 2800, pago_total: 7600 },
+    instrucciones_Especiales: "Ninguna",
   }
 ]);
