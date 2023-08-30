@@ -1,30 +1,5 @@
 use("db_ordenes_rappi");
 
-/** Colección Cliente */
-
-db.cliente.insertMany([
-  {id_Cliente: 1,nombre_Cliente: "Carlos Rodríguez",direccion_Cliente: "Cll 23c 58-94 barrio Alcala",telefono_Cliente: "123-456-7890",nivel_Cliente: "plata",
-  },
-  {id_Cliente: 2,nombre_Cliente: "Sofía Fernández",direccion_Cliente: "av25 48-73 barrio provenza",telefono_Cliente: "987-654-3210",nivel_Cliente: "oro",
-  },
-  {id_Cliente: 3,nombre_Cliente: "Marta Sánchez",direccion_Cliente: "avrosales  57-12 barrio Villamil",telefono_Cliente: "3185472568",nivel_Cliente: "diamante",
-  },
-  {id_Cliente: 4,nombre_Cliente: "Roberto Fernández",direccion_Cliente: "  57-12 barrio Alarcón",telefono_Cliente: "257-658-254",nivel_Cliente: "bronce",
-  },
-  {id_Cliente: 5,nombre_Cliente: "Javier Torres",direccion_Cliente: " occ 17-11 barrio Carmen",telefono_Cliente: "274856233",nivel_Cliente: "bronce",
-  },
-  {id_Cliente: 6,nombre_Cliente: "Javier Torres",direccion_Cliente: " occ 17-11 barrio Carmen",telefono_Cliente: "274856233",nivel_Cliente: "bronce",
-  },
-  {id_Cliente: 7,nombre_Cliente: "Lucas Martinez",direccion_Cliente: " cra 3ra 28-59 barrio Alfonzo lopez",telefono_Cliente: "311487521",nivel_Cliente: "oro",
-  },
-  {id_Cliente: 8,nombre_Cliente: "Leonardo Sanchez",direccion_Cliente: " cra 27  28-69 barrio Primavera",telefono_Cliente: "2215454",nivel_Cliente: "oro",
-  },
-  {id_Cliente: 9,nombre_Cliente: "Diego Fernandez",direccion_Cliente: " cra 33 58-24 barrio Cabecera",telefono_Cliente: "245875665",nivel_Cliente: "oro",
-  },
-  {id_Cliente: 10,nombre_Cliente: "Camila Ramirez",direccion_Cliente: " cll 105 35-124 barrio Caldas",telefono_Cliente: "2598456",nivel_Cliente: "diamante",
-  },
-]);
-
 /** Colección Producto */
 
 db.producto.insertMany([
@@ -175,7 +150,7 @@ db.rol.insertMany([
   {
     Id_rol:1,
     nombre_rol: "administrador",
-    acceso_rol: ["cliente", "producto", "repartidor", "orden", "restaurante", "roles"]
+    acceso_rol: ["usuario", "producto", "repartidor", "orden", "restaurante", "roles"]
   },
   {
     Id_rol:2,
@@ -189,29 +164,80 @@ db.rol.insertMany([
   }
 ]);
 
+/** Colección usuario */
+
 db.usuario.insertMany([
   {
    nombre: "Diego Martinez",
    correo: "diego63_19@hotmail.com",
    contraseña:"123456789dm",
-   rol:"usuario"
+   rol:"cliente",
+   telefono: 3151456321,
+   direccion: "cra14afk#15"
   },
   {
     nombre: "Adrian Bueno",
     correo: "Adrian123@hotmail.com",
     contraseña:"123456789ab",
-    rol:"repartidor"
+    rol:"repartidor",
+    telefono: 3254896541,
+    direccion: "calle45"
   },
   {
     nombre: "fernando Calderon",
     correo: "fernando@hotmail.com",
     contraseña:"123456789fc",
-    rol:"usuario"
+    rol:"cliente",
+    telefono: 3478965412,
+    direccion: "cra48"
   },
   {
     nombre: "carlo lopez",
     correo: "carlos@hotmail.com",
     contraseña:"123456789cp",
-    rol:"repartidor"
+    rol:"repartidor",
+    telefono: 310245628
+  },
+  {
+    nombre: "Joel Pedraza",
+    correo: "joel@gmail.com",
+    contraseña:"hola1234",
+    rol:"cliente",
+    telefono: 3504265412
+  },
+  {
+    nombre: "juan manito",
+    correo: "juan@hotmail.com",
+    contraseña:"si123456789",
+    rol:"repartidor",
+    telefono: 3201425632
+  },
+  {
+    nombre: "maria gonzales",
+    correo: "maria@hotmail.com",
+    contraseña:"facil1234",
+    rol:"cliente",
+    telefono: 3904555485
+  },
+  {
+    nombre: "juana martinez",
+    correo: "juana@hotmail.com",
+    contraseña:"juana123",
+    rol:"repartidor",
+    telefono: 3502145632
+  },
+  {
+    nombre: "mariana palacio",
+    correo: "mariana@hotmail.com",
+    contraseña:"no12345",
+    rol:"cliente",
+    telefono: 3102456283
+  },
+  {
+    nombre: "diego manga",
+    correo: "diego@hotmail.com",
+    contraseña:"diego1234",
+    rol:"repartidor",
+    telefono: 3504265412
   }
 ]);
