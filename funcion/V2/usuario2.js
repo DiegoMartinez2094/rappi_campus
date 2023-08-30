@@ -69,7 +69,7 @@ usuario2.get("/usuario/rol/:rol", limitGrt(),validarToken, async (req, res) => {
     }
 });
 
-usuario2.post("/usuario",limitGrt(),validarToken, async(req, res) => {
+usuario2.post("/usuario",limitGrt(), async(req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     const {errors} = validationResult(req)

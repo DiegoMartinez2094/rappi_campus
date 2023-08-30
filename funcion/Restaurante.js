@@ -6,7 +6,7 @@ import { validarToken } from "../middleware_token/middlewareJWT.js";
 
 const restaurante = Router();
 
-restaurante.post("/",limitGrt(), validarToken, async (req, res) => {
+restaurante.post("/restaurante",limitGrt(), validarToken, async (req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     try {
@@ -21,7 +21,7 @@ restaurante.post("/",limitGrt(), validarToken, async (req, res) => {
     }
 });
 
-restaurante.get("/todos",limitGrt(), validarToken, async (req, res) => {
+restaurante.get("/restaurante/todos",limitGrt(), validarToken, async (req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     try {
@@ -35,7 +35,7 @@ restaurante.get("/todos",limitGrt(), validarToken, async (req, res) => {
     }
 });
 
-restaurante.get("/nombre/:nombreRestaurante",limitGrt(), validarToken, async (req, res) => {
+restaurante.get("/restaurante/nombre/:nombreRestaurante",limitGrt(), validarToken, async (req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     const nombreRestaurante = req.params.nombreRestaurante;
@@ -56,7 +56,7 @@ restaurante.get("/nombre/:nombreRestaurante",limitGrt(), validarToken, async (re
     }
 });
 
-restaurante.put("/nombre/:nombreRestaurante",limitGrt(), validarToken, async (req, res) => {
+restaurante.put("/restaurante/nombre/:nombre_Restaurante",limitGrt(), validarToken, async (req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     const nombreRestaurante = req.params.nombreRestaurante;
@@ -81,7 +81,7 @@ restaurante.put("/nombre/:nombreRestaurante",limitGrt(), validarToken, async (re
     }
 });
 
-restaurante.delete("/nombre/:nombreRestaurante",limitGrt(), validarToken, async (req, res) => {
+restaurante.delete("/restaurante/nombreRestaurante/:nombre_Restaurante",limitGrt(), validarToken, async (req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     const nombreRestaurante = req.params.nombreRestaurante;
