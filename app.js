@@ -105,8 +105,60 @@ check("precio_und")
    "2.0.0": producto2,
 }));
 
-app.use('/orden', versionRoute({
-   "1.0.0": orden,
+app.use('/orden',
+
+[check("id_Orden")
+.notEmpty().withMessage('El id_Orden es obligatorio')
+.custom(value => /^\d+$/.test(value)).withMessage('El id_Orden debe ser numérico sin letras')
+.toInt(),
+
+check("fecha_Creacion")
+.notEmpty().withMessage('La fecha_Creacion es obligatoria')
+.isISO8601().withMessage('El formato de fecha_Creacion no es válido'),
+
+check("cliente")
+.isObject().withMessage('El cliente debe ser un objeto')
+.custom(value => value.nombre_Cliente && value.direccion_Cliente && value.telefono_Cliente)
+.withMessage('El objeto cliente debe contener nombre_Cliente, direccion_Cliente y telefono_Cliente'),
+
+check("producto")
+.isObject().withMessage('El producto debe ser un objeto')
+.custom(value => value.id && value.nombre_Producto && value.precio_und && value.cantidad_Producto)
+.withMessage('El objeto producto debe contener id, nombre_Producto, precio_und y cantidad_Producto'),
+
+check("pago")
+.isObject().withMessage('El pago debe ser un objeto')
+.custom(value => value.monto && value.metodo_Pago && value.costo_domicilio && value.pago_total)
+.withMessage('El objeto pago debe contener monto, metodo_Pago, costo_domicilio y pago_total'),
+
+check("estado")
+.notEmpty().withMessage('El estado es obligatorio'),
+
+check("instrucciones_Especiales")
+.notEmpty().withMessage('Las instrucciones_Especiales son obligatorias'),
+
+check("repartidor_Asignado")
+.isObject().withMessage('El repartidor_Asignado debe ser un objeto')
+.custom(value => value.nombre_Repartidor && value.telefono_Repartidor && value.vehiculo && value.nivel_repartidor)
+.withMessage('El objeto repartidor_Asignado debe contener nombre_Repartidor, telefono_Repartidor, vehiculo y nivel_repartidor'),
+
+check("fecha_Entrega")
+.notEmpty().withMessage('La fecha_Entrega es obligatoria')
+.isISO8601().withMessage('El formato de fecha_Entrega no es válido'),
+
+check("calificacion")
+.notEmpty().withMessage('La calificacion es obligatoria')
+.custom(value => /^[1-5]$/.test(value)).withMessage('La calificacion debe ser un número entre 1 y 5')
+.toFloat(),
+
+check("restaurante")
+.isObject().withMessage('El restaurante debe ser un objeto')
+.custom(value => value.nombre && value.telefono_Restaurante)
+.withMessage('El objeto restaurante debe contener nombre y telefono_Restaurante')
+  ],
+
+  versionRoute({
+   "1.0.0": orden, 
 }));
 
 app.use('/restaurante', versionRoute({
