@@ -188,3 +188,30 @@ db.rol.insertMany([
     acceso_rol: ["orden"]
   }
 ]);
+
+db.usuario.insertMany([
+  {
+   nombre: "Diego Martinez",
+   correo: "diego63_19@hotmail.com",
+   contraseña:"123456789dm",
+   rol:"usuario"
+  },
+  {
+    nombre: "Adrian Bueno",
+    correo: "Adrian123@hotmail.com",
+    contraseña:"123456789ab",
+    rol:"repartidor"
+  },
+  {
+    nombre: "fernando Calderon",
+    correo: "fernando@hotmail.com",
+    contraseña:"123456789fc",
+    rol:"usuario"
+  },
+  {
+    nombre: "carlo lopez",
+    correo: "carlos@hotmail.com",
+    contraseña:"123456789cp",
+    rol:"repartidor"
+  }
+]);

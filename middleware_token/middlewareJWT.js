@@ -8,25 +8,38 @@ const conexionDB = await con();
 
 const crearToken = async (req, res) => {
     const encoder = new TextEncoder();
-    const roles = {
-        administrador: ["cliente", "producto", "repartidor", "orden", "restaurante", "roles"],
-        cliente: ["restaurante", "producto"],
-        repartidor:["orden"]
-    };
 
-    const rol = req.params.rol;
-    if (!roles[rol]) {
-        return res.status(400).json({ mensaje: "Rol no encontrado" });
+    const userInfo = decodeURIComponent(req.params.user);
+    const [correo, contraseña] = userInfo.split('-');
+  
+    console.log("correo:", correo);
+    console.log("contraseña:", contraseña);
+
+    try {
+        // Verificar si el correo y la contraseña existen en la colección "usuario"
+        const usuarioData = await conexionDB.collection('usuario').findOne({ correo, contraseña });
+    
+        if (!usuarioData) {
+            return res.status(401).json({ mensaje: "Credenciales inválidas" });
+        }
+    
+        // Obtener el rol del usuario
+        const rol = usuarioData.rol;
+    
+        // Crear el token con los permisos del rol
+        const jwtConstructor = await new SignJWT({ rol }) // Configurar el rol en el token
+            .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
+            .setIssuedAt()
+            .setExpirationTime('3m')
+            .sign(encoder.encode(process.env.JWT_SECRET));
+    
+        res.send(jwtConstructor);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ mensaje: "Error en el servidor" });
     }
-
-    // Crear el token con los permisos del rol
-    const jwtConstructor = await new SignJWT({ rol: rol }) // Configurar el rol en el token
-        .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
-        .setIssuedAt()
-        .setExpirationTime('3m')
-        .sign(encoder.encode(process.env.JWT_SECRET));
-    res.send(jwtConstructor);
 }
+
 
 
 const validarToken = async (req, res, next) => {
@@ -86,3 +99,4 @@ export {
     crearToken,
     validarToken
 }
+
