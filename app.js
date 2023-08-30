@@ -4,12 +4,13 @@ import versionRoutes from "express-routes-versioning";
 import { check } from "express-validator";
 import { crearToken } from "./middleware_token/middlewareJWT.js";
 
-import orden from "./funcion/Ordenes.js";
 import restaurante from "./funcion/Restaurante.js";
 import producto from "./funcion/V1/Productos.js";
 import producto2 from "./funcion/V2/Productos2.js";
 import usuario from "./funcion/V1/usuario.js";
 import usuario2 from "./funcion/V2/usuario2.js";
+import ordenes from "./funcion/V2/Ordenes2.js";
+import ordenes1 from "./funcion/V1/ordenes.js";
 
 dotenv.config();
 const app = express();
@@ -220,7 +221,8 @@ app.use("/orden",
   ],
 
   versionRoute({
-    "1.0.0": orden,
+    "1.0.0": ordenes1,
+    "2.0.0": ordenes
   })
 );
 app.use('/restaurante', 

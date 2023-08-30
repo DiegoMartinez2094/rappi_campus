@@ -1,7 +1,7 @@
-import { con } from "../db/atlas.js";
+import { con } from "../../db/atlas.js";
 import { Router } from "express";
-import { limitGrt } from "../limit/config.js";
-import { validarToken } from "../middleware_token/middlewareJWT.js";
+import { limitGrt } from "../../limit/config.js";
+import { validarToken } from "../../middleware_token/middlewareJWT.js";
 
 const ordenes = Router();
 
@@ -39,6 +39,25 @@ ordenes.get("/orden/:id_Orden",limitGrt(), validarToken, async (req, res) => {
     console.error("Error al obtener la orden:", error);
     res.status(500).send("Error interno del servidor");
   }
+});
+
+ordenes.post("/orden",limitGrt(), validarToken, async(req, res)=>{
+  if(!req.rateLimit) return; 
+  console.log(req.rateLimit);
+  const {errors} = validationResult(req)
+  if (errors.length > 0) {
+      return res.status(400).json({ errors: errors });
+    }
+  let result;
+  try {
+      const ordenes = db.collection("orden");
+      result = await ordenes.insertOne(req.body);
+      res.status(201).send(result);
+  } catch (error) {
+      console.log(error.errInfo.details.schemaRulesNotSatisfied[0]);
+      res.send();
+  }
+
 });
 
 // Eliminar una orden por id_Orden
