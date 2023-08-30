@@ -8,7 +8,7 @@ import { validarToken } from '../../middleware_token/middlewareJWT.js';
 const repartidor = Router();
 const db = await con();
 
-repartidor.get("/repartidor/:id_Repartidor?", limitGrt(), async (req, res) => {
+repartidor.get("/repartidor/:id_Repartidor?", limitGrt(), validarToken, async (req, res) => {
     if (!req.rateLimit) return;
     console.log(req.rateLimit);
     const id_Repartidor = req.params.id_Repartidor ? parseInt(req.params.id_Repartidor) : null;
@@ -32,7 +32,7 @@ repartidor.get("/repartidor/:id_Repartidor?", limitGrt(), async (req, res) => {
     }
 });
 
-repartidor.get("/repartidor/nivel/:nivel_repartidor", limitGrt(), async (req, res) => {
+repartidor.get("/repartidor/nivel/:nivel_repartidor", limitGrt(), validarToken, async (req, res) => {
     if (!req.rateLimit) return;
     console.log(req.rateLimit);
     const nivel_repartidor = req.params.nivel_repartidor;
@@ -51,7 +51,7 @@ repartidor.get("/repartidor/nivel/:nivel_repartidor", limitGrt(), async (req, re
     }
 });
 
-repartidor.get("/repartidor/vehiculo/:vehiculo", limitGrt(), async (req, res) => {
+repartidor.get("/repartidor/vehiculo/:vehiculo", limitGrt(), validarToken, async (req, res) => {
     if (!req.rateLimit) return;
     console.log(req.rateLimit);
     const vehiculo = req.params.vehiculo;
@@ -70,7 +70,7 @@ repartidor.get("/repartidor/vehiculo/:vehiculo", limitGrt(), async (req, res) =>
     }
 });
 
-repartidor.get("/repartidor/nombre/:nombre_Repartidor", limitGrt(), async (req, res) => {
+repartidor.get("/repartidor/nombre/:nombre_Repartidor", limitGrt(), validarToken, async (req, res) => {
     if (!req.rateLimit) return;
     console.log(req.rateLimit);
     const nombre_Repartidor = req.params.nombre_Repartidor;
@@ -89,7 +89,7 @@ repartidor.get("/repartidor/nombre/:nombre_Repartidor", limitGrt(), async (req, 
     }
 });
 
-repartidor.post("/repartidor",limitGrt(), async(req, res)=>{
+repartidor.post("/repartidor",limitGrt(), validarToken,async(req, res)=>{
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     const {errors} = validationResult(req)
@@ -107,7 +107,7 @@ repartidor.post("/repartidor",limitGrt(), async(req, res)=>{
     }
 });
 
-repartidor.put("/repartidor/:id_Repartidor",limitGrt(), async(req, res)=>{
+repartidor.put("/repartidor/:id_Repartidor",limitGrt(), validarToken, async(req, res)=>{
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     const id_Repartidor = parseInt(req.params.id_Repartidor);
@@ -133,7 +133,7 @@ repartidor.put("/repartidor/:id_Repartidor",limitGrt(), async(req, res)=>{
 
 });
 
-repartidor.delete("/repartidor/:id_Repartidor", limitGrt(), async (req, res) => {
+repartidor.delete("/repartidor/:id_Repartidor", limitGrt(), validarToken,async (req, res) => {
     if (!req.rateLimit) return;
     console.log(req.rateLimit);
     const id_Repartidor = parseInt(req.params.id_Repartidor);

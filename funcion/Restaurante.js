@@ -1,11 +1,12 @@
 import { con } from "../db/atlas.js";
 import { Router } from "express";
 import { limitGrt } from "../limit/config.js";
+import { validarToken } from "../middleware_token/middlewareJWT.js";
 
 
 const restaurante = Router();
 
-restaurante.post("/",limitGrt(), async (req, res) => {
+restaurante.post("/",limitGrt(), validarToken, async (req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     try {
@@ -20,7 +21,7 @@ restaurante.post("/",limitGrt(), async (req, res) => {
     }
 });
 
-restaurante.get("/todos",limitGrt(), async (req, res) => {
+restaurante.get("/todos",limitGrt(), validarToken, async (req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     try {
@@ -34,7 +35,7 @@ restaurante.get("/todos",limitGrt(), async (req, res) => {
     }
 });
 
-restaurante.get("/nombre/:nombreRestaurante",limitGrt(), async (req, res) => {
+restaurante.get("/nombre/:nombreRestaurante",limitGrt(), validarToken, async (req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     const nombreRestaurante = req.params.nombreRestaurante;
@@ -55,7 +56,7 @@ restaurante.get("/nombre/:nombreRestaurante",limitGrt(), async (req, res) => {
     }
 });
 
-restaurante.put("/nombre/:nombreRestaurante",limitGrt(), async (req, res) => {
+restaurante.put("/nombre/:nombreRestaurante",limitGrt(), validarToken, async (req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     const nombreRestaurante = req.params.nombreRestaurante;
@@ -80,7 +81,7 @@ restaurante.put("/nombre/:nombreRestaurante",limitGrt(), async (req, res) => {
     }
 });
 
-restaurante.delete("/nombre/:nombreRestaurante",limitGrt(), async (req, res) => {
+restaurante.delete("/nombre/:nombreRestaurante",limitGrt(), validarToken, async (req, res) => {
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     const nombreRestaurante = req.params.nombreRestaurante;
