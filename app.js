@@ -25,7 +25,7 @@ app.use((req, res, next) => {
    next();
 });
 
-app.get('/token/:rol', crearToken);
+app.get('/login/:user', crearToken);
 
 app.use('/cliente',
 [check("id_Cliente")
