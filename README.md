@@ -234,7 +234,6 @@ Bibliografia:
 
 [https://www.notion.so/help/tasks-and-dependencies]()
 
-
 ## **Descripción del Proyecto: Aplicación de Delivery con Express y Node.js**
 
 El proyecto es una aplicación de delivery basada en Node.js que utiliza el framework Express para crear un servidor. El objetivo principal de esta aplicación es recrear las funcion básica de una plataforma de delivery, permitiendo la gestión de clientes, repartidores, restaurantes, productos,  y órdenes a través de una base de datos. El enfoque se pone en la seguridad, la validación de datos y la gestión eficiente de peticiones.
@@ -290,3 +289,46 @@ npm run dev
 ```
 
 Nos dará un mensaje similar a este: `Servidor iniciado en http://127.10.10.10:5011` que nos indica la direccion url donde está corriendo el servidor.
+
+
+## Utilización de la APP:
+
+1-Se debe crear un usuario con el metodo post y la direccion `http://127.10.10.10:5011/usuario` y los datos en el body todos son obligatorios:
+
+```
+{ nombre:"carlo lopez",
+    correo:"carlos@hotmail.com",
+    contraseña:"123456789cp",
+    rol:"repartidor}
+```
+
+**Tener en cuenta que en el rol solo podrás poner "repartidor" o "cliente".**
+
+**2-Login, para ingresar debes solicitar un token mediante la solicitud get y la URL de la siguiente forma:**
+
+**{puerto de conexion}/login/{correo}-{contraseña}**
+
+```
+http://127.10.10.10:5011/login/Adrian123@hotmail.com-123456789ab
+```
+
+**si el usuario está previamente registrado, el token dará acceso a las respectivas colecciones y metodos especificos:**
+
+**Para el usuario "administrador" todos los metodos en todas las colecciones.**
+
+**Para el usuario "cliente":**
+
+| **metodo** | **coleccion**   | **url ejemplo**                                                     |
+| ---------------- | --------------------- | ------------------------------------------------------------------------- |
+| **post**   | **pedido**      | [http://127.10.10.10:5011/pedido](http://127.10.10.10:5011/pedido)           |
+| **put**    | **pedido**      | [http://127.10.10.10:5011/pedido](http://127.10.10.10:5011/pedido)           |
+| **get**    | **pedido**      | [http://127.10.10.10:5011/pedido/](http://127.10.10.10:5011/pedido/)         |
+| **delete** | **pedido**      | [http://127.10.10.10:5011/pedido/](http://127.10.10.10:5011/pedido/)         |
+| **get**    | **producto**    | [http://127.10.10.10:5011/producto](http://127.10.10.10:5011/producto)       |
+| **get**    | **restaurante** | [http://127.10.10.10:5011/restaurante](http://127.10.10.10:5011/restaurante) |
+
+**Para el usuario "repartidor":**
+
+| **metodo** | **coleccion** | **url ejemplo**                                           |
+| ---------------- | ------------------- | --------------------------------------------------------------- |
+| **get**    | **orden**     | [http://127.10.10.10:5011/pedido](http://127.10.10.10:5011/pedido) |
