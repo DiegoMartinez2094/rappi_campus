@@ -25,31 +25,6 @@ db.producto.insertMany([
   },
 ]);
 
-/** Colección Repartidor */
-
-db.repartidor.insertMany([
-  {id_Repartidor: 1,nombre_Repartidor: "Luis Hernandez",telefono_Repartidor: "555-123-4567",vehiculo: "Caminando",nivel_repartidor: "Diamante",
-  },
-  {id_Repartidor: 2,nombre_Repartidor: "Ana Torres",telefono_Repartidor: "555-987-6543",vehiculo: "Bicicleta",nivel_repartidor: "Oro",
-  },
-  {id_Repartidor: 3,nombre_Repartidor: "Carlos Martinez",telefono_Repartidor: "555-555-5555",vehiculo: "Moto",nivel_repartidor: "Plata",
-  },
-  {id_Repartidor: 4,nombre_Repartidor: "Laura Gonzalez",telefono_Repartidor: "555-222-3333",vehiculo: "Auto",nivel_repartidor: "Bronce",
-  },
-  {id_Repartidor: 5,nombre_Repartidor: "Daniel Ramirez",telefono_Repartidor: "555-444-7777",vehiculo: "Bicicleta",nivel_repartidor: "Oro",
-  },
-  {id_Repartidor: 6,nombre_Repartidor: "María Silva",telefono_Repartidor: "555-666-8888",vehiculo: "Moto",nivel_repartidor: "Plata",
-  },
-  {id_Repartidor: 7,nombre_Repartidor: "Eduardo Perez",telefono_Repartidor: "555-111-2222",vehiculo: "Auto",nivel_repartidor: "Bronce",
-  },
-  {id_Repartidor: 8,nombre_Repartidor: "Isabel Diaz",telefono_Repartidor: "555-333-4444",vehiculo: "Caminando",nivel_repartidor: "Diamante",
-  },
-  {id_Repartidor: 9,nombre_Repartidor: "Hector Vega",telefono_Repartidor: "555-777-9999",vehiculo: "Moto",nivel_repartidor: "Plata",
-  },
-  {id_Repartidor: 10,nombre_Repartidor: "Patricia Luna",telefono_Repartidor: "555-999-1111",vehiculo: "Auto",nivel_repartidor: "Oro",
-  },
-]);
-
 /** Colección Restaurante */
 
 db.restaurante.insertMany([
@@ -196,48 +171,55 @@ db.usuario.insertMany([
     correo: "carlos@hotmail.com",
     contraseña:"123456789cp",
     rol:"repartidor",
-    telefono: 310245628
+    telefono: 310245628,
+    direccion: "cra50"
   },
   {
     nombre: "Joel Pedraza",
     correo: "joel@gmail.com",
     contraseña:"hola1234",
     rol:"cliente",
-    telefono: 3504265412
+    telefono: 3504265412,
+    direccion: "cra51"
   },
   {
     nombre: "juan manito",
     correo: "juan@hotmail.com",
     contraseña:"si123456789",
     rol:"repartidor",
-    telefono: 3201425632
+    telefono: 3201425632,
+    direccion: "cra52"
   },
   {
     nombre: "maria gonzales",
     correo: "maria@hotmail.com",
     contraseña:"facil1234",
     rol:"cliente",
-    telefono: 3904555485
+    telefono: 3904555485,
+    direccion: "cra53"
   },
   {
     nombre: "juana martinez",
     correo: "juana@hotmail.com",
     contraseña:"juana123",
     rol:"repartidor",
-    telefono: 3502145632
+    telefono: 3502145632,
+    direccion: "cra54"
   },
   {
     nombre: "mariana palacio",
     correo: "mariana@hotmail.com",
     contraseña:"no12345",
     rol:"cliente",
-    telefono: 3102456283
+    telefono: 3102456283,
+    direccion: "cra56"
   },
   {
     nombre: "diego manga",
     correo: "diego@hotmail.com",
     contraseña:"diego1234",
     rol:"repartidor",
-    telefono: 3504265412
+    telefono: 3504265412,
+    direccion: "cra57"
   }
 ]);
