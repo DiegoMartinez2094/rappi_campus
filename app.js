@@ -4,7 +4,8 @@ import versionRoutes from "express-routes-versioning";
 import { check } from "express-validator";
 import { crearToken } from "./middleware_token/middlewareJWT.js";
 
-import restaurante from "./funcion/Restaurante.js";
+import restaurante from "./funcion/V2/Restaurante2.js";
+import restaurante1 from "./funcion/V1/Restaurante.js";
 import producto from "./funcion/V1/Productos.js";
 import producto2 from "./funcion/V2/Productos2.js";
 import usuario from "./funcion/V1/usuario.js";
@@ -270,6 +271,7 @@ app.use(
 
   versionRoute({
     "1.0.0": restaurante,
+    "2.0.0": restaurante1
   })
 );
 
