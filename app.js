@@ -4,12 +4,13 @@ import versionRoutes from "express-routes-versioning";
 import { check } from "express-validator";
 import { crearToken } from "./middleware_token/middlewareJWT.js";
 
-import orden from "./funcion/Ordenes.js";
 import restaurante from "./funcion/Restaurante.js";
 import producto from "./funcion/V1/Productos.js";
 import producto2 from "./funcion/V2/Productos2.js";
 import usuario from "./funcion/V1/usuario.js";
 import usuario2 from "./funcion/V2/usuario2.js";
+import ordenes from "./funcion/V2/Ordenes2.js";
+import ordenes1 from "./funcion/V1/ordenes.js";
 
 dotenv.config();
 const app = express();
@@ -220,15 +221,37 @@ app.use("/orden",
   ],
 
   versionRoute({
-    "1.0.0": orden,
+    "1.0.0": ordenes1,
+    "2.0.0": ordenes
   })
 );
+app.use('/restaurante', 
 
-app.use("/restaurante",
-  versionRoute({
-    "1.0.0": restaurante,
-  })
-);
+[check("id_Restaurante")
+.notEmpty().withMessage('El id_Restaurante es obligatorio')
+.custom(value => /^\d+$/.test(value)).withMessage('El id_Restaurante debe ser numérico sin letras')
+.toInt(),
+
+check("nombre_Restaurante")
+.notEmpty().withMessage('El nombre_Restaurante es obligatorio')
+.isString().withMessage('El nombre_Restaurante debe ser string'),
+
+check("telefono_Restaurante")
+.notEmpty().withMessage('El telefono_Restaurante es obligatorio')
+.isString().withMessage('El nombre_Producto debe ser string'),
+
+check("direccion_Restaurante")
+.notEmpty().withMessage('La direccion_Restaurante es obligatorio')
+.isString().withMessage('La direccion_Restaurante debe ser string'),
+
+check("calificacion_Restaurante")
+.notEmpty().withMessage('La calificacion_Restaurante es obligatorio')
+.custom(value => /^[1-5]$/.test(value)).withMessage('La calificacion_Restaurante debe ser un número entre 1 y 5')
+.toInt()],
+
+versionRoute({
+   "1.0.0": restaurante,
+}));
 
 app.listen(config.port, config.hostname, () => {
   console.log(`Servidor iniciado en http://${config.hostname}:${config.port}`);
