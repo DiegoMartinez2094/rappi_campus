@@ -123,17 +123,22 @@ db.orden.insertMany([
 
 db.rol.insertMany([
   {
-    Id_rol:1,
-    nombre_rol: "administrador",
-    acceso_rol: ["usuario", "producto", "orden", "restaurante", "roles", "pedido" ]
+    Id_rol:2,
+    nombre_rol: "Super_administrador",
+    acceso_rol: ["usuario", "producto", "orden", "restaurante", "pedido", "rol" ]
   },
   {
     Id_rol:2,
+    nombre_rol: "administrador",
+    acceso_rol: ["usuario", "producto", "orden", "restaurante", "pedido" ]
+  },
+  {
+    Id_rol:3,
     nombre_rol: "cliente",
     acceso_rol: ["restaurante", "producto", "pedido"]
   },
   {
-    Id_rol:3,
+    Id_rol:4,
     nombre_rol: "repartidor",
     acceso_rol: ["orden"]
   }
