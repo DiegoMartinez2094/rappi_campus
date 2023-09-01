@@ -1,6 +1,7 @@
 import { con } from "../../db/atlas.js";
 import { Router } from "express";
 import { limitGrt } from "../../limit/config.js";
+import { validationResult } from "express-validator";
 import { validarToken } from "../../middleware_token/middlewareJWT.js";
 
 const ordenes = Router();
