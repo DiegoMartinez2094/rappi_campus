@@ -63,7 +63,7 @@ const validarToken = async (req, res, next) => {
         const urlParts = req.url.split("/");
         console.log("partes url:", urlParts[1]);
         
-        let coleccionIndex = urlParts.findIndex(part => part === "usuario" || part === "producto" || part === "repartidor"|| part === "orden"|| part === "restaurante"|| part === "pedido");
+        let coleccionIndex = urlParts.findIndex(part => part === "usuario" || part === "producto" || part === "repartidor"|| part === "orden"|| part === "restaurante"|| part === "pedido" || part === "rol");
 
         if (coleccionIndex === -1) {
             return res.status(400).json({ mensaje: "Colección no encontrada en la URL" });

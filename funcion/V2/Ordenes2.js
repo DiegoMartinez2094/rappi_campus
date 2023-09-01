@@ -1,6 +1,7 @@
 import { con } from "../../db/atlas.js";
 import { Router } from "express";
 import { limitGrt } from "../../limit/config.js";
+import { validationResult } from "express-validator";
 import { validarToken } from "../../middleware_token/middlewareJWT.js";
 
 const ordenes = Router();
@@ -50,14 +51,17 @@ ordenes.post("/orden",limitGrt(), validarToken, async(req, res)=>{
     }
   let result;
   try {
-      const ordenes = db.collection("orden");
-      result = await ordenes.insertOne(req.body);
+      const db = await con();
+      const orden = db.collection("orden");
+      result = await orden.insertOne(req.body);
+      if (result.insertedCount === 0) {
+        throw new Error("No se pudo insertar el registro");
+      }
       res.status(201).send(result);
   } catch (error) {
-      console.log(error.errInfo.details.schemaRulesNotSatisfied[0]);
-      res.send();
+      console.log(error.message);
+      res.status(500).send(error.message);
   }
-
 });
 
 // Eliminar una orden por id_Orden

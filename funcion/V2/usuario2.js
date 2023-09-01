@@ -69,24 +69,27 @@ usuario2.get("/usuario/rol/:rol", limitGrt(),validarToken, async (req, res) => {
     }
 });
 
-usuario2.post("/usuario",limitGrt(), async(req, res) => {
+usuario2.post("/usuario",limitGrt(), validarToken, async(req, res)=>{
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
     const {errors} = validationResult(req)
     if (errors.length > 0) {
         return res.status(400).json({ errors: errors });
       }
-let resul;
-try { 
-    const db = await con();
-    const usuarios = db.collection("usuario");
-    resul = await usuarios.insertOne(req.body);
-    res.status(201).send(resul);
-} catch (error) {
-    console.log(error);
-    res.send();
-}
-});    
+    let result;
+    try {
+        const db = await con();
+        const usuarios = db.collection("usuario");
+        result = await usuarios.insertOne(req.body);
+        if (result.insertedCount === 0) {
+          throw new Error("No se pudo insertar el registro");
+        }
+        res.status(201).send(result);
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).send(error.message);
+    }
+});   
 
 usuario2.delete("/usuario/:id_usuario",limitGrt(),validarToken, async (req, res) => {
     if(!req.rateLimit) return; 

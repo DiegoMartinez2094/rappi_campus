@@ -1,23 +1,31 @@
-import { con } from "../db/atlas.js";
+import { con } from "../../db/atlas.js";
 import { Router } from "express";
-import { limitGrt } from "../limit/config.js";
-import { validarToken } from "../middleware_token/middlewareJWT.js";
+import { limitGrt } from "../../limit/config.js";
+import { validationResult } from "express-validator";
+import { validarToken } from "../../middleware_token/middlewareJWT.js";
 
 
 const restaurante = Router();
 
-restaurante.post("/restaurante",limitGrt(), validarToken, async (req, res) => {
+restaurante.post("/restaurante",limitGrt(), validarToken, async(req, res)=>{
     if(!req.rateLimit) return; 
     console.log(req.rateLimit);
+    const {errors} = validationResult(req)
+    if (errors.length > 0) {
+        return res.status(400).json({ errors: errors });
+      }
+    let result;
     try {
-        const db = await con(); 
-        const restaurantes = db.collection("restaurante"); 
-        const nuevoRestaurante = req.body;
-        const resultado = await restaurantes.insertOne(nuevoRestaurante);
-        res.status(201).json({ mensaje: "Restaurante agregado exitosamente", id: resultado.insertedId });
+        const db = await con();
+        const restaurantes = db.collection("restaurante");
+        result = await restaurantes.insertOne(req.body);
+        if (result.insertedCount === 0) {
+          throw new Error("No se pudo insertar el registro");
+        }
+        res.status(201).send(result);
     } catch (error) {
-        console.error("Error al agregar el restaurante:", error);
-        res.status(500).send("Error interno del servidor");
+        console.log(error.message);
+        res.status(500).send(error.message);
     }
 });
 
