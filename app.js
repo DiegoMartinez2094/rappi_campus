@@ -14,6 +14,8 @@ import ordenes from "./funcion/V2/Ordenes2.js";
 import ordenes1 from "./funcion/V1/ordenes.js";
 import pedido from "./funcion/V1/pedido.js";
 import pedido2 from "./funcion/V2/pedido2.js";
+import rol from "./funcion/V1/rol.js";
+import rol2 from "./funcion/V2/rol2.js";
 
 dotenv.config();
 const app = express();
@@ -28,6 +30,11 @@ app.use((req, res, next) => {
 });
 
 app.get("/login/:user", crearToken);
+
+app.use("/rol", versionRoute({
+  "1.0.0": rol,
+  "2.0.0": rol2
+}));
 
 app.use(
   "/usuario",
