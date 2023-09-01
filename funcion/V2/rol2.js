@@ -41,22 +41,26 @@ rol2.get("/rol/:Id_rol",limitGrt(), validarToken, async (req, res) => {
 });
 
 rol2.post("/rol",limitGrt(), validarToken, async(req, res)=>{
-    if(!req.rateLimit) return; 
-    console.log(req.rateLimit);
-    const {errors} = validationResult(req)
-    if (errors.length > 0) {
-        return res.status(400).json({ errors: errors });
-      }
-    let result;
-    try {
-        const roles = db.collection("rol");
-        result = await roles.insertOne(req.body);
-        res.status(201).send(result);
-    } catch (error) {
-        console.log(error.errInfo.details.schemaRulesNotSatisfied[0]);
-        res.send();
+  if(!req.rateLimit) return; 
+  console.log(req.rateLimit);
+  const {errors} = validationResult(req)
+  if (errors.length > 0) {
+      return res.status(400).json({ errors: errors });
     }
-  });
+  let result;
+  try {
+      const db = await con();
+      const roles = db.collection("rol");
+      result = await roles.insertOne(req.body);
+      if (result.insertedCount === 0) {
+        throw new Error("No se pudo insertar el registro");
+      }
+      res.status(201).send(result);
+  } catch (error) {
+      console.log(error.message);
+      res.status(500).send(error.message);
+  }
+});
 
 rol2.put("/rol/:Id_rol",limitGrt(), validarToken, async (req, res) => {
     if(!req.rateLimit) return; 
