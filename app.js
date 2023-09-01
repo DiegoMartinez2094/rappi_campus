@@ -320,11 +320,11 @@ app.use(
 app.use(
   "/pedido",
   [
-    check("Id_pedido")
+    check("id_pedido")
       .notEmpty()
-      .withMessage("El Id_pedido es obligatorio")
+      .withMessage("El id_pedido es obligatorio")
       .custom((value) => /^\d+$/.test(value))
-      .withMessage("El Id_pedido debe ser numérico sin letras")
+      .withMessage("El id_pedido debe ser numérico sin letras")
       .toInt(),
 
     check("cliente.nombre_Cliente")
@@ -377,12 +377,12 @@ app.use(
       .notEmpty()
       .withMessage("El método de pago es obligatorio")
       .custom((value) =>
-        ["trajeta debito", "trajeta credito", "efectivo", "bono"].includes(
+        ["tarjeta debito", "tarjeta credito", "efectivo", "bono"].includes(
           value.toLowerCase()
         )
       )
       .withMessage(
-        "método de pago no válido debee ser alguno de estos: trajeta debito,trajeta credito, efectivo, bono "
+        "método de pago no válido debee ser alguno de estos: tarjeta debito, tarjeta credito, efectivo, bono "
       ),
 
     check("pago.costo_domicilio")
