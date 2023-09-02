@@ -1,6 +1,378 @@
 use("db_ordenes_rappi");
 
-/** Colección Producto */
+
+db.createCollection("productos", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      additionalProperties: false,  // Impide la adición de propiedades adicionales no especificadas en el esquema.
+      required: ["id_Producto", "nombre_Producto", "descripcion_Producto", "precio_und"],
+      properties: {
+        id_Producto: {
+          bsonType: "int",
+          description: "El id_producto debe ser un numero y es obligatorio"
+        },
+        nombre_Producto: {
+          bsonType: "string",
+          description: "Nombre_producto debe ser un string y es oligatorio"
+        },
+        descripcion_Producto: {
+          bsonType: "string",
+          description: "Descripción_producto es obligatorio y debe ser un string"
+        },
+        precio_und: {
+          bsonType: ["int", "double"],
+          description: "Precio por unidad del producto debe ser un numero puede llevar solo puntos"
+        }
+      }
+    }
+  }
+})
+
+db.createCollection("restaurante", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["id_Restaurante", "nombre_Restaurante", "telefono_Restaurante", "direccion_Restaurante", "calificacion_Restaurante"],
+      properties: {
+        id_Restaurante: {
+          bsonType: "int",
+          description: "Identificador único del restaurante debe ser un entero y es obligatorio"
+        },
+        nombre_Restaurante: {
+          bsonType: "string",
+          description: "Nombre del restaurante es obligatorio y debe ser un string"
+        },
+        telefono_Restaurante: {
+          bsonType: "string",
+          description: "Número de teléfono del restaurante es obligatorio"
+        },
+        direccion_Restaurante: {
+          bsonType: "string",
+          description: "Dirección del restaurante es obligatoria"
+        },
+        calificacion_Restaurante: {
+          bsonType: "double",
+          minimum: 0,
+          maximum: 5,
+          description: "Calificación del restaurante (valor entre 0 y 5) puede llevar puntos ejemplo 4.2"
+        }
+      }
+    }
+  }
+})
+
+db.createCollection("orden", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: [
+        "id_Orden",
+        "fecha_Creacion",
+        "cliente",
+        "producto",
+        "pago",
+        "estado",
+        "repartidor_Asignado",
+        "fecha_Entrega",
+        "calificacion",
+        "restaurante"
+      ],
+      properties: {
+        id_Orden: {
+          bsonType: "int",
+          description: "Identificador único de la orden es obligatorio y debe ser un entero"
+        },
+        fecha_Creacion: {
+          bsonType: "date",
+          description: "Fecha de creación de la orden debe estar en formato Año-mes-dia ejemplo: 2023-08-31 y es obligatoria"
+        },
+        cliente: {
+          bsonType: "object",
+          required: ["nombre_Cliente", "direccion_Cliente", "telefono_Cliente"],
+          properties: {
+            nombre_Cliente: {
+              bsonType: "string",
+              description: "Nombre del cliente es obligatorio"
+            },
+            direccion_Cliente: {
+              bsonType: "string",
+              description: "Dirección del cliente es obligatoria"
+            },
+            telefono_Cliente: {
+              bsonType: "string",
+              description: "Número de teléfono del cliente es obligatorio"
+            }
+          }
+        },
+        producto: {
+          bsonType: "object",
+          required: ["id", "nombre_Producto", "precio_und", "cantidad_Producto"],
+          properties: {
+            id: {
+              bsonType: "int",
+              description: "Identificador único del producto es oligatorio"
+            },
+            nombre_Producto: {
+              bsonType: "string",
+              description: "Nombre del producto es obligatorio"
+            },
+            precio_und: {
+              bsonType: ["int", "double"],
+              description: "Precio por unidad del producto (entero o decimal) y es obligatorio"
+            },
+            cantidad_Producto: {
+              bsonType: "int",
+              description: "Cantidad del producto debe ser un numero entero"
+            }
+          }
+        },
+        pago: {
+          bsonType: "object",
+          required: ["monto", "metodo_Pago", "costo_domicilio", "pago_total"],
+          properties: {
+            monto: {
+              bsonType: ["int", "double"],
+              description: "Monto del pedido (entero o decimal)"
+            },
+            metodo_Pago: {
+              bsonType: "string",
+              description: "Método de pago debe ser una de estas: tarjeta credito, tarjeta debito, efectivo, bono",
+              pattern: "^(tarjeta credito|tarjeta debito|efectivo|bono)$",
+              options: "i" // La opción 'i' indica que la coincidencia sea insensible a mayúsculas y minúsculas.
+            },
+            costo_domicilio: {
+              bsonType: ["int", "double"],
+              description: "Costo de entrega (entero o decimal) y es obligatorio"
+            },
+            pago_total: {
+              bsonType: ["int", "double"],
+              description: "Pago total (entero o decimal) y es obligatorio"
+            }
+          }
+        },
+        estado: {
+          bsonType: "string",
+          pattern: "^(pendiente|entregado|cancelado)$",
+          options: "i",
+          description: "Estado de la orden debe ser pendiente, entregado, cancelado"
+        },
+        instrucciones_Especiales: {
+          bsonType: "string",
+          description: "Instrucciones especiales para la entrega"
+        },
+        repartidor_Asignado: {
+          bsonType: "object",
+          required: ["nombre_Repartidor", "telefono_Repartidor", "vehiculo", "nivel_repartidor"],
+          properties: {
+            nombre_Repartidor: {
+              bsonType: "string",
+              description: "Nombre del repartidor asignado"
+            },
+            telefono_Repartidor: {
+              bsonType: "string",
+              description: "Número de teléfono del repartidor"
+            },
+            vehiculo: {
+              bsonType: "string",
+              description: "Tipo de vehículo del repartidor debe ser caminando, bicicleta, moto o auto",
+              pattern: "^(caminando|bicicleta|moto|auto)$",
+              options: "i" // La opción 'i' indica que la coincidencia sea insensible a mayúsculas y minúsculas.
+            },
+            nivel_repartidor: {
+              bsonType: "string",
+              description: "Nivel de repartidor asignado debe ser: diamante, oro, plata, bronce",
+              pattern: "^(diamante|oro|plata|bronce)$",
+              options: "i"
+            }
+          }
+        },
+        fecha_Entrega: {
+          bsonType: "date",
+          description: "Fecha de entrega programada es obligatoria"
+        },
+        calificacion: {
+          bsonType: ["int", "double"],
+          minimum: 0,
+          maximum: 5,
+          description: "Calificación de la orden (valor entre 0 y 5) es obligatoria"
+        },
+        restaurante: {
+          bsonType: "object",
+          required: ["nombre", "telefono_Restaurante"],
+          properties: {
+            nombre: {
+              bsonType: "string",
+              description: "Nombre del restaurante es obligatorio"
+            },
+            telefono_Restaurante: {
+              bsonType: "string",
+              description: "Número de teléfono del restaurante es obligatorio"
+            }
+          }
+        }
+      }
+    }
+  }
+})
+
+db.createCollection("rol", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["Id_rol", "nombre_rol", "acceso_rol"],
+      properties: {
+        Id_rol: {
+          bsonType: "int",
+          description: "Identificador único del rol es obligatorio"
+        },
+        nombre_rol: {
+          bsonType: "string",
+          description: "Nombre del rol",
+          pattern: "^(Super_administrador|administrador|cliente|repartidor)$",
+        },
+        acceso_rol: {
+          bsonType: "array",
+          description: "Lista de accesos permitidos para el rol",
+          items: {
+            bsonType: "string",
+            enum: ["usuario", "producto", "orden", "restaurante", "pedido", "rol"],
+            description: "Acceso permitido"
+          }
+        }
+      }
+    }
+  }
+})
+
+db.createCollection("usuario", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["id_usuario", "nombre", "correo", "contraseña", "rol", "telefono", "direccion"],
+      properties: {
+        id_usuario: {
+          bsonType: "int",
+          description: "Identificador único del usuario es obligatorio y de tipo entero"
+        },
+        nombre: {
+          bsonType: "string",
+          description: "Nombre del usuario es obligatorio y de tipo string"
+        },
+        correo: {
+          bsonType: "string",
+          pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+          description: "Dirección de correo electrónico debe ser obligatoria"
+        },
+        contraseña: {
+          bsonType: "string",
+          description: "Contraseña del usuario es obligatoria"
+        },
+        rol: {
+          bsonType: "string",
+          description: "El rol es obligatorio y debe ser: Super_administrador, administrador, cliente, repartidor",
+          pattern: "^(Super_administrador|administrador|cliente|repartidor)$",
+        },
+        telefono: {
+          bsonType: ["int", "string"],
+          description: "Número de teléfono del usuario (entero o cadena) y es obligatorio"
+        },
+        direccion: {
+          bsonType: "string",
+          description: "Dirección del usuario es obligatoria"
+        }
+      }
+    }
+  }
+})
+
+db.createCollection("pedido", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["id_pedido", "cliente", "producto", "pago"],
+      properties: {
+        id_pedido: {
+          bsonType: "int",
+          description: "Identificador único del pedido debe ser tipo int y obligatorio"
+        },
+        cliente: {
+          bsonType: "object",
+          required: ["nombre_Cliente", "direccion_Cliente", "telefono_Cliente"],
+          properties: {
+            nombre_Cliente: {
+              bsonType: "string",
+              description: "Nombre del cliente debe ser string y obligatorio"
+            },
+            direccion_Cliente: {
+              bsonType: "string",
+              description: "Dirección del cliente debe ser un string y obligatorio"
+            },
+            telefono_Cliente: {
+              bsonType: "string",
+              description: "Número de teléfono del cliente debe ser un string y obligatorio "
+            }
+          }
+        },
+        producto: {
+          bsonType: "object",
+          required: ["id", "nombre_Producto", "precio_und", "cantidad_Producto"],
+          properties: {
+            id: {
+              bsonType: "int",
+              description: "Identificador único del producto debe ser un entero y obligatorio"
+            },
+            nombre_Producto: {
+              bsonType: "string",
+              description: "Nombre del producto debe ser un string y obligatorio"
+            },
+            precio_und: {
+              bsonType: ["int", "double"],
+              description: "Precio por unidad del producto (entero o decimal) y obligatorio"
+            },
+            cantidad_Producto: {
+              bsonType: "int",
+              description: "Cantidad del producto debe ser un entero y obligatorio"
+            }
+          }
+        },
+        pago: {
+          bsonType: "object",
+          required: ["monto", "metodo_Pago", "costo_domicilio", "pago_total"],
+          properties: {
+            monto: {
+              bsonType: ["int", "double"],
+              description: "Monto del pedido (entero o decimal)"
+            },
+            metodo_Pago: {
+              bsonType: "string",
+              description: "Método de pago debe ser una de estas: tarjeta credito, tarjeta debito, efectivo, bono",
+              pattern: "^(tarjeta credito|tarjeta debito|efectivo|bono)$",
+              options: "i"
+            },
+            costo_domicilio: {
+              bsonType: ["int", "double"],
+              description: "Costo de entrega (entero o decimal) y obligatorio"
+            },
+            pago_total: {
+              bsonType: ["int", "double"],
+              description: "Pago total (entero o decimal) obligatorio"
+            }
+          }
+        },
+        instrucciones_Especiales: {
+          bsonType: "string",
+          description: "Instrucciones especiales para la entrega"
+        }
+      }
+    }
+  }
+})
+
+
+
+
+/** Colección producto */
 
 db.producto.insertMany([
   {id_Producto: 1,nombre_Producto: "Manzanas",descripcion_Producto: "Frescas manzanas rojas de temporada",precio_und: 1.500,
@@ -50,7 +422,7 @@ db.restaurante.insertMany([
   },
 ]);
 
-/** Colección Ordenes */
+/** Colección Orden */
 
 db.orden.insertMany([
   {
@@ -120,6 +492,7 @@ db.orden.insertMany([
   }
 ]);
 
+/** Colección rol */
 
 db.rol.insertMany([
   {
