@@ -7,7 +7,7 @@ export let limitGrt = ()=>{
         legacyHeaders: false, 
         skip: (req,res)=>{ //Una función que determina si se debe omitir la limitación de velocidad para ciertas solicitudes.
                           // En este caso, si la longitud del contenido de la solicitud es mayor que 120 bytes, 
-            if(req.headers["content-length"]>520){
+            if(req.headers["content-length"]>5200){
                 res.status(413).send({
                     status:413, 
                     message: "Tamaño de la solicitud alcanzado"
