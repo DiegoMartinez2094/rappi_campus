@@ -542,7 +542,7 @@ db.usuario.insertMany([
     id_usuario:1,
     nombre: "Adrian Bueno",
     correo: "adrianjbuenop@gmail.com",
-    contraseña:"Ajbp170605",
+    contraseña:"$2a$10$LdsW6IuxIUmsh0Trn0bAmeX.yvPMMkRH9ioVmuF1iTHw/r2XdrKo6",
     rol:"Super_administrador",
     telefono: "3504265412",
     direccion: "cra14aw#45b17"
@@ -551,52 +551,52 @@ db.usuario.insertMany([
     id_usuario:2,
     nombre: "Diego Martinez",
     correo: "diegofernadndomartinezcalderon@gmail.com",
-    contraseña:"123456789dm",
+    contraseña:"$2a$10$BUVwI1l18Nn4Pf1gteK8VeKZPmyhqe7qbjS8k1woQ2gm97XIfzeV6",
     rol:"Super_administrador",
     telefono: "3151456321",
     direccion: "cra14afk#15"
   },
   {
     id_usuario:3,
-    nombre: "Adrian Bueno",
+    nombre: "Joel Bueno",
     correo: "adrianj@gmail.com",
-    contraseña:"adrian17",
+    contraseña:"$2a$10$15hhuyjLbZTwDWmiUdHagOcgKVVUHU8k8MEAq7C1rFX/Fz2NwSSde",
     rol:"administrador",
     telefono: "3504265412",
     direccion: "cra14aw#45b17"
    },
   {
     id_usuario:4,
-    nombre: "Diego Martinez",
+    nombre: "Fernando Martinez",
     correo: "diegof@gmail.com",
-    contraseña:"facil456",
+    contraseña:"$2a$10$FxhWn6uRhcQ3KpR/7NGUDuxFWNuzkepSd.6bdl87artp673VJIggm",
     rol:"administrador",
     telefono: "3151456321",
     direccion: "cra14afk#15"
   },
   {
     id_usuario:5,
-   nombre: "Diego Hernando",
-   correo: "diego63_19@hotmail.com",
-   contraseña:"facil789",
+   nombre: "Andrey Hernando",
+   correo: "Andrey@hotmail.com",
+   contraseña:"$2a$10$oqos9VuIs0tF6lWoaCkD.eYvt/AFL69/EyaTkl1SQKoskwN4TONKq",
    rol:"cliente",
    telefono: "3151456321",
    direccion: "cra14afk#15"
   },
   {
     id_usuario:6,
-    nombre: "Adrian Pedraza",
-    correo: "Adrian123@hotmail.com",
-    contraseña:"123456789ab",
+    nombre: "Adriano Pedraza",
+    correo: "Adriano123@hotmail.com",
+    contraseña:"$2a$10$B0NIGHyyCSpEgP7JNKUOlud2Sah6bMNyKH.aTRxMVyuYZglEuiSXW",
     rol:"repartidor",
     telefono: "3254896541",
     direccion: "calle45"
   },
   {
     id_usuario:7,
-    nombre: "fernando Calderon",
-    correo: "fernando@hotmail.com",
-    contraseña:"123456789fc",
+    nombre: "fercho Calderon",
+    correo: "fercho@hotmail.com",
+    contraseña:"$2a$10$XY25nMMgw3/BFEHbuFJgv.1bvYzeKxHghEnqfSXBJR8PRBt7DvJr2",
     rol:"cliente",
     telefono: "3478965412",
     direccion: "cra48"
@@ -604,65 +604,47 @@ db.usuario.insertMany([
   {
     id_usuario:8,
     nombre: "carlo lopez",
-    correo: "carlos@hotmail.com",
-    contraseña:"123456789cp",
+    correo: "carlo@hotmail.com",
+    contraseña:"$2a$10$ht46OESt70L7G2LsONYL4ewbgp4gjcDzNtNf0wC2DBRS0YX7Bsgmy",
     rol:"repartidor",
     telefono: "310245628",
     direccion: "cra50"
   },
   {
     id_usuario:9,
-    nombre: "Joel Pedraza",
-    correo: "joel@gmail.com",
-    contraseña:"hola1234",
+    nombre: "Joelo Pedraza",
+    correo: "joelo@gmail.com",
+    contraseña:"$2a$10$lxlXu8RYZ9lD6yndSuy5..Qn9Txz1rrqUSru4xNCUovo5vQtxBy9y",
     rol:"cliente",
     telefono: "3504265412",
     direccion: "cra51"
   },
   {
     id_usuario:10,
-    nombre: "juan manito",
-    correo: "juan@hotmail.com",
-    contraseña:"si123456789",
+    nombre: "Juan manito",
+    correo: "Juan@hotmail.com",
+    contraseña:"$2a$10$Z8Rtg6aNG4nbGIcqUVoTPuCnHdif.LSVlaDXgV2VpQZChEQs2ipVu",
     rol:"repartidor",
     telefono: "3201425632",
     direccion: "cra52"
   },
   {
     id_usuario:11,
-    nombre: "maria gonzales",
-    correo: "maria@hotmail.com",
-    contraseña:"facil1234",
+    nombre: "Maria gonzales",
+    correo: "Maria@hotmail.com",
+    contraseña:"$2a$10$3WxIti31dFANtN5vrXU9IeMuG7ngmZYYJ2pWB5rcd6w33I7L6R66a",
     rol:"cliente",
     telefono: "3904555485",
     direccion: "cra53"
   },
   {
     id_usuario:12,
-    nombre: "juana martinez",
-    correo: "juana@hotmail.com",
-    contraseña:"juana123",
+    nombre: "Juana martinez",
+    correo: "Juana@hotmail.com",
+    contraseña:"$2a$10$UHfHiNR.bIFEw/.J/ps4l.RjtsuwLtopbT1YJcSgMjsf/0MlaiKCe",
     rol:"repartidor",
     telefono: "3502145632",
     direccion: "cra54"
-  },
-  {
-    id_usuario:13,
-    nombre: "mariana palacio",
-    correo: "mariana@hotmail.com",
-    contraseña:"no12345",
-    rol:"cliente",
-    telefono: "3102456283",
-    direccion: "cra56"
-  },
-  {
-    id_usuario:14,
-    nombre: "diego manga",
-    correo: "diego@hotmail.com",
-    contraseña:"diego1234",
-    rol:"repartidor",
-    telefono: "3504265412",
-    direccion: "cra57"
   }
 ]);
 
