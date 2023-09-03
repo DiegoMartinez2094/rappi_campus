@@ -236,18 +236,19 @@ Bibliografia:
 
 ## **Descripción del Proyecto: Aplicación de Delivery con Express y Node.js**
 
-El proyecto es una aplicación de delivery basada en Node.js que utiliza el framework Express para crear un servidor. El objetivo principal de esta aplicación es recrear las funcion básica de una plataforma de delivery, permitiendo la gestión de clientes, repartidores, restaurantes, productos,  y órdenes a través de una base de datos. El enfoque se pone en la seguridad, la validación de datos y la gestión eficiente de peticiones.
+El proyecto es una aplicación de delivery basada en Node.js que utiliza el framework Express para crear un servidor. El objetivo principal de esta aplicación es recrear las funcion básica de una plataforma de delivery, permitiendo la gestión de usuarios (clientes y repartidores), restaurantes, productos, órdenes, pedidos y roles a través de una base de datos. El enfoque se pone en la seguridad, la validación de datos y la gestión eficiente de peticiones.
 
 #### **Características:**
 
 1. **Servidor Express:** El proyecto comienza configurando un servidor utilizando Express, facilitando la creación de rutas y el manejo de peticiones.
-2. **Base de Datos:** Se integra una base de datos NoSQL con MongoDB. Se crean colecciones para cada entidad del sistema: cliente, repartidor, restaurante, producto, rol y orden.
-3. **Autenticación y Autorización:** Se implementa un sistema de autenticación y autorización utilizando JSON Web Tokens (JWT) y middlewares de Express. Se verifican los tokens para asegurar que solo los usuarios autenticados y autorizados puedan acceder a rutas específicas.
-4. **Gestión de Roles:** Se asignan roles a los usuarios (cliente, repartidor,administrador etc.) y se utilizan middlewares para restringir el acceso a ciertas rutas basado en los roles asignados.
+2. **Base de Datos:** Se integra una base de datos NoSQL con MongoDB. Se crean colecciones para cada entidad del sistema: usuario, restaurante, pedido, producto, rol y orden.
+3. **Autenticación y Autorización:** Se implementa un sistema de autenticación y autorización utilizando JSON Web Tokens (JWT), bcrypt y middlewares de Express. Se verifican los tokens para asegurar que solo los usuarios autenticados y autorizados puedan acceder a rutas específicas.
+4. **Gestión de Roles:** Se asignan roles a los usuarios (cliente, repartidor, administrador etc.) y se utilizan middlewares para restringir el acceso a ciertas rutas basado en los roles asignados.
 5. **Limitación de Peticiones:** Se implementa un mecanismo para limitar la cantidad de peticiones que un usuario puede hacer en un determinado período de tiempo. Esto evita abusos o ataques de fuerza bruta.
-6. **Validación de Datos de Entrada:** Se utiliza un enfoque de Transferencia de Objeto de Datos (DTO) para validar y procesar los datos de entrada. Esto garantiza que los datos ingresados en las solicitudes POST sean coherentes y cumplan con los requisitos del sistema.
-7. **Manejo de Versiones:** Se utiliza el encabezado "Accept-Version" en las solicitudes para manejar versiones de la API de manera efectiva. Esto permite realizar cambios y actualizaciones en la API sin afectar a los clientes existentes.
-8. **Funcionalidades de Delivery:** Se implementan rutas y controladores para permitir a los usuarios crear órdenes, ver restaurantes y productos, realizar seguimiento de pedidos, etc.
+6. **Encriptado de contraseñas:** se utiliza la libreria bcrypt para la proteccion de datos.
+7. **Validación de Datos de Entrada:** Se utiliza un enfoque de Transferencia de Objeto de Datos (DTO) para validar y procesar los datos de entrada. Esto garantiza que los datos ingresados en las solicitudes POST sean coherentes y cumplan con los requisitos del sistema.
+8. **Manejo de Versiones:** Se utiliza el encabezado "Accept-Version" en las solicitudes para manejar versiones de la API de manera efectiva. Esto permite realizar cambios y actualizaciones en la API sin afectar a los clientes existentes.
+9. **Funcionalidades de Delivery:** Se implementan rutas y controladores para permitir a los usuarios crear órdenes, ver restaurantes y productos, realizar seguimiento de pedidos, etc.
 
 **Flujo de Trabajo Típico:**
 
@@ -290,45 +291,104 @@ npm run dev
 
 Nos dará un mensaje similar a este: `Servidor iniciado en http://127.10.10.10:5011` que nos indica la direccion url donde está corriendo el servidor.
 
-
 ## Utilización de la APP:
 
-1-Se debe crear un usuario con el metodo post y la direccion `http://127.10.10.10:5011/usuario` y los datos en el body todos son obligatorios:
+Nota: Para la validación utilizaremos la erramienta Extension de Visual Estudio: ThunderClient,
+
+1-Se debe crear un usuario con el metodo post y la direccion http://127.10.10.10:5000/usuario/usuario y los datos en el body todos son obligatorios:
 
 ```
-{ nombre:"carlo lopez",
-    correo:"carlos@hotmail.com",
-    contraseña:"123456789cp",
-    rol:"repartidor}
+ {
+    "id_usuario":20,
+   "nombre": "Miguel Castro",
+   "correo": "Miguel_Castro@hotmail.com",
+   "contraseña":"Miguel1234",
+   "rol":"cliente",
+   "telefono": "0123456789",
+   "direccion": "cra14afk#15"
+  }
 ```
 
-**Tener en cuenta que en el rol solo podrás poner "repartidor" o "cliente".**
+**Tener en cuenta que en el rol solo podrás poner "repartidor" o "cliente" sin modificaciones con mayusculas.**
+
+Si hay algun error en los datos ingresados, se mostrará el erro al costado derecho, ejemplo :
+
+intentamos no poner el id_usuario:
+
+![1693772701382](image/README/1693772701382.png)
+
+Intentamos no poner una dirección de correo correcta :
+
+![1693772772665](image/README/1693772772665.png)
+
+Así con todas las colecciones obtendremos errores en caso de datos erroneos
+
+**Terner en cuenta que si hay un usuario con el mismo correo previamente registrado, no dejará registrar con el mismo correo y saldrá el siguiente mensaje:  "message": "Correo registrado con anterioridad"**
+
+para confirmar  debe salir el siguiente mensaje:  "message": **"Usuario creado con éxito"**
 
 **2-Login, para ingresar debes solicitar un token mediante la solicitud get y la URL de la siguiente forma:**
 
-**{puerto de conexion}/login/{correo}-{contraseña}**
+**{puerto de conexion}/login/{correo}-{contraseña} ejemplo:**
 
 ```
-http://127.10.10.10:5011/login/Adrian123@hotmail.com-123456789ab
+http://127.10.10.10:5000/login/Miguel_Castro@hotmail.com-Miguel1234
 ```
 
-**si el usuario está previamente registrado, el token dará acceso a las respectivas colecciones y metodos especificos:**
+Si se envia información por la Url no valida saldrá el siguiente mensaje: "mensaje": "Credenciales inválidas"
 
-**Para el usuario "administrador" todos los metodos en todas las colecciones.**
+**si el usuario está previamente registrado, el token (duración 10 minutos) dará acceso a las respectivas colecciones y metodos especificos:**
 
-**Para el usuario "cliente":**
+si el tiempo del token caduca saldrá el siguiente mensaje: "mensaje": "Token inválido" tendrá que realizar denuevo el proceso de login
 
-| **metodo** | **coleccion**   | **url ejemplo**                                                     |
-| ---------------- | --------------------- | ------------------------------------------------------------------------- |
-| **post**   | **pedido**      | [http://127.10.10.10:5011/pedido](http://127.10.10.10:5011/pedido)           |
-| **put**    | **pedido**      | [http://127.10.10.10:5011/pedido](http://127.10.10.10:5011/pedido)           |
-| **get**    | **pedido**      | [http://127.10.10.10:5011/pedido/](http://127.10.10.10:5011/pedido/)         |
-| **delete** | **pedido**      | [http://127.10.10.10:5011/pedido/](http://127.10.10.10:5011/pedido/)         |
-| **get**    | **producto**    | [http://127.10.10.10:5011/producto](http://127.10.10.10:5011/producto)       |
-| **get**    | **restaurante** | [http://127.10.10.10:5011/restaurante](http://127.10.10.10:5011/restaurante) |
+*Para el usuario "cliente": en las versiones 1.0.0 solo podrá hacer un get global, para la version 2.0.0 podrá realizar post, put por id*
+
+| **metodo** | **coleccion**   | **url ejemplo**                            | version       |
+| ---------------- | --------------------- | ------------------------------------------------ | ------------- |
+| POST             | **pedido**      | http://127.10.10.10:5000/pedido/pedido           | 2.0.0         |
+| PUT              | **pedido**      | http://127.10.10.10:5000/pedido/pedido/id_pedido | 2.0.0         |
+| GET              | **pedido**      | http://127.10.10.10:5000/pedido/pedido           | 1.0.0 o 2.0.0 |
+| DELETE           | **pedido**      | http://127.10.10.10:5000/pedido/pedido/id_pedido | 2.0.0         |
+| GET              | **producto**    | http://127.10.10.10:5000/producto/producto       | 1.0.0 o 2.0.0 |
+| GET              | **restaurante** | http://127.10.10.10:5000/restaurante/restaurante | 1.0.0 o 2.0.0 |
+
+**Para realizar una solicitud ejemplo pedido: 	**
+
+**Tener en cuenta que si un usuario intenta acceder a una coleccio a la que no tien permiso, saldrá el siguiente mensaje: "mensaje": "Acceso no autorizado a la colección"**
+
+**si el usuario intenta acceder a un metodo al que no tiene permiso saldrá el siguiente mensaje: "mensaje": "Método no permitido para este rol y colección"**
+
+1. Ingresamos la url=http://127.10.10.10:5000/pedido/pedido
+2. Metodo tipo GET
+3. En los headers: accept-version   2.0.0
+4. En los headers: Authorization   (ingresamos el token generado anteriormente)
+
+   De esta manera debería quedar la solicitud:
+
+   ![1693766789674](image/README/1693766789674.png)
 
 **Para el usuario "repartidor":**
 
-| **metodo** | **coleccion** | **url ejemplo**                                           |
-| ---------------- | ------------------- | --------------------------------------------------------------- |
-| **get**    | **orden**     | [http://127.10.10.10:5011/pedido](http://127.10.10.10:5011/pedido) |
+| **metodo** | **coleccion** | **url ejemplo**                         | version |
+| ---------------- | ------------------- | --------------------------------------------- | ------- |
+| GET              | orden               | http://127.10.10.10:5000/orden/orden          | 1.0.0   |
+| GET              | orden               | http://127.10.10.10:5000/orden/orden/id_orden | 2.0.0   |
+
+para el usuario "administrador":
+
+El administrador tiene acceso a todas las colecciones y a todos los metodos, excepto la coleccion rol.
+
+para el usuario "Super_administrador" tiene acceso a todas las colecciones y a todos los metodos.
+
+---
+
+**SEGURIDAD:**
+La app cuenta con un sistema de encriptado de contraseñas para los usuarios, limitante de numero de solicitudes en un determinado tiempo (5 solicitudes en 30 segundos) cuando se supera el limite, saldrá el siguiente mensaje:**"message": "Limite alcanzado",** validador de datos tanto en la solicitud del metodo como en la base de datos.
+
+**ERRORES:**
+En caso de esperimentar algún error de conexión de este tipo : "Error: listen EADDRINUSE: address already in use 127.10.10.10:5000"
+se debe ingresar al archivo .env y cambiar el puertoMy_server={"hostname":"127.10.10.10", "port":"**5000**"} es el numero que está en negrilla.
+
+En caso de experimentar un error en el programa en general, se recomienda digitar el comando en la terminal Ctrl+C segudio de la letra s y la tecla Intro, de nuevo el comando npm run dev.
+
+En caso de esperimentar otro tipo de errores ponerse en contacto con los desarrolladores.
