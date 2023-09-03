@@ -1,28 +1,39 @@
 import { SignJWT, jwtVerify } from "jose";
-import { con } from "../db/atlas.js";
 import dotenv from "dotenv";
+import bcrypt from 'bcryptjs';
+
+import { con } from "../db/atlas.js";
 dotenv.config();
 
 const conexionDB = await con();
 
 const crearToken = async (req, res) => {
   const encoder = new TextEncoder();
-
   const userInfo = decodeURIComponent(req.params.user);
-  const [correo, contraseña] = userInfo.split("-");
+  const [correo, contraseñaSinEncriptar] = userInfo.split("-");
 
   console.log("correo:", correo);
-  console.log("contraseña:", contraseña);
-
+  console.log("contraseñaSinEncriptar:", contraseñaSinEncriptar);
+  console.log("contraseñaEncriptada: ",  await bcrypt.hash(contraseñaSinEncriptar, 10) )
   try {
-    // Verificar si el correo y la contraseña existen en la colección "usuario"
-    const usuarioData = await conexionDB
-      .collection("usuario")
-      .findOne({ correo, contraseña });
+    // Buscar el usuario por correo en la colección "usuario"
+    const usuarioData = await conexionDB.collection("usuario").findOne({ correo });
 
     if (!usuarioData) {
       return res.status(401).json({ mensaje: "Credenciales inválidas" });
     }
+
+    // Obtener la contraseña encriptada almacenada en la base de datos
+    const contraseñaAlmacenada = usuarioData.contraseña;
+
+    // Verificar si la contraseña proporcionada coincide con la almacenada en la base de datos
+    const contraseñaValida = await bcrypt.compare(contraseñaSinEncriptar, contraseñaAlmacenada);
+
+    if (!contraseñaValida) {
+      return res.status(401).json({ mensaje: "Credenciales inválidas" });
+    }
+
+    // La contraseña es válida, puedes generar el token aquí
 
     // Obtener el rol del usuario
     const rol = usuarioData.rol;
