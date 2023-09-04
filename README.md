@@ -264,7 +264,7 @@ El proyecto es una aplicación de delivery basada en Node.js que utiliza el fram
 git clone https://github.com/DiegoMartinez2094/rappi_campus.git
 ```
 
-***2. Instalar Dependencias:*** Asegúrate de tener Node.js instalado. Luego, desde la raíz del proyecto, ejecuta el siguiente comando para instalar las dependencias:
+***2. Instalar Dependencias:*** Asegúrate de tener Node.js instalado en este caso se manejó el proyecto en la v18.16.0. Luego, desde la raíz del proyecto, ejecuta el siguiente comando para instalar las dependencias:
 
 ```
 npm install
@@ -381,6 +381,81 @@ El administrador tiene acceso a todas las colecciones y a todos los metodos, exc
 para el usuario "Super_administrador" tiene acceso a todas las colecciones y a todos los metodos.
 
 ---
+
+**DIagrama de la Base de datos:**
+
+```
++-----------------+  
+|      rol        |
++-----------------+
+| Id_rol          |
+| nombre_rol      |
+| acceso_rol      |
++-----------------+ 
+
++----------------------+
+|    producto          |
++----------------------+
+| id_Producto          |
+| nombre_Producto      |
+| descripcion_Producto |
+| precio_und           |
++----------------------+
+
++--------------------------+
+|   restaurante            |
++--------------------------+
+| id_Restaurante           |
+| nombre_Restaurante       |
+| telefono_Restaurante     |
+| direccion_Restaurante    |
+| calificacion_Restaurante |
++--------------------------+
+
++--------------------------+
+|     pedido               |
++--------------------------+
+| id_pedido                |
+| cliente                  |
+| producto                 |
+| pago                     |
+| instrucciones_Especiales |
++--------------------------+
+
++-----------------+
+|     usuario     |
++-----------------+
+| id_usuario      |
+| nombre          |
+| correo          |
+| contraseña      |
+| rol             |
+| telefono        |
+| direccion       |
++-----------------+
+
++--------------------------+
+|     orden                |
++--------------------------+
+| id_Orden                 |
+| fecha_Creacion           |
+| cliente                  |
+| producto                 |
+| pago                     |
+| estado                   |
+| instrucciones_Especiales |
+| repartidor_Asignado      |
+| fecha_Entrega            |
+| calificacion             |
+| restaurante              |
++--------------------------+
+
+```
+
+
+---
+
+
 
 **SEGURIDAD:**
 La app cuenta con un sistema de encriptado de contraseñas para los usuarios, limitante de numero de solicitudes en un determinado tiempo (5 solicitudes en 30 segundos) cuando se supera el limite, saldrá el siguiente mensaje:**"message": "Limite alcanzado",** validador de datos tanto en la solicitud del metodo como en la base de datos.
