@@ -14,7 +14,7 @@ const crearToken = async (req, res) => {
 
   console.log("correo:", correo);
   console.log("contraseñaSinEncriptar:", contraseñaSinEncriptar);
-  console.log("contraseñaEncriptada: ",  await bcrypt.hash(contraseñaSinEncriptar, 10) )
+  console.log("contraseñaEncriptada: ", await bcrypt.hash(contraseñaSinEncriptar, 10));
   try {
     // Buscar el usuario por correo en la colección "usuario"
     const usuarioData = await conexionDB.collection("usuario").findOne({ correo });
@@ -44,12 +44,14 @@ const crearToken = async (req, res) => {
       .setExpirationTime("10m")
       .sign(encoder.encode(process.env.JWT_SECRET));
 
-    res.send(jwtConstructor);
+    // Enviar el token como respuesta JSON
+    res.json({ token: jwtConstructor });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ mensaje: "Error en el servidor" });
   }
 };
+
 
 const validarToken = async (req, res, next) => {
     const token = req.headers.authorization;
