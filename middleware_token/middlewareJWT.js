@@ -124,50 +124,5 @@ const validarToken = async (req, res, next) => {
       return res.status(401).json({ mensaje: "Token inválido" });
     }
   };
-  
-
-// const validarToken = async (req, res, next) => {
-//     const token = req.headers.authorization;
-//     if (!token) {
-//         return res.status(401).json({ mensaje: "Token no proporcionado" });
-//     }
-
-//     try {
-//         const encoder = new TextEncoder();
-//         const jwtData = await jwtVerify( token,encoder.encode(process.env.JWT_SECRET));
-//         const rol = jwtData.payload.rol;        // Obtener el rol del token
-//         console.log("Rol obtenido:", rol); // Imprimir el rol en la consola
-//         const urlParts = req.url.split("/");      // Obtener la colección de la URL
-//         console.log("partes url:", urlParts[1]);
-
-//         let coleccionIndex = urlParts.findIndex(part => part === "usuario" || part === "producto" || part === "repartidor"|| part === "orden"|| part === "restaurante"|| part === "pedido" || part === "rol");
-
-//         if (coleccionIndex === -1) {
-//             return res.status(400).json({ mensaje: "Colección no encontrada en la URL" });
-//         }
-//         const coleccion = urlParts[coleccionIndex];
-//         console.log("Colección obtenida:", coleccion); // Imprimir la colección en la consola
-//         const rolesData = await conexionDB.collection('rol').findOne({ nombre_rol: rol });// Buscar el rol en la colección roles
-//         if (!rolesData) {
-//             return res.status(401).json({ mensaje: "Rol no encontrado" });
-//         }
-//         const accesoColecciones = rolesData.acceso_rol;
-//         console.log("acceso: ", accesoColecciones) //[ 'usuario', 'producto', 'orden', 'restaurante', 'roles', 'pedido' ]
-
-//         if (accesoColecciones.some(acceso => acceso === coleccion)) {
-//             return res.status(403).json({ mensaje: "Acceso no autorizado a la colección" });
-//         }
-//         const metodoActual = req.method;// Verificar si el método actual está permitido para el rol y la colección
-//         if (!accesoColecciones[coleccion].includes(metodoActual)) {
-//             return res.status(403).json({ mensaje: "Método no permitido para este rol y colección" });
-//         }
-
-//         // Usuario tiene acceso al método y la colección específicos
-//         next();
-//     } catch (error) {
-//         console.log(error);
-//         return res.status(401).json({ mensaje: "Token inválido" });
-//     }
-// }
 
 export { crearToken, validarToken };

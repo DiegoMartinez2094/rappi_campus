@@ -89,37 +89,44 @@ usuario2.get(
   }
 );
 
-usuario2.post('/usuario', limitGrt(), validarToken, async (req, res) => {
-    if (!req.rateLimit) return;
-    console.log(req.rateLimit);
-    const { errors } = validationResult(req);
-    if (errors.length > 0) {
-      return res.status(400).json({ errors: errors });
+usuario2.post('/usuario', limitGrt(), async (req, res) => {
+  if (!req.rateLimit) return;
+  console.log(req.rateLimit);
+  const { errors } = validationResult(req);
+  if (errors.length > 0) {
+    return res.status(400).json({ errors: errors });
+  }
+
+  try {
+    const db = await con();
+    const usuarios = db.collection('usuario');
+
+    // Verificar si el correo ya existe en la base de datos
+    const existingUser = await usuarios.findOne({ correo: req.body.correo });
+    if (existingUser) {
+      return res.status(400).send({ message: 'Correo registrado con anterioridad' });
     }
-  
-    try {
-      const db = await con();
-      const usuarios = db.collection('usuario');
-  
-      // Encripta la contraseña antes de insertarla en la base de datos
-      const hashedPassword = await bcrypt.hash(req.body.contraseña, 10); // 10 es el número de rondas de encriptación
-  
-      // Reemplaza la contraseña en el objeto req.body con la contraseña encriptada
-      req.body.contraseña = hashedPassword;
-  
-      // Inserta el usuario en la base de datos con la contraseña encriptada
-      const result = await usuarios.insertOne(req.body);
-  
-      if (result.insertedCount === 0) {
-        throw new Error('No se pudo insertar el registro');
-      }
-      console.log('contraseña encriptada: ', hashedPassword);
-      res.status(201).send(result);
-    } catch (error) {
-      console.log(error.message);
-      res.status(500).send(error.message);
+
+    // Encripta la contraseña antes de insertarla en la base de datos
+    const hashedPassword = await bcrypt.hash(req.body.contraseña, 10); // 10 es el número de rondas de encriptación
+
+    // Reemplaza la contraseña en el objeto req.body con la contraseña encriptada
+    req.body.contraseña = hashedPassword;
+
+    // Inserta el usuario en la base de datos con la contraseña encriptada
+    const result = await usuarios.insertOne(req.body);
+
+    if (result.insertedCount === 0) {
+      throw new Error('No se pudo insertar el registro');
     }
-  });
+    console.log('contraseña encriptada: ', hashedPassword);
+    res.status(201).send({ message: 'Usuario creado con éxito' });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send(error.message);
+  }
+});
+
 
 usuario2.delete(
   "/usuario/:id_usuario",
