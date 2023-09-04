@@ -391,7 +391,7 @@ Ejemplo de restaurante:
   }
 ```
 
-Ejemplo producto: 
+Ejemplo producto:
 
 ```
 {id_Producto: 150,nombre_Producto: "Manzanas",descripcion_Producto: "Frescas manzanas rojas de temporada",precio_und: 1500,
@@ -407,24 +407,6 @@ ejemplo pedido:
   producto: { id: 1, nombre_Producto: "Manzanas",precio_und: 1.500, cantidad_Producto:10},
  pago: { monto: 15.000, metodo_Pago: "Efectivo", costo_domicilio: 5000, pago_total: 20.000 },
 instrucciones_Especiales:"dejar en la puerta",
-  }
-```
-
-ejemplo de orden:
-
-```
-{
-    id_Orden: 150,
-    fecha_Creacion: new Date("2023-08-29"),
-    cliente: { nombre_Cliente: "Carlos Rodríguez",direccion_Cliente: "Cll 23c 58-94 barrio Alcala",telefono_Cliente:"123-456-7890"},
-    producto: { id_Producto: 1, nombre_Producto: "Manzanas",precio_und: 1500, cantidad_Producto:10},
-    pago: { monto: 15000, metodo_Pago: "Tarjeta", costo_domicilio: 5000, pago_total: 20000 },
-    estado: "pendiente",
-    instrucciones_Especiales:"dejar en la puerta",
-    repartidor_Asignado: { nombre_Repartidor: "Luis Hernandez",telefono_Repartidor: "555-123-4567",vehiculo: "Caminando",nivel_repartidor: "Diamante" },
-    fecha_Entrega: new Date("2023-08-29"),
-    calificacion: 3,
-    restaurante: { nombre: "El Rincón Criollo", telefono_Restaurante: "453456453" },
   }
 ```
 
