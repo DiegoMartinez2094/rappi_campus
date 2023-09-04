@@ -385,77 +385,74 @@ para el usuario "Super_administrador" tiene acceso a todas las colecciones y a t
 **DIagrama de la Base de datos:**
 
 ```
-+-----------------+  
-|      rol        |
-+-----------------+
-| Id_rol          |
-| nombre_rol      |
-| acceso_rol      |
-+-----------------+ 
-
++----------------------+  
+|      rol             |
 +----------------------+
-|    producto          |
-+----------------------+
-| id_Producto          |
-| nombre_Producto      |
-| descripcion_Producto |
-| precio_und           |
-+----------------------+
+| Id_rol: int          |
+| nombre_rol: string   |
+| acceso_rol: object   |
++----------------------+ 
 
-+--------------------------+
-|   restaurante            |
-+--------------------------+
-| id_Restaurante           |
-| nombre_Restaurante       |
-| telefono_Restaurante     |
-| direccion_Restaurante    |
-| calificacion_Restaurante |
-+--------------------------+
++------------------------------+
+|    producto                  |
++------------------------------+
+| id_Producto: int             |
+| nombre_Producto: string      |
+| descripcion_Producto: string |
+| precio_und: int              |
++------------------------------+
 
-+--------------------------+
-|     pedido               |
-+--------------------------+
-| id_pedido                |
-| cliente                  |
-| producto                 |
-| pago                     |
-| instrucciones_Especiales |
-+--------------------------+
++-------------------------------+
+|   restaurante                 |
++-------------------------------+
+| id_Restaurante: int           |
+| nombre_Restaurante: string    |
+| telefono_Restaurante: string  |
+| direccion_Restaurante: string |
+| calificacion_Restaurante: int |
++-------------------------------+
 
-+-----------------+
-|     usuario     |
-+-----------------+
-| id_usuario      |
-| nombre          |
-| correo          |
-| contraseña      |
-| rol             |
-| telefono        |
-| direccion       |
-+-----------------+
++----------------------------------+
+|     pedido                       |
++----------------------------------+
+| id_pedido: int                   |
+| cliente: object                  |
+| producto: object                 |
+| pago:object                      |
+| instrucciones_Especiales: string |
++----------------------------------+
 
-+--------------------------+
-|     orden                |
-+--------------------------+
-| id_Orden                 |
-| fecha_Creacion           |
-| cliente                  |
-| producto                 |
-| pago                     |
-| estado                   |
-| instrucciones_Especiales |
-| repartidor_Asignado      |
-| fecha_Entrega            |
-| calificacion             |
-| restaurante              |
-+--------------------------+
++--------------------+
+|     usuario        |
++--------------------+
+| id_usuario: int    |
+| nombre: string     |
+| correo: string     |
+| contraseña: string |
+| rol: string        |
+| telefono: string   |
+| direccion: string  |
++--------------------+
+
++----------------------------------+
+|     orden                        |
++----------------------------------+
+| id_Orden: int                    |
+| fecha_Creacion:date              |
+| cliente:object                   |
+| producto:object                  |
+| pago: object                     |
+| estado: string                   |
+| instrucciones_Especiales: string |
+| repartidor_Asignado: object      |
+| fecha_Entrega: date              |
+| calificacion: int                |
+| restaurante: object              |
++----------------------------------+
 
 ```
 
-
 ---
-
-
 
 **SEGURIDAD:**
 La app cuenta con un sistema de encriptado de contraseñas para los usuarios, limitante de numero de solicitudes en un determinado tiempo (5 solicitudes en 30 segundos) cuando se supera el limite, saldrá el siguiente mensaje:**"message": "Limite alcanzado",** validador de datos tanto en la solicitud del metodo como en la base de datos.
