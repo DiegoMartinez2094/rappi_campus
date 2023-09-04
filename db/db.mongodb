@@ -1,32 +1,423 @@
 use("db_ordenes_rappi");
 
-/** Colección Producto */
 
+db.createCollection("rol", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["Id_rol", "nombre_rol", "acceso_rol"],
+      properties: {
+        Id_rol: {
+          bsonType: "int",
+          description: "Identificador único del rol (entero)"
+        },
+        nombre_rol: {
+          bsonType: "string",
+          enum: ["Super_administrador", "administrador", "cliente", "repartidor"],
+          description: "Nombre del rol (cadena de caracteres)"
+        },
+        acceso_rol: {
+          bsonType: "object",
+          description: "Permisos de acceso del rol",
+          patternProperties: {
+            "^[a-zA-Z0-9_]+$": {
+              bsonType: "array",
+              description: "Métodos permitidos para la colección",
+              items: {
+                bsonType: "string",
+                description: "Método permitido (cadena de caracteres)"
+              }
+            }
+          },
+          additionalProperties: false // Solo permite propiedades que coincidan con el patrón
+        }
+      }
+    }
+  }
+})
+
+db.createCollection("usuario", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["id_usuario", "nombre", "correo", "contraseña", "rol", "telefono", "direccion"],
+      properties: {
+        id_usuario: {
+          bsonType: "int",
+          description: "Identificador único del usuario es obligatorio y de tipo entero"
+        },
+        nombre: {
+          bsonType: "string",
+          description: "Nombre del usuario es obligatorio y de tipo string"
+        },
+        correo: {
+          bsonType: "string",
+          pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+          description: "Dirección de correo electrónico debe ser obligatoria"
+        },
+        contraseña: {
+          bsonType: "string",
+          description: "Contraseña del usuario es obligatoria"
+        },
+        rol: {
+          bsonType: "string",
+          description: "El rol es obligatorio y debe ser: Super_administrador, administrador, cliente, repartidor",
+          pattern: "^(Super_administrador|administrador|cliente|repartidor)$",
+        },
+        telefono: {
+          bsonType: "string", // Cambiado a cadena (string)
+          description: "Número de teléfono del usuario (cadena) y es obligatorio"
+        },
+        direccion: {
+          bsonType: "string",
+          description: "Dirección del usuario es obligatoria"
+        }
+      }
+    }
+  }
+})
+
+db.createCollection("pedido", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["id_pedido", "cliente", "producto", "pago"],
+      properties: {
+        id_pedido: {
+          bsonType: "int",
+          description: "Identificador único del pedido debe ser tipo int y obligatorio"
+        },
+        cliente: {
+          bsonType: "object",
+          required: ["nombre_Cliente", "direccion_Cliente", "telefono_Cliente"],
+          properties: {
+            nombre_Cliente: {
+              bsonType: "string",
+              description: "Nombre del cliente debe ser string y obligatorio"
+            },
+            direccion_Cliente: {
+              bsonType: "string",
+              description: "Dirección del cliente debe ser un string y obligatorio"
+            },
+            telefono_Cliente: {
+              bsonType: "string",
+              description: "Número de teléfono del cliente debe ser un string y obligatorio "
+            }
+          }
+        },
+        producto: {
+          bsonType: "object",
+          required: ["id", "nombre_Producto", "precio_und", "cantidad_Producto"],
+          properties: {
+            id: {
+              bsonType: "int",
+              description: "Identificador único del producto debe ser un entero y obligatorio"
+            },
+            nombre_Producto: {
+              bsonType: "string",
+              description: "Nombre del producto debe ser un string y obligatorio"
+            },
+            precio_und: {
+              bsonType: ["int", "double"],
+              description: "Precio por unidad del producto (entero o decimal) y obligatorio"
+            },
+            cantidad_Producto: {
+              bsonType: "int",
+              description: "Cantidad del producto debe ser un entero y obligatorio"
+            }
+          }
+        },
+        pago: {
+          bsonType: "object",
+          required: ["monto", "metodo_Pago", "costo_domicilio", "pago_total"],
+          properties: {
+            monto: {
+              bsonType: ["int", "double"],
+              description: "Monto del pedido (entero o decimal)"
+            },
+            metodo_Pago: {
+              bsonType: "string",
+              description: "Método de pago debe ser una de estas: tarjeta credito, tarjeta debito, efectivo, bono",
+              pattern: "^(tarjeta credito|tarjeta debito|Efectivo|bono)$",
+            },
+            costo_domicilio: {
+              bsonType: ["int", "double"],
+              description: "Costo de entrega (entero o decimal) y obligatorio"
+            },
+            pago_total: {
+              bsonType: ["int", "double"],
+              description: "Pago total (entero o decimal) obligatorio"
+            }
+          }
+        },
+        instrucciones_Especiales: {
+          bsonType: "string",
+          description: "Instrucciones especiales para la entrega"
+        }
+      }
+    }
+  }
+})
+
+ db.createCollection("producto", {
+   validator: {
+     $jsonSchema: {
+       bsonType: "object",
+       required: ["id_Producto", "nombre_Producto", "descripcion_Producto", "precio_und"],
+       properties: {
+         id_Producto: {
+           bsonType: "int",
+           description: "El id_producto debe ser un numero y es obligatorio"
+         },
+         nombre_Producto: {
+           bsonType: "string",
+           description: "Nombre_producto debe ser un string y es oligatorio"
+         },
+         descripcion_Producto: {
+           bsonType: "string",
+           description: "Descripción_producto es obligatorio y debe ser un string"
+         },
+         precio_und: {
+           bsonType: "int",
+           description: "Precio por unidad del producto debe ser un numero "
+         }
+       }
+     }
+   }
+ })
+
+ db.createCollection("restaurante", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["id_Restaurante", "nombre_Restaurante", "telefono_Restaurante", "direccion_Restaurante"],
+      properties: {
+        id_Restaurante: {
+          bsonType: "int",
+          description: "Identificador único del restaurante debe ser un entero y es obligatorio"
+        },
+        nombre_Restaurante: {
+          bsonType: "string",
+          description: "Nombre del restaurante es obligatorio y debe ser un string"
+        },
+        telefono_Restaurante: {
+          bsonType: "string",
+          description: "Número de teléfono del restaurante es obligatorio"
+        },
+        direccion_Restaurante: {
+          bsonType: "string",
+          description: "Dirección del restaurante es obligatoria"
+        }
+      }
+    }
+  }
+})
+
+db.createCollection("orden", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["id_Orden","fecha_Creacion","cliente","producto","pago","estado","instrucciones_Especiales","repartidor_Asignado",
+                  "fecha_Entrega","calificacion","restaurante"
+      ],
+      properties: {
+        id_Orden: {
+          bsonType: "int",
+          description: "Identificador único de la orden es obligatorio y debe ser un entero"
+        },
+        fecha_Creacion: {
+          bsonType: "date",
+          description: "Fecha de creación de la orden debe estar en formato Año-mes-día ejemplo: 2023-08-31 y es obligatoria"
+        },
+        cliente: {
+          bsonType: "object",
+          required: ["nombre_Cliente", "direccion_Cliente", "telefono_Cliente"],
+          properties: {
+            nombre_Cliente: {
+              bsonType: "string",
+              description: "Nombre del cliente es obligatorio"
+            },
+            direccion_Cliente: {
+              bsonType: "string",
+              description: "Dirección del cliente es obligatoria"
+            },
+            telefono_Cliente: {
+              bsonType: "string",
+              description: "Número de teléfono del cliente es obligatorio"
+            }
+          }
+        },
+        producto: {
+          bsonType: "object",
+          required: ["id_Producto", "nombre_Producto", "precio_und", "cantidad_Producto"],
+          properties: {
+            id_Producto: {
+              bsonType: "int",
+              description: "Identificador único del producto es obligatorio y debe ser un entero"
+            },
+            nombre_Producto: {
+              bsonType: "string",
+              description: "Nombre del producto es obligatorio"
+            },
+            precio_und: {
+              bsonType: "int",
+              description: "Precio por unidad del producto es obligatorio"
+            },
+            cantidad_Producto: {
+              bsonType: "int",
+              description: "Cantidad del producto debe ser un número entero y es obligatorio"
+            }
+          }
+        },
+        pago: {
+          bsonType: "object",
+          required: ["monto", "metodo_Pago", "costo_domicilio", "pago_total"],
+          properties: {
+            monto: {
+              bsonType: "int",
+              description: "Monto del pedido  es obligatorio"
+            },
+            metodo_Pago: {
+              bsonType: "string",
+              description: "Método de pago debe ser una de estas: Tarjeta, Efectivo, Otro",
+            },
+            costo_domicilio: {
+              bsonType: "int",
+              description: "Costo de entrega  es obligatorio"
+            },
+            pago_total: {
+              bsonType: "int",
+              description: "Pago total  es obligatorio"
+            }
+          }
+        },
+        estado: {
+          bsonType: "string",
+          description: "Estado de la orden es obligatorio"
+        },
+        instrucciones_Especiales: {
+          bsonType: "string",
+          description: "Instrucciones especiales para la entrega"
+        },
+        repartidor_Asignado: {
+          bsonType: "object",
+          required: ["nombre_Repartidor", "telefono_Repartidor", "vehiculo", "nivel_repartidor"],
+          properties: {
+            nombre_Repartidor: {
+              bsonType: "string",
+              description: "Nombre del repartidor asignado"
+            },
+            telefono_Repartidor: {
+              bsonType: "string",
+              description: "Número de teléfono del repartidor"
+            },
+            vehiculo: {
+              bsonType: "string",
+              description: "Tipo de vehículo del repartidor debe ser Caminando, Bicicleta, Moto, Auto",
+              enum: ["Caminando", "Bicicleta", "Moto", "Auto"]
+            },
+            nivel_repartidor: {
+              bsonType: "string",
+              description: "Nivel de repartidor asignado debe ser Diamante, Oro, Plata, Bronce",
+              enum: ["Diamante", "Oro", "Plata", "Bronce"]
+            }
+          }
+        },
+        fecha_Entrega: {
+          bsonType: "date",
+          description: "Fecha de entrega programada es obligatoria"
+        },
+        calificacion: {
+          bsonType: "int",
+          description: "Calificación de la orden  es obligatoria y debe ser un entero"
+        },
+        restaurante: {
+          bsonType: "object",
+          required: ["nombre", "telefono_Restaurante"],
+          properties: {
+            nombre: {
+              bsonType: "string",
+              description: "Nombre del restaurante es obligatorio"
+            },
+            telefono_Restaurante: {
+              bsonType: "string",
+              description: "Número de teléfono del restaurante es obligatorio"
+            }
+          }
+        }
+      }
+    }
+  }
+})
+
+/** Colección rol */
+db.rol.insertMany([
+  {
+    Id_rol: 1,
+    nombre_rol: "Super_administrador",
+    acceso_rol: {
+      usuario: ["GET", "POST", "PUT", "DELETE"],
+      producto: ["GET", "POST", "PUT", "DELETE"],
+      orden: ["GET", "POST", "PUT", "DELETE"],
+      restaurante: ["GET", "POST", "PUT", "DELETE"],
+      pedido: ["GET", "POST", "PUT", "DELETE"],
+      rol: ["GET", "POST", "PUT", "DELETE"]
+    }
+  },
+  {
+    Id_rol: 2,
+    nombre_rol: "administrador",
+    acceso_rol: {
+      usuario: ["GET", "POST", "PUT", "DELETE"],
+      producto: ["GET", "POST", "PUT", "DELETE"],
+      orden: ["GET", "POST", "PUT", "DELETE"],
+      restaurante: ["GET", "POST", "PUT", "DELETE"],
+      pedido: ["GET", "POST", "PUT", "DELETE"]
+    }
+  },
+  {
+    Id_rol: 3,
+    nombre_rol: "cliente",
+    acceso_rol: {
+      restaurante: ["GET"],
+      producto: ["GET"],
+      pedido: ["GET", "POST", "PUT", "DELETE"]
+    }
+  },
+  {
+    Id_rol: 4,
+    nombre_rol: "repartidor",
+    acceso_rol: {
+      orden: ["GET"]
+    }
+  }
+]);
+
+/** Colección producto */
 db.producto.insertMany([
-  {id_Producto: 1,nombre_Producto: "Manzanas",descripcion_Producto: "Frescas manzanas rojas de temporada",precio_und: 1.500,
+  {id_Producto: 1,nombre_Producto: "Manzanas",descripcion_Producto: "Frescas manzanas rojas de temporada",precio_und: 1500,
   },
-  {id_Producto: 2,nombre_Producto: "Arroz integral",descripcion_Producto: "Arroz integral de grano entero, rico en nutrientes",precio_und: 2.000
+  {id_Producto: 2,nombre_Producto: "Arroz integral",descripcion_Producto: "Arroz integral de grano entero, rico en nutrientes",precio_und: 2000
   },
-  {id_Producto: 3,nombre_Producto: "Yogur griego",descripcion_Producto: "Yogur cremoso estilo griego, sin azúcares añadidos",precio_und: 3.500
+  {id_Producto: 3,nombre_Producto: "Yogur griego",descripcion_Producto: "Yogur cremoso estilo griego, sin azúcares añadidos",precio_und: 3500
   },
-  {id_Producto: 4,nombre_Producto: "Pan integral",descripcion_Producto: "Pan integral recién horneado, perfecto para sándwiches",precio_und: 4.000
+  {id_Producto: 4,nombre_Producto: "Pan integral",descripcion_Producto: "Pan integral recién horneado, perfecto para sándwiches",precio_und: 4000
   },
-  {id_Producto: 5,nombre_Producto: "Pollo orgánico",descripcion_Producto: "Pechugas de pollo orgánico, criado en condiciones naturales",precio_und: 8.000
+  {id_Producto: 5,nombre_Producto: "Pollo orgánico",descripcion_Producto: "Pechugas de pollo orgánico, criado en condiciones naturales",precio_und: 8000
   },
-  {id_Producto: 6,nombre_Producto: "Ensalada mixta",descripcion_Producto: "Mezcla fresca de lechugas, tomates y zanahorias",precio_und: 5.500
+  {id_Producto: 6,nombre_Producto: "Ensalada mixta",descripcion_Producto: "Mezcla fresca de lechugas, tomates y zanahorias",precio_und: 5500
   },
-  {id_Producto: 7,nombre_Producto: "Salmón fresco",descripcion_Producto: "Filete de salmón atlántico fresco, alto en omega-3",precio_und: 12.000
+  {id_Producto: 7,nombre_Producto: "Salmón fresco",descripcion_Producto: "Filete de salmón atlántico fresco, alto en omega-3",precio_und: 12000
   },
-  {id_Producto: 8,nombre_Producto: "Pasta de trigo integral",descripcion_Producto: "Pasta de trigo integral para platos saludables"
+  {id_Producto: 8,nombre_Producto: "Pasta de trigo integral",descripcion_Producto: "Pasta de trigo integral para platos saludables",precio_und: 12000
   },
-  {id_Producto: 9,nombre_Producto: "Miel pura",descripcion_Producto: "Miel natural y pura, directo del colmenar",precio_und: 6.000
+  {id_Producto: 9,nombre_Producto: "Miel pura",descripcion_Producto: "Miel natural y pura, directo del colmenar",precio_und: 6000
   },
-  {id_Producto: 10,nombre_Producto: "Vegetales congelados",descripcion_Producto: "Mezcla de vegetales congelados para guisos y salteados",precio_und: 3.200
+  {id_Producto: 10,nombre_Producto: "Vegetales congelados",descripcion_Producto: "Mezcla de vegetales congelados para guisos y salteados",precio_und: 3200
   },
 ]);
 
 /** Colección Restaurante */
-
 db.restaurante.insertMany([
   {id_Restaurante: 1,nombre_Restaurante: "Delicias del Mar", telefono_Restaurante: "1234569877", direccion_Restaurante: "Calle de los Sabores 123",calificacion_Restaurante: 4.2,
   },
@@ -50,239 +441,13 @@ db.restaurante.insertMany([
   },
 ]);
 
-/** Colección Ordenes */
-
-db.orden.insertMany([
-  {
-    id_Orden: 1,
-    fecha_Creacion: "2023-08-29",
-    cliente: { nombre_Cliente: "Carlos Rodríguez",direccion_Cliente: "Cll 23c 58-94 barrio Alcala",telefono_Cliente:"123-456-7890"},
-    producto: { id: 1, nombre_Producto: "Manzanas",precio_und: 1.500, cantidad_Producto:10},
-    pago: { monto: 15.000, metodo_Pago: "Tarjeta", costo_domicilio: 5000, pago_total: 20.000 },
-    estado: "pendiente",
-    instrucciones_Especiales:"dejar en la puerta",
-    repartidor_Asignado: { nombre_Repartidor: "Luis Hernandez",telefono_Repartidor: "555-123-4567",vehiculo: "Caminando",nivel_repartidor: "Diamante" },
-    fecha_Entrega: "2023-08-31",
-    calificacion: 3.5,
-    restaurante: { nombre: "El Rincón Criollo", telefono_Restaurante: "453456453" },
-  },
-  {
-    id_Orden: 2,
-    fecha_Creacion: "2023-08-25",
-    cliente: { nombre_Cliente: "Sofía Fernández",direccion_Cliente: "av25 48-73 barrio provenza",telefono_Cliente: "987-654-3210"},
-    producto: { id: 2, nombre: "Arroz integral",precio_und: 2.000, cantidad_Producto:1 },
-    pago: { monto:2000 , metodo_Pago: "Efectivo",costo_domicilio: 4000, pago_total: 6.000 },
-    estado: "entregado",
-    instrucciones_Especiales: "preguntar por Juan",
-    repartidor_Asignado: { nombre_Repartidor: "Ana Torres",telefono_Repartidor: "555-987-6543",vehiculo: "Bicicleta",nivel_repartidor: "Oro"},
-    fecha_Entrega: "2023-08-26",
-    calificacion: 4.3,
-    restaurante: { nombre: "Fusión Oriental",telefono_Restaurante: "4456445" },
-  },
-  {
-    id_Orden: 3,
-    fecha_Creacion: "2023-08-27",
-    cliente: { nombre_Cliente: "Marta Sánchez",direccion_Cliente: "avrosales  57-12 barrio Villamil",telefono_Cliente: "3185472568"},
-    producto: { id_Producto: 3,nombre_Producto: "Yogur griego",precio_und: 3.500, cantidad_Producto:2 },
-    pago: { monto:7000 , metodo_Pago: "Efectivo",costo_domicilio: 6000, pago_total: 13.000 },
-    estado: "entregado",
-    instrucciones_Especiales: "dejar en porteria",
-    repartidor_Asignado: {nombre_Repartidor: "Carlos Martinez",telefono_Repartidor: "555-555-5555",vehiculo: "Moto",nivel_repartidor: "Plata"},
-    fecha_Entrega: "2023-08-26",
-    calificacion: 4.3,
-    restaurante: { nombre_Restaurante: "Sabores Mediterráneos", telefono_Restaurante: "45864558"},
-  },
-  {
-    id_Orden: 4,
-    fecha_Creacion: "2023-08-10",
-    cliente: { id_Cliente: 5,nombre_Cliente: "Javier Torres",direccion_Cliente: " occ 17-11 barrio Carmen",telefono_Cliente: "274856233"},
-    producto: { id_Producto: 3,nombre_Producto: "Pollo orgánico",precio_und: 8.000, cantidad_Producto:2 },
-    pago: { monto:16000 , metodo_Pago: "trajeta de credito", costo_domicilio: 8000, pago_total: 24.000 },
-    estado: "entregado",
-    instrucciones_Especiales: "tocar la puerta",
-    repartidor_Asignado: {nombre_Repartidor: "Patricia Luna",telefono_Repartidor: "555-999-1111",vehiculo: "Auto",nivel_repartidor: "Oro"},
-    fecha_Entrega: "2023-08-11",
-    calificacion: 5,
-    restaurante: { nombre_Restaurante: "Delicias del Mar", telefono_Restaurante: "1234569877"},
-  },
-  {
-    id_Orden: 5,
-    fecha_Creacion: "2023-08-10",
-    cliente: { id_Cliente: 9,nombre_Cliente: "Diego Fernandez",direccion_Cliente: " cra 33 58-24 barrio Cabecera",telefono_Cliente: "245875665"},
-    producto: { id_Producto: 6,nombre_Producto: "Ensalada mixta",precio_und: 5.500, cantidad_Producto:3 },
-    pago: { monto:16.500 , metodo_Pago: "trajeta de debito", costo_domicilio: 6.500, pago_total: 23.000 },
-    estado: "entregado",
-    instrucciones_Especiales: "llamar al telefono del cliente",
-    repartidor_Asignado: {nombre_Repartidor: "María Silva",telefono_Repartidor: "555-666-8888",vehiculo: "Moto",nivel_repartidor: "Plata"},
-    fecha_Entrega: "2023-08-10",
-    calificacion: 4,
-    restaurante: { nombre_Restaurante: "Cocina Vegana Verde", telefono_Restaurante: "8456455"},
-  }
-]);
-
-
-db.rol.insertMany([
-  {
-    Id_rol:1,
-    nombre_rol: "Super_administrador",
-    acceso_rol: ["usuario", "producto", "orden", "restaurante", "pedido", "rol" ]
-  },
-  {
-    Id_rol:2,
-    nombre_rol: "administrador",
-    acceso_rol: ["usuario", "producto", "orden", "restaurante", "pedido" ]
-  },
-  {
-    Id_rol:3,
-    nombre_rol: "cliente",
-    acceso_rol: ["restaurante", "producto", "pedido"]
-  },
-  {
-    Id_rol:4,
-    nombre_rol: "repartidor",
-    acceso_rol: ["orden"]
-  }
-]);
-
-/** Colección usuario */
-
-db.usuario.insertMany([
-  {
-    id_usuario:1,
-    nombre: "Adrian Bueno",
-    correo: "adrianjbuenop@gmail.com",
-    contraseña:"Ajbp170605",
-    rol:"Super_administrador",
-    telefono: 3504265412,
-    direccion: "cra14aw#45b17"
-   },
-  {
-    id_usuario:2,
-    nombre: "Diego Martinez",
-    correo: "diegofernadndomartinezcalderon@gmail.com",
-    contraseña:"123456789dm",
-    rol:"Super_administrador",
-    telefono: 3151456321,
-    direccion: "cra14afk#15"
-  },
-  {
-    id_usuario:3,
-    nombre: "Adrian Bueno",
-    correo: "adrianj@gmail.com",
-    contraseña:"adrian17",
-    rol:"administrador",
-    telefono: 3504265412,
-    direccion: "cra14aw#45b17"
-   },
-  {
-    id_usuario:4,
-    nombre: "Diego Martinez",
-    correo: "diegof@gmail.com",
-    contraseña:"facil456",
-    rol:"administrador",
-    telefono: 3151456321,
-    direccion: "cra14afk#15"
-  },
-  {
-    id_usuario:5,
-   nombre: "Diego Hernando",
-   correo: "diego63_19@hotmail.com",
-   contraseña:"facil789",
-   rol:"cliente",
-   telefono: 3151456321,
-   direccion: "cra14afk#15"
-  },
-  {
-    id_usuario:6,
-    nombre: "Adrian Pedraza",
-    correo: "Adrian123@hotmail.com",
-    contraseña:"123456789ab",
-    rol:"repartidor",
-    telefono: 3254896541,
-    direccion: "calle45"
-  },
-  {
-    id_usuario:7,
-    nombre: "fernando Calderon",
-    correo: "fernando@hotmail.com",
-    contraseña:"123456789fc",
-    rol:"cliente",
-    telefono: 3478965412,
-    direccion: "cra48"
-  },
-  {
-    id_usuario:8,
-    nombre: "carlo lopez",
-    correo: "carlos@hotmail.com",
-    contraseña:"123456789cp",
-    rol:"repartidor",
-    telefono: 310245628,
-    direccion: "cra50"
-  },
-  {
-    id_usuario:9,
-    nombre: "Joel Pedraza",
-    correo: "joel@gmail.com",
-    contraseña:"hola1234",
-    rol:"cliente",
-    telefono: 3504265412,
-    direccion: "cra51"
-  },
-  {
-    id_usuario:10,
-    nombre: "juan manito",
-    correo: "juan@hotmail.com",
-    contraseña:"si123456789",
-    rol:"repartidor",
-    telefono: 3201425632,
-    direccion: "cra52"
-  },
-  {
-    id_usuario:11,
-    nombre: "maria gonzales",
-    correo: "maria@hotmail.com",
-    contraseña:"facil1234",
-    rol:"cliente",
-    telefono: 3904555485,
-    direccion: "cra53"
-  },
-  {
-    id_usuario:12,
-    nombre: "juana martinez",
-    correo: "juana@hotmail.com",
-    contraseña:"juana123",
-    rol:"repartidor",
-    telefono: 3502145632,
-    direccion: "cra54"
-  },
-  {
-    id_usuario:13,
-    nombre: "mariana palacio",
-    correo: "mariana@hotmail.com",
-    contraseña:"no12345",
-    rol:"cliente",
-    telefono: 3102456283,
-    direccion: "cra56"
-  },
-  {
-    id_usuario:14,
-    nombre: "diego manga",
-    correo: "diego@hotmail.com",
-    contraseña:"diego1234",
-    rol:"repartidor",
-    telefono: 3504265412,
-    direccion: "cra57"
-  }
-]);
-
 /** Colección pedido */
-
 db.pedido.insertMany([
   {
     id_pedido:1,
   cliente: { nombre_Cliente: "Carlos Rodríguez",direccion_Cliente: "Cll 23c 58-94 barrio Alcala",telefono_Cliente:"123-456-7890"},
   producto: { id: 1, nombre_Producto: "Manzanas",precio_und: 1.500, cantidad_Producto:10},
- pago: { monto: 15.000, metodo_Pago: "Tarjeta", costo_domicilio: 5000, pago_total: 20.000 },
+ pago: { monto: 15.000, metodo_Pago: "Efectivo", costo_domicilio: 5000, pago_total: 20.000 },
 instrucciones_Especiales:"dejar en la puerta",
   },
   {
@@ -296,7 +461,7 @@ instrucciones_Especiales:"dejar en la puerta",
     id_pedido: 3,
     cliente: { nombre_Cliente: "María López", direccion_Cliente: "Cra 10 25-30", telefono_Cliente: "555-123-4567" },
     producto: { id: 2, nombre_Producto: "Peras", precio_und: 1200, cantidad_Producto: 8 },
-    pago: { monto: 9600, metodo_Pago: "Tarjeta", costo_domicilio: 3500, pago_total: 13100 },
+    pago: { monto: 9600, metodo_Pago: "Efectivo", costo_domicilio: 3500, pago_total: 13100 },
     instrucciones_Especiales: "No incluir condimentos",
   },
   {
@@ -310,7 +475,7 @@ instrucciones_Especiales:"dejar en la puerta",
     id_pedido: 5,
     cliente: { nombre_Cliente: "Laura Gómez", direccion_Cliente: "Av. Central 456", telefono_Cliente: "444-555-6666" },
     producto: { id: 1, nombre_Producto: "Manzanas", precio_und: 1500, cantidad_Producto: 3 },
-    pago: { monto: 4500, metodo_Pago: "Tarjeta", costo_domicilio: 3000, pago_total: 7500 },
+    pago: { monto: 4500, metodo_Pago: "Efectivo", costo_domicilio: 3000, pago_total: 7500 },
     instrucciones_Especiales: "Dejar con el portero",
   },
   {
@@ -324,7 +489,7 @@ instrucciones_Especiales:"dejar en la puerta",
     id_pedido: 7,
     cliente: { nombre_Cliente: "Elena Torres", direccion_Cliente: "Cll 15A 28-10", telefono_Cliente: "123-789-4560" },
     producto: { id: 3, nombre_Producto: "Lechugas", precio_und: 800, cantidad_Producto: 2 },
-    pago: { monto: 1600, metodo_Pago: "Tarjeta", costo_domicilio: 1500, pago_total: 3100 },
+    pago: { monto: 1600, metodo_Pago: "Efectivo", costo_domicilio: 1500, pago_total: 3100 },
     instrucciones_Especiales: "Usar caja de regalo",
   },
   {
@@ -338,7 +503,7 @@ instrucciones_Especiales:"dejar en la puerta",
     id_pedido: 9,
     cliente: { nombre_Cliente: "Sofía Díaz", direccion_Cliente: "Cra 8 15-20", telefono_Cliente: "999-888-7777" },
     producto: { id: 6, nombre_Producto: "Zanahorias", precio_und: 700, cantidad_Producto: 5 },
-    pago: { monto: 3500, metodo_Pago: "Tarjeta", costo_domicilio: 2000, pago_total: 5500 },
+    pago: { monto: 3500, metodo_Pago: "Efectivo", costo_domicilio: 2000, pago_total: 5500 },
     instrucciones_Especiales: "Llamar antes de llegar",
   },
   {
@@ -352,7 +517,7 @@ instrucciones_Especiales:"dejar en la puerta",
     id_pedido: 11,
     cliente: { nombre_Cliente: "Ricardo Silva", direccion_Cliente: "Av. Principal 789", telefono_Cliente: "111-333-5555" },
     producto: { id: 5, nombre_Producto: "Tomates", precio_und: 900, cantidad_Producto: 3 },
-    pago: { monto: 2700, metodo_Pago: "Tarjeta", costo_domicilio: 2500, pago_total: 5200 },
+    pago: { monto: 2700, metodo_Pago: "Efectivo", costo_domicilio: 2500, pago_total: 5200 },
     instrucciones_Especiales: "Entregar en la oficina 305",
   },
   {
@@ -366,7 +531,152 @@ instrucciones_Especiales:"dejar en la puerta",
     id_pedido: 13,
     cliente: { nombre_Cliente: "Javier Gutiérrez", direccion_Cliente: "Cll 18A 35-40", telefono_Cliente: "222-444-6666" },
     producto: { id: 3, nombre_Producto: "Lechugas", precio_und: 800, cantidad_Producto: 6 },
-    pago: { monto: 4800, metodo_Pago: "Tarjeta", costo_domicilio: 2800, pago_total: 7600 },
+    pago: { monto: 4800, metodo_Pago: "Efectivo", costo_domicilio: 2800, pago_total: 7600 },
     instrucciones_Especiales: "Ninguna",
   }
 ]);
+
+/** Colección usuario */
+db.usuario.insertMany([
+  {
+    id_usuario:1,
+    nombre: "Adrian Bueno",
+    correo: "adrianjbuenop@gmail.com",
+    contraseña:"$2a$10$LdsW6IuxIUmsh0Trn0bAmeX.yvPMMkRH9ioVmuF1iTHw/r2XdrKo6",
+    rol:"Super_administrador",
+    telefono: "3504265412",
+    direccion: "cra14aw#45b17"
+   },
+  {
+    id_usuario:2,
+    nombre: "Diego Martinez",
+    correo: "diegofernadndomartinezcalderon@gmail.com",
+    contraseña:"$2a$10$BUVwI1l18Nn4Pf1gteK8VeKZPmyhqe7qbjS8k1woQ2gm97XIfzeV6",
+    rol:"Super_administrador",
+    telefono: "3151456321",
+    direccion: "cra14afk#15"
+  },
+  {
+    id_usuario:3,
+    nombre: "Joel Bueno",
+    correo: "adrianj@gmail.com",
+    contraseña:"$2a$10$15hhuyjLbZTwDWmiUdHagOcgKVVUHU8k8MEAq7C1rFX/Fz2NwSSde",
+    rol:"administrador",
+    telefono: "3504265412",
+    direccion: "cra14aw#45b17"
+   },
+  {
+    id_usuario:4,
+    nombre: "Fernando Martinez",
+    correo: "diegof@gmail.com",
+    contraseña:"$2a$10$FxhWn6uRhcQ3KpR/7NGUDuxFWNuzkepSd.6bdl87artp673VJIggm",
+    rol:"administrador",
+    telefono: "3151456321",
+    direccion: "cra14afk#15"
+  },
+  {
+    id_usuario:5,
+   nombre: "Andrey Hernando",
+   correo: "Andrey@hotmail.com",
+   contraseña:"$2a$10$oqos9VuIs0tF6lWoaCkD.eYvt/AFL69/EyaTkl1SQKoskwN4TONKq",
+   rol:"cliente",
+   telefono: "3151456321",
+   direccion: "cra14afk#15"
+  },
+  {
+    id_usuario:6,
+    nombre: "Adriano Pedraza",
+    correo: "Adriano123@hotmail.com",
+    contraseña:"$2a$10$B0NIGHyyCSpEgP7JNKUOlud2Sah6bMNyKH.aTRxMVyuYZglEuiSXW",
+    rol:"repartidor",
+    telefono: "3254896541",
+    direccion: "calle45"
+  },
+  {
+    id_usuario:7,
+    nombre: "fercho Calderon",
+    correo: "fercho@hotmail.com",
+    contraseña:"$2a$10$XY25nMMgw3/BFEHbuFJgv.1bvYzeKxHghEnqfSXBJR8PRBt7DvJr2",
+    rol:"cliente",
+    telefono: "3478965412",
+    direccion: "cra48"
+  },
+  {
+    id_usuario:8,
+    nombre: "carlo lopez",
+    correo: "carlo@hotmail.com",
+    contraseña:"$2a$10$ht46OESt70L7G2LsONYL4ewbgp4gjcDzNtNf0wC2DBRS0YX7Bsgmy",
+    rol:"repartidor",
+    telefono: "310245628",
+    direccion: "cra50"
+  },
+  {
+    id_usuario:9,
+    nombre: "Joelo Pedraza",
+    correo: "joelo@gmail.com",
+    contraseña:"$2a$10$lxlXu8RYZ9lD6yndSuy5..Qn9Txz1rrqUSru4xNCUovo5vQtxBy9y",
+    rol:"cliente",
+    telefono: "3504265412",
+    direccion: "cra51"
+  },
+  {
+    id_usuario:10,
+    nombre: "Juan manito",
+    correo: "Juan@hotmail.com",
+    contraseña:"$2a$10$Z8Rtg6aNG4nbGIcqUVoTPuCnHdif.LSVlaDXgV2VpQZChEQs2ipVu",
+    rol:"repartidor",
+    telefono: "3201425632",
+    direccion: "cra52"
+  },
+  {
+    id_usuario:11,
+    nombre: "Maria gonzales",
+    correo: "Maria@hotmail.com",
+    contraseña:"$2a$10$3WxIti31dFANtN5vrXU9IeMuG7ngmZYYJ2pWB5rcd6w33I7L6R66a",
+    rol:"cliente",
+    telefono: "3904555485",
+    direccion: "cra53"
+  },
+  {
+    id_usuario:12,
+    nombre: "Juana martinez",
+    correo: "Juana@hotmail.com",
+    contraseña:"$2a$10$UHfHiNR.bIFEw/.J/ps4l.RjtsuwLtopbT1YJcSgMjsf/0MlaiKCe",
+    rol:"repartidor",
+    telefono: "3502145632",
+    direccion: "cra54"
+  }
+]);
+
+/** Colección Orden */
+db.orden.insertMany([
+  {
+    id_Orden: 1,
+    fecha_Creacion: new Date("2023-08-29"),
+    cliente: { nombre_Cliente: "Carlos Rodríguez",direccion_Cliente: "Cll 23c 58-94 barrio Alcala",telefono_Cliente:"123-456-7890"},
+    producto: { id_Producto: 1, nombre_Producto: "Manzanas",precio_und: 1500, cantidad_Producto:10},
+    pago: { monto: 15000, metodo_Pago: "Tarjeta", costo_domicilio: 5000, pago_total: 20000 },
+    estado: "pendiente",
+    instrucciones_Especiales:"dejar en la puerta",
+    repartidor_Asignado: { nombre_Repartidor: "Luis Hernandez",telefono_Repartidor: "555-123-4567",vehiculo: "Caminando",nivel_repartidor: "Diamante" },
+    fecha_Entrega: new Date("2023-08-29"),
+    calificacion: 3,
+    restaurante: { nombre: "El Rincón Criollo", telefono_Restaurante: "453456453" },
+  },
+  {
+    id_Orden: 2,
+    fecha_Creacion: new Date("2023-08-29"),
+    cliente: { nombre_Cliente: "Sofía Fernández",direccion_Cliente: "av25 48-73 barrio provenza",telefono_Cliente: "987-654-3210"},
+    producto: { id_Producto: 2, nombre_Producto: "Arroz integral",precio_und: 2000, cantidad_Producto:1 },
+    pago: { monto:2000 , metodo_Pago: "Efectivo",costo_domicilio: 4000, pago_total: 6000 },
+    estado: "entregado",
+    instrucciones_Especiales: "preguntar por Juan",
+    repartidor_Asignado: { nombre_Repartidor: "Ana Torres",telefono_Repartidor: "555-987-6543",vehiculo: "Bicicleta",nivel_repartidor: "Oro"},
+    fecha_Entrega: new Date("2023-08-29"),
+    calificacion: 4,
+    restaurante: { nombre: "Fusión Oriental",telefono_Restaurante: "4456445" }
+  }
+]);
+
+
+

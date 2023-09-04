@@ -3,6 +3,7 @@ import express from "express";
 import versionRoutes from "express-routes-versioning";
 import { check } from "express-validator";
 import { crearToken } from "./middleware_token/middlewareJWT.js";
+import { limitGrt } from "./limit/config.js";
 
 import restaurante from "./funcion/V2/Restaurante2.js";
 import restaurante1 from "./funcion/V1/Restaurante.js";
@@ -10,7 +11,7 @@ import producto from "./funcion/V1/Productos.js";
 import producto2 from "./funcion/V2/Productos2.js";
 import usuario from "./funcion/V1/usuario.js";
 import usuario2 from "./funcion/V2/usuario2.js";
-import ordenes from "./funcion/V2/Ordenes2.js";
+import Ordenes2 from "./funcion/V2/Ordenes2.js";
 import ordenes1 from "./funcion/V1/ordenes.js";
 import pedido from "./funcion/V1/pedido.js";
 import pedido2 from "./funcion/V2/pedido2.js";
@@ -29,7 +30,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/login/:user", crearToken);
+app.get("/login/:user",limitGrt(), crearToken);
 
 app.use("/rol", versionRoute({
   "1.0.0": rol,
@@ -270,7 +271,7 @@ app.use(
 
   versionRoute({
     "1.0.0": ordenes1,
-    "2.0.0": ordenes,
+    "2.0.0": Ordenes2,
   })
 );
 
