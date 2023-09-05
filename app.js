@@ -313,8 +313,8 @@ app.use(
   ],
 
   versionRoute({
-    "1.0.0": restaurante,
-    "2.0.0": restaurante1
+    "1.0.0": restaurante1,
+    "2.0.0": restaurante
   })
 );
 
