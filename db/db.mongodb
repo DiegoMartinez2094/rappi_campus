@@ -226,7 +226,7 @@ db.createCollection("orden", {
           description: "Identificador único de la orden es obligatorio y debe ser un entero"
         },
         fecha_Creacion: {
-          bsonType: "date",
+          bsonType: "string",
           description: "Fecha de creación de la orden debe estar en formato Año-mes-día ejemplo: 2023-08-31 y es obligatoria"
         },
         cliente: {
@@ -301,7 +301,7 @@ db.createCollection("orden", {
         },
         repartidor_Asignado: {
           bsonType: "object",
-          required: ["nombre_Repartidor", "telefono_Repartidor", "vehiculo", "nivel_repartidor"],
+          required: ["nombre_Repartidor", "telefono_Repartidor", "vehiculo"],
           properties: {
             nombre_Repartidor: {
               bsonType: "string",
@@ -316,15 +316,10 @@ db.createCollection("orden", {
               description: "Tipo de vehículo del repartidor debe ser Caminando, Bicicleta, Moto, Auto",
               enum: ["Caminando", "Bicicleta", "Moto", "Auto"]
             },
-            nivel_repartidor: {
-              bsonType: "string",
-              description: "Nivel de repartidor asignado debe ser Diamante, Oro, Plata, Bronce",
-              enum: ["Diamante", "Oro", "Plata", "Bronce"]
-            }
           }
         },
         fecha_Entrega: {
-          bsonType: "date",
+          bsonType: "string",
           description: "Fecha de entrega programada es obligatoria"
         },
         calificacion: {
