@@ -315,7 +315,7 @@ db.createCollection("orden", {
               bsonType: "string",
               description: "Tipo de vehículo del repartidor debe ser Caminando, Bicicleta, Moto, Auto",
               enum: ["Caminando", "Bicicleta", "Moto", "Auto"]
-            },
+            }
           }
         },
         fecha_Entrega: {
