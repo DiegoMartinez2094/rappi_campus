@@ -168,11 +168,11 @@ app.use(
       .withMessage("El telefono_Cliente es obligatorio")
       .isString("El telefono_Cliente debe ser un string"),
 
-    check("producto.id")
+    check("producto.id_Producto")
       .notEmpty()
-      .withMessage("El id de el producto es obligatorio")
+      .withMessage("El id_Producto es obligatorio")
       .custom((value) => /^\d+$/.test(value))
-      .withMessage("El idde el producto debe ser numérico sin letras")
+      .withMessage("El id_Producto debe ser numérico sin letras")
       .toInt(),
     
     check("producto.nombre_Producto")
@@ -313,8 +313,8 @@ app.use(
   ],
 
   versionRoute({
-    "1.0.0": restaurante,
-    "2.0.0": restaurante1
+    "1.0.0": restaurante1,
+    "2.0.0": restaurante
   })
 );
 
